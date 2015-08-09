@@ -1,10 +1,4 @@
 resources:
-  haproxy:
-    number: 1
-    flavor: medium
-    image: trusty
-    networks: default
-    boot_volume: default_volume
   ct:
     number: 2
     flavor: large
@@ -14,12 +8,6 @@ resources:
   ctseed:
     number: 1
     flavor: large
-    image: trusty
-    networks: default
-    boot_volume: default_volume
-  keystone:
-    number: 1
-    flavor: small
     image: trusty
     networks: default
     boot_volume: default_volume
