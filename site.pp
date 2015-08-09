@@ -5,7 +5,7 @@ Exec {
 
 
 node /^ctseed\d+/{
-#  include rjil::base
+  include rjil::base
 #  include rjil::redis
 #  include rjil::cassandra
   include rjil::rabbitmq
@@ -17,7 +17,7 @@ node /^ctseed\d+/{
 
 
 node /^ct\d+/ {
-#  include rjil::base
+  include rjil::base
 #  include rjil::redis
 #  include rjil::cassandra
   include rjil::rabbitmq
