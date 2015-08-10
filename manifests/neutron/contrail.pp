@@ -13,10 +13,11 @@
 class rjil::neutron::contrail(
   $keystone_admin_password,
   $fip_pools           = {},
-  $contrail_api_server = 'real.neutron.service.consul',
+  $contrail_api_server = 'lb.neutron.service.consul',
   $rt_number           = 10000,
   $router_asn          = 64512,
   $seed                = false,
+  $tenants             = undef,
 ) {
 
   include ::rjil::neutron
@@ -32,6 +33,10 @@ class rjil::neutron::contrail(
   ##
   # Subscribe neutron-server to contrailplugin.ini
   ##
+  file { '/etc/default/neutron-server':
+    content => 'NEUTRON_PLUGIN_CONFIG="/etc/neutron/plugins/opencontrail/ContrailPlugin.ini"',
+    require => File['/etc/neutron/plugins/opencontrail/ContrailPlugin.ini'],
+  }
 
   File['/etc/neutron/plugins/opencontrail/ContrailPlugin.ini'] ~>
     Service['neutron-server']
@@ -39,15 +44,16 @@ class rjil::neutron::contrail(
   include rjil::contrail::server
 
   ##
-  # Create fip pools including creation of network, subnet, fip pool etc
+  # Create default network and fip pools including creation of network, subnet, fip pool etc
   ##
   if $seed {
+     create_resources(rjil::neutron::default_network,$tenants)
      $fip_pool_defaults = {
                           keystone_admin_password => $keystone_admin_password,
                           contrail_api_server     => $contrail_api_server,
                           rt_number               => $rt_number,
                           router_asn              => $router_asn
                         }
-  create_resources(rjil::neutron::contrail::fip_pool,$fip_pools,$fip_pool_defaults)
+     create_resources(rjil::neutron::contrail::fip_pool,$fip_pools,$fip_pool_defaults)
   }
 }

@@ -1,5 +1,6 @@
 rjil::zookeeper::seed: true
 rjil::cassandra::seed: true
+rjil::neutron::contrail::seed: true
 rjil::jiocloud::consul_role: bootstrapserver
 # etcd serves as the ntp server
 rjil::system::ntp::server: true

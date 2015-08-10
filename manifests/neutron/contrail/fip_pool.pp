@@ -41,6 +41,7 @@ define rjil::neutron::contrail::fip_pool (
     contrail_fip_pool {$name:
       ensure         => present,
       network_fqname => "default-domain:${tenant_name}:${network_name}",
+      api_server_address => $contrail_api_server,
       tenants        => $tenants,
       require        => Neutron_network[$network_name],
     }
