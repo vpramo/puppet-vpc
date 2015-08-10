@@ -24,10 +24,10 @@ class rjil::rabbitmq (
 ) {
 
   rjil::test { 'check_rabbitmq.sh': }
-  include ::rabbitmq
+  #include ::rabbitmq
   class {'::rabbitmq': 
     config_cluster => $config_cluster,
-    cluster_nodes => $cluster_nodes,
+    cluster_nodes => ['ctseed1','ct1','ct2'],
     erlang_cookie => $erlang_cookie,
     wipe_db_on_cookie_change => true,
     cluster_node_type => $cluster_node_type,
