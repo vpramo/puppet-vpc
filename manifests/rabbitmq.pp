@@ -27,7 +27,7 @@ class rjil::rabbitmq (
   rjil::test { 'check_rabbitmq.sh': }
 
   # forward non-seed failures when there is no leader in their cluster list
-  if size($cluster_members) < $min_members {
+  if size($cluster_nodes) < $min_members {
     $fail = true
   } else {
     $fail = false
