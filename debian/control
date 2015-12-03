@@ -1,0 +1,13 @@
+Source: puppet-jiocloud
+Section: admin
+Priority: optional
+Maintainer: Soren Hansen <Soren.Hansen@ril.com>
+Build-Depends: debhelper (>= 8)
+Standards-Version: 3.9.5
+Homepage: https://github.com/JioCloud/puppet-rjil
+
+Package: puppet-jiocloud
+Architecture: all
+Depends: ${misc:Depends}, rsync
+Description: Complete collection of Puppet modules for JioCloud
+ This package contains all the modules used to run JioCloud

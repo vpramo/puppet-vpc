@@ -1,0 +1,2 @@
+rjil::zookeeper::seed: true
+rjil::cassandra::seed: true
