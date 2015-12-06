@@ -15,7 +15,7 @@
 
 
 class rjil::rabbitmq (
-  $config_cluster = 'true'
+  $config_cluster = true,
   $rabbit_admin_user = undef,
   $rabbit_admin_pass = undef,
   $cluster_nodes = sort(values(service_discover_consul('rabbitmq'))),
@@ -25,7 +25,7 @@ class rjil::rabbitmq (
 
   rjil::test { 'check_rabbitmq.sh': }
 
-  class ::rabbitmq {
+  class {'::rabbitmq': 
     config_cluster => $config_cluster,
     cluster_nodes => $cluster_nodes,
     erlang_cookie => $erlang_cookie,

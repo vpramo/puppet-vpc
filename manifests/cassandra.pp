@@ -30,7 +30,7 @@
 
 class rjil::cassandra (
   $local_ip          = $::ipaddress,
-  $seeds             = values(service_discover_consul('cassandra', 'seed'))
+  $seeds             = values(service_discover_consul('cassandra', 'seed')),
   $seed              = false,
   $cluster_name      = 'contrail',
   $thread_stack_size = 300,
@@ -40,13 +40,13 @@ class rjil::cassandra (
 
   # if we are the seed, add ourselves to the list
   if $seed == true {
-    $seeds_with_self = $local_ip
+    $seeds_with_self = [$local_ip]
     $tag = 'seed'
   } else {
     if size($seeds) < 1 {
       $fail = true
       # this is just being set so that the cassandra class does not fail to compile
-      $seeds_with_self = ['127.0.0.1'],
+      $seeds_with_self = ['127.0.0.1']
       $tag = 'seed'
     } else {
       $fail = false
@@ -83,7 +83,7 @@ class rjil::cassandra (
   }
 
   rjil::jiocloud::consul::service { 'cassandra':
-    port          => 2181,
+    port          => 9160,
     tags          => ['real', 'contrail', $tag],
   }
 

@@ -11,6 +11,7 @@
 #
 
 class rjil::zookeeper (
+  $id            = '1',
   $local_ip      = $::ipaddress,
   $hosts         = values(service_discover_consul('pre-zookeeper')),
   $leader_port   = 2888,
@@ -52,10 +53,10 @@ class rjil::zookeeper (
   # the non-seed nodes should not configure themselves until
   # there is at least one active seed node
   if ! $seed {
-    rjil::service_blocker { "zookeeper":
-      before  => $zk_files,
-      require => Runtime_fail['zk_members_not_ready']
-    }
+    #rjil::service_blocker { "zookeeper":
+    #  before  => $zk_files,
+    #  require => Runtime_fail['zk_members_not_ready']
+    #}
   }
 
   rjil::test::check { 'zookeeper':
@@ -70,15 +71,10 @@ class rjil::zookeeper (
   }
 
   class { '::zookeeper':
-    id        => $zk_id,
-    servers   => $hosts,
+    id        => $id,
+    client_ip => $::ipaddress_eth1,
+    servers   => ['192.168.100.76', '192.168.100.130', '192.168.100.181'],
     datastore => $datastore,
-  }
-
-  file { "${datastore}/myid":
-    ensure => link,
-    target => "${zk_cfg}/myid",
-    notify => Service['zookeeper'],
   }
 
 

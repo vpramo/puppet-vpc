@@ -143,7 +143,7 @@ mod 'jiocloud/contrail',
 
 mod 'deric/zookeeper',
   :git => "#{base_url}/deric/puppet-zookeeper",
-  :ref => 'v0.2.4'
+  :ref => 'v0.4.0'
 
 mod 'saz/dnsmasq',
   :git => "#{base_url}/JioCloud/puppet-dnsmasq",
@@ -224,3 +224,6 @@ mod 'fnerdwq/omd',
   :git => "#{base_url}/jiocloud/puppet-omd",
   :ref => 'master'
 
+mod 'richardc/datacat',
+  :git => "#{base_url}/richardc/puppet-datacat",
+  :ref => 'master'

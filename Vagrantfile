@@ -60,6 +60,10 @@ Vagrant.configure("2") do |config|
       # the internal DHCP of virtualbox, after the virtual machine comes up, the 
       # DHCP server is disabled and the below command is executed on the VM so that
       # it gets the IP from DHCP server on HTTPPROXY vm
+      if node_name == 'httpproxy1'
+        config.vm.provision 'shell', :inline =>
+        'ifconfig eth1 192.168.100.10 netmask 255.255.255.0'
+      end
       config.vm.provision 'shell', :inline =>
       'ifdown eth1;ifup eth1'
      # This is required because otherwise hiera files will not be referenced at all
@@ -111,8 +115,8 @@ Vagrant.configure("2") do |config|
       end
       config.vm.provision 'shell', :inline =>
       'puppet apply -e \'ini_setting { basemodulepath: path => "/etc/puppet/puppet.conf", section => main, setting => basemodulepath, value => "/etc/puppet/modules.overrides:/etc/puppet/modules" } ini_setting { default_manifest: path => "/etc/puppet/puppet.conf", section => main, setting => default_manifest, value => "/etc/puppet/manifests/site.pp" } ini_setting { disable_per_environment_manifest: path => "/etc/puppet/puppet.conf", section => main, setting => disable_per_environment_manifest, value => "true" }\''
-      config.vm.provision 'shell', :inline =>
-      "wget http://#{ENV['repo_server']}/#{environment}/stable_repo.yaml -O /etc/puppet/hiera/data/repo.yaml || echo 'Could not download the repo yaml, please ensure the server is reachable'; exit 1"
+      #config.vm.provision 'shell', :inline =>
+      #"wget http://#{ENV['repo_server']}/#{environment}/stable_repo.yaml -O /etc/puppet/hiera/data/repo.yaml || echo 'Could not download the repo yaml, please ensure the server is reachable'; exit 1"
       if ENV['snapshot_url']
         config.vm.provision 'shell', :inline =>
         "puppet apply -e 'include ::apt apt::source{'developer': location=> #{ENV['snapshot_url']}, release=> #{ENV['repo_release']}, repos=> 'main', pin=> '1002', key => { 'source'=> #{ENV['repo_url']}/repo.key}, include => {'src'=> false}  }"
@@ -124,7 +128,7 @@ Vagrant.configure("2") do |config|
       net_prefix = ENV['NET_PREFIX'] || "192.168.100.0"
       nic_adapter= ENV['NIC_ADAPTER'] || `echo "No environment variable NIC_ADAPTER, set the NIC_ADAPTER you want to place the VM";exit 100`
       if node_name == 'httpproxy1'
-        config.vm.network  "private_network", :ip => "192.168.100.10", :netmask => "255.255.255.0", :name => nic_adapter, :adapter => 2
+        config.vm.network  "private_network", ip: "192.168.100.10", :name => nic_adapter, :adapter => 2, auto_config: false
       else
         config.vm.network "private_network", :type => :dhcp, :name => nic_adapter, :adapter => 2
       end
