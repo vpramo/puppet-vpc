@@ -29,7 +29,7 @@
 #    have to set the package name.
 
 class rjil::cassandra (
-  $local_ip          = $::ipaddress,
+  $local_ip          = $::ipaddress_eth1,
   $seeds             = values(service_discover_consul('cassandra', 'seed')),
   $seed              = false,
   $cluster_name      = 'contrail',
@@ -79,7 +79,7 @@ class rjil::cassandra (
   rjil::test::check { 'cassandra':
     type    => 'tcp',
     address => '127.0.0.1',
-    port    => 2181,
+    port    => 9160,
   }
 
   rjil::jiocloud::consul::service { 'cassandra':

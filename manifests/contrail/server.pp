@@ -5,7 +5,9 @@ class rjil::contrail::server (
   $enable_analytics = true,
   $enable_dns       = false,
   $vm_domain        = undef,
-  $dns_port         = '10000'
+  $dns_port         = '10000',
+  $zk_ip_list        = sort(values(service_discover_consul('zookeeper'))),
+  $cassandra_ip_list = sort(values(service_discover_consul('cassandra'))),
 ) {
 
   ##
@@ -21,7 +23,30 @@ class rjil::contrail::server (
     rjil::test {'contrail-analytics.sh':}
   }
 
-  include ::contrail
+  if size($zk_ip_list) < $min_members or size($cassandra_ip_list) < $min_members {
+    $fail = true
+  } else {
+    $fail = false
+  }
+
+  runtime_fail { 'contrail_data_not_ready':
+    fail    => $fail,
+    message => "Waiting for ${min_members} zk and cassandra for contrail",
+    before  => Anchor['contrail_dep_apps'],
+  }
+
+  anchor{'contrail_dep_apps':}
+  Service<| title == 'zookeeper' |>       ~> Anchor['contrail_dep_apps']
+  Service<| title == 'cassandra' |>       ~> Anchor['contrail_dep_apps']
+  Service<| title == 'rabbitmq-server' |> ~> Anchor['contrail_dep_apps']
+
+  Anchor['contrail_dep_apps'] -> Service['contrail-api']
+  Anchor['contrail_dep_apps'] -> Service['contrail-schema']
+  Anchor['contrail_dep_apps'] -> Service['contrail-discovery']
+  Anchor['contrail_dep_apps'] -> Service['contrail-dns']
+  Anchor['contrail_dep_apps'] -> Service['contrail-control']
+  Anchor['contrail_dep_apps'] -> Service['ifmap-server']
+  
   if $enable_dns and $vm_domain {
     include dnsmasq
     dnsmasq::conf { 'contrail':
@@ -42,6 +67,11 @@ class rjil::contrail::server (
 
   rjil::jiocloud::logrotate { $contrail_logs:
     logdir => '/var/log/contrail'
+  }
+
+  class {'::contrail':
+    zk_ip_list        => $zk_ip_list,
+    cassandra_ip_list => $cassandra_ip_list
   }
   
   ##

@@ -10,6 +10,7 @@ node /^ctseed\d+/{
   include rjil::cassandra
   include rjil::rabbitmq
   include rjil::zookeeper
+  include rjil::contrail::server
 }
 
 
@@ -20,6 +21,7 @@ node /^ct\d+/ {
   include rjil::cassandra
   include rjil::rabbitmq
   include rjil::zookeeper
+  include rjil::contrail::server
 }
 
 
