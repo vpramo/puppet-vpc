@@ -13,7 +13,7 @@
 class rjil::zookeeper (
   $id            = '1',
   $local_ip      = $::ipaddress,
-  $hosts         = values(service_discover_consul('pre-zookeeper')),
+  $hosts         = service_discover_consul('pre-zookeeper'),
   $leader_port   = 2888,
   $election_port = 3888,
   $seed          = false,
@@ -21,7 +21,6 @@ class rjil::zookeeper (
   $datastore     = '/var/lib/zookeeper',
 ) {
 
-   $zk_id = regsubst($local_ip, '^(\d+)\.(\d+)\.(\d+)\.(\d+)$','\4')
 
   # both of these functions also have hardcoded the use of the 4th octet
   # to determine uniqueness
@@ -47,16 +46,23 @@ class rjil::zookeeper (
   # Add a check that always succeeds that we can use to know
   # when we have enough members ready to configure a cluster.
   rjil::jiocloud::consul::service { 'pre-zookeeper':
-    check_command => '/bin/true'
+    check_command => '/bin/true',
+    tags => ['real', $zk_id]
   }
 
   # the non-seed nodes should not configure themselves until
   # there is at least one active seed node
   if ! $seed {
+    $zk_id = regsubst($::hostname, '^ct(\d+)$','\1')+1
+    notice($zk_id)
+    notice($::hostname)
     #rjil::service_blocker { "zookeeper":
     #  before  => $zk_files,
     #  require => Runtime_fail['zk_members_not_ready']
     #}
+  }
+  else {
+    $zk_id = '1'
   }
 
   rjil::test::check { 'zookeeper':
@@ -71,9 +77,9 @@ class rjil::zookeeper (
   }
 
   class { '::zookeeper':
-    id        => $id,
+    id        => $zk_id,
     client_ip => $::ipaddress_eth1,
-    servers   => ['192.168.100.76', '192.168.100.130', '192.168.100.181'],
+    servers   => [$hosts['ctseed1'], $hosts['ct1'], $hosts['ct2']],
     datastore => $datastore,
   }
 
