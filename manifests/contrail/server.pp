@@ -6,6 +6,9 @@ class rjil::contrail::server (
   $enable_dns       = false,
   $vm_domain        = undef,
   $dns_port         = '10000',
+  $api_virtual_ip   = service_disover_consul('pre-haproxy')['haproxy1'],
+  $discovery_virtual_ip = service_disover_consul('pre-haproxy')['haproxy1'],
+  $control_ip_list  = sort(values(service_discover_consul('pre-contrail'))),
   $zk_ip_list        = sort(values(service_discover_consul('zookeeper'))),
   $cassandra_ip_list = sort(values(service_discover_consul('cassandra'))),
   $min_members      = '3',
@@ -36,6 +39,20 @@ class rjil::contrail::server (
     before  => Anchor['contrail_dep_apps'],
   }
 
+
+  if size($control_ip_list) < $min_members or ! $api_virtual_ip or ! $discovery_virtual_ip {
+     $contrail_fail= true
+  } else {
+     $contrail_fail= false
+  }
+
+  runtime_fail { 'contrail_ready':
+    fail    => $contrail_fail,
+    message => "Waiting for ${min_members} contrail control or haproxy endpoint is not ready",
+    before  => Class['::contrail'],
+  }
+
+
   anchor{'contrail_dep_apps':}
   Service<| title == 'zookeeper' |>       ~> Anchor['contrail_dep_apps']
   Service<| title == 'cassandra' |>       ~> Anchor['contrail_dep_apps']
@@ -44,7 +61,11 @@ class rjil::contrail::server (
   Anchor['contrail_dep_apps'] -> Service['contrail-api']
   Anchor['contrail_dep_apps'] -> Service['contrail-schema']
   Anchor['contrail_dep_apps'] -> Service['contrail-discovery']
+<<<<<<< HEAD
  # Anchor['contrail_dep_apps'] -> Service['contrail-dns']
+=======
+  #Anchor['contrail_dep_apps'] -> Service['contrail-dns']
+>>>>>>> origin/master
   Anchor['contrail_dep_apps'] -> Service['contrail-control']
   Anchor['contrail_dep_apps'] -> Service['ifmap-server']
   
@@ -70,9 +91,19 @@ class rjil::contrail::server (
     logdir => '/var/log/contrail'
   }
 
+  # Add a check that always succeeds that we can use to know
+  # when we have enough members ready to configure a cluster.
+  rjil::jiocloud::consul::service { 'pre-contrail':
+    check_command => '/bin/true',
+    tags => ['real', 'contrail']
+  }
+
   class {'::contrail':
-    zk_ip_list        => $zk_ip_list,
-    cassandra_ip_list => $cassandra_ip_list
+    api_virtual_ip       => $api_virtual_ip,
+    discovery_virtual_ip => $discovery_virtual_ip,
+    control_ip_list      => $control_ip_list,
+    zk_ip_list           => $zk_ip_list,
+    cassandra_ip_list    => $cassandra_ip_list
   }
   
   ##
@@ -106,5 +137,39 @@ class rjil::contrail::server (
   rjil::jiocloud::logrotate { $contrail_logrotate_delete:
     ensure => absent
   }
-  
+
+  rjil::test::check { 'contrail-api':
+    type    => 'tcp',
+    address => '127.0.0.1',
+    port    => 9100,
+  }
+
+  rjil::jiocloud::consul::service { 'contrail-api':
+    port          => 9100,
+    tags          => ['real', 'contrail','api'],
+  }
+
+  rjil::test::check { 'contrail-discovery':
+    type    => 'tcp',
+    address => '127.0.0.1',
+    port    => 9110,
+  }
+
+  rjil::jiocloud::consul::service { 'contrail-discovery':
+    port          => 9110,
+    tags          => ['real', 'contrail','discovery'],
+  }
+
+  rjil::test::check { 'contrail-control':
+    type    => 'tcp',
+    address => '127.0.0.1',
+    port    => 5269,
+  }
+
+  rjil::jiocloud::consul::service { 'contrail-control':
+    port          => 5269,
+    tags          => ['real', 'contrail','control'],
+  }
+
+
 }

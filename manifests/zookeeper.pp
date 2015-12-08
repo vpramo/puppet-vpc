@@ -78,7 +78,7 @@ class rjil::zookeeper (
 
   class { '::zookeeper':
     id        => $zk_id,
-    client_ip => $::ipaddress_eth1,
+    client_ip => $local_ip,
     servers   => [$hosts['ctseed1'], $hosts['ct1'], $hosts['ct2']],
     datastore => $datastore,
   }
