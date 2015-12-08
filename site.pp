@@ -28,7 +28,7 @@ node /^ct\d+/ {
 node /^haproxy\d+/ {
   include rjil::base
   include rjil::haproxy
-#  include rjil::haproxy::contrail
+  include rjil::haproxy::contrail
 }
 
 node /^httpproxy\d+/ {

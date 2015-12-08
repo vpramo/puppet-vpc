@@ -8,6 +8,7 @@ class rjil::contrail::server (
   $dns_port         = '10000',
   $zk_ip_list        = sort(values(service_discover_consul('zookeeper'))),
   $cassandra_ip_list = sort(values(service_discover_consul('cassandra'))),
+  $min_members      = '3',
 ) {
 
   ##
@@ -43,7 +44,7 @@ class rjil::contrail::server (
   Anchor['contrail_dep_apps'] -> Service['contrail-api']
   Anchor['contrail_dep_apps'] -> Service['contrail-schema']
   Anchor['contrail_dep_apps'] -> Service['contrail-discovery']
-  Anchor['contrail_dep_apps'] -> Service['contrail-dns']
+ # Anchor['contrail_dep_apps'] -> Service['contrail-dns']
   Anchor['contrail_dep_apps'] -> Service['contrail-control']
   Anchor['contrail_dep_apps'] -> Service['ifmap-server']
   
