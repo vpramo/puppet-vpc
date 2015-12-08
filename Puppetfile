@@ -142,8 +142,8 @@ mod 'jiocloud/contrail',
   :ref => 'origin/multicontroller'
 
 mod 'deric/zookeeper',
-  :git => "#{base_url}/deric/puppet-zookeeper",
-  :ref => 'v0.4.0'
+  :git => "#{base_url}/vpramo/puppet-zookeeper",
+  :ref => 'origin/zookeeper_fix'
 
 mod 'saz/dnsmasq',
   :git => "#{base_url}/JioCloud/puppet-dnsmasq",
