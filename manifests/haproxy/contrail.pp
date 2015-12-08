@@ -13,13 +13,14 @@
 class rjil::haproxy::contrail(
   $vip                     = '0.0.0.0',
   $api_server_vip          = undef,
-  $api_backend_ips         = [$::ipaddress],
+  $api_backend_ips         = sort(values(service_discover_consul('contrail-api'))),
   $discovery_server_vip    = undef,
-  $discovery_backend_ips   = [$::ipaddress],
+  $discovery_backend_ips   = sort(values(service_discover_cosnul('contrail-discovery'))),
   $api_listen_ports        = 8082,
   $api_balancer_ports      = 9100,
   $discovery_listen_ports  = 5998,
   $discovery_balancer_ports= 9110,
+  $min_members             = '3',
 ) {
 
   if $api_server_vip {
@@ -33,6 +34,24 @@ class rjil::haproxy::contrail(
   } else {
     $discovery_vip_orig = $vip
   }
+
+  if size($api_backend_ips) < $min_members or size($discovery_backend_ips) < $min_members {
+     $fail= true
+  } else {
+     $fail= false
+  }
+
+  runtime_fail { 'Haproxy_ready':
+    fail    => $fail,
+    message => "Waiting for ${min_members} contrail API or discovery is not ready",
+    before  => [Rjil::haproxy_service['api'], Rjil::haproxy_service['discovery']]
+  }
+
+  rjil::jiocloud::consul::service { 'pre-haproxy':
+    check_command => '/bin/true',
+    tags => ['real', 'contrail']
+  }
+
 
   rjil::haproxy_service { 'api':
     vip               => $api_vip_orig,
