@@ -6,8 +6,8 @@ class rjil::contrail::server (
   $enable_dns       = false,
   $vm_domain        = undef,
   $dns_port         = '10000',
-  $api_virtual_ip   = service_disover_consul('pre-haproxy')['haproxy1'],
-  $discovery_virtual_ip = service_disover_consul('pre-haproxy')['haproxy1'],
+  $api_virtual_ip   = service_discover_consul('pre-haproxy'),
+  $discovery_virtual_ip = service_discover_consul('pre-haproxy'),
   $control_ip_list  = sort(values(service_discover_consul('pre-contrail'))),
   $zk_ip_list        = sort(values(service_discover_consul('zookeeper'))),
   $cassandra_ip_list = sort(values(service_discover_consul('cassandra'))),
@@ -40,17 +40,17 @@ class rjil::contrail::server (
   }
 
 
-  if size($control_ip_list) < $min_members or ! $api_virtual_ip or ! $discovery_virtual_ip {
+  if size($control_ip_list) < $min_members {
      $contrail_fail= true
   } else {
      $contrail_fail= false
   }
 
-  runtime_fail { 'contrail_ready':
-    fail    => $contrail_fail,
-    message => "Waiting for ${min_members} contrail control or haproxy endpoint is not ready",
-    before  => Class['::contrail'],
-  }
+#  runtime_fail { 'contrail_ready':
+#    fail    => $contrail_fail,
+#    message => "Waiting for ${min_members} contrail control or haproxy endpoint is not ready",
+#    before  => Class['::contrail'],
+#  }
 
 
   anchor{'contrail_dep_apps':}
@@ -61,11 +61,6 @@ class rjil::contrail::server (
   Anchor['contrail_dep_apps'] -> Service['contrail-api']
   Anchor['contrail_dep_apps'] -> Service['contrail-schema']
   Anchor['contrail_dep_apps'] -> Service['contrail-discovery']
-<<<<<<< HEAD
- # Anchor['contrail_dep_apps'] -> Service['contrail-dns']
-=======
-  #Anchor['contrail_dep_apps'] -> Service['contrail-dns']
->>>>>>> origin/master
   Anchor['contrail_dep_apps'] -> Service['contrail-control']
   Anchor['contrail_dep_apps'] -> Service['ifmap-server']
   
@@ -99,8 +94,8 @@ class rjil::contrail::server (
   }
 
   class {'::contrail':
-    api_virtual_ip       => $api_virtual_ip,
-    discovery_virtual_ip => $discovery_virtual_ip,
+    api_virtual_ip       => $api_virtual_ip['haproxy'],
+    discovery_virtual_ip => $discovery_virtual_ip['haproxy'],
     control_ip_list      => $control_ip_list,
     zk_ip_list           => $zk_ip_list,
     cassandra_ip_list    => $cassandra_ip_list
