@@ -11,6 +11,7 @@ node /^ctseed\d+/{
   include rjil::rabbitmq
   include rjil::zookeeper
   include rjil::contrail::server
+  include rjil::neutron::contrail
 }
 
 
@@ -22,6 +23,7 @@ node /^ct\d+/ {
   include rjil::rabbitmq
   include rjil::zookeeper
   include rjil::contrail::server
+  include rjil::neutron::contrail
 }
 
 
@@ -29,6 +31,12 @@ node /^haproxy\d+/ {
   include rjil::base
   include rjil::haproxy
   include rjil::haproxy::contrail
+}
+
+node /^keystone\d+/ {
+  include rjil::base
+  include rjil::keystone
+  include rjil::db
 }
 
 node /^httpproxy\d+/ {

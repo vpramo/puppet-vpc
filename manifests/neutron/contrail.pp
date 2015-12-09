@@ -16,6 +16,7 @@ class rjil::neutron::contrail(
   $contrail_api_server = 'real.neutron.service.consul',
   $rt_number           = 10000,
   $router_asn          = 64512,
+  $seed                = false,
 ) {
 
   include ::rjil::neutron
@@ -40,11 +41,13 @@ class rjil::neutron::contrail(
   ##
   # Create fip pools including creation of network, subnet, fip pool etc
   ##
-  $fip_pool_defaults = {
-                        keystone_admin_password => $keystone_admin_password,
-                        contrail_api_server     => $contrail_api_server,
-                        rt_number               => $rt_number,
-                        router_asn              => $router_asn
-                      }
+  if $seed {
+     $fip_pool_defaults = {
+                          keystone_admin_password => $keystone_admin_password,
+                          contrail_api_server     => $contrail_api_server,
+                          rt_number               => $rt_number,
+                          router_asn              => $router_asn
+                        }
   create_resources(rjil::neutron::contrail::fip_pool,$fip_pools,$fip_pool_defaults)
+  }
 }

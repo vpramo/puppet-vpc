@@ -20,6 +20,10 @@ class rjil::haproxy::contrail(
   $api_balancer_ports      = 9100,
   $discovery_listen_ports  = 5998,
   $discovery_balancer_ports= 9110,
+  $neutron_server_vip      = undef,
+  $neutron_backend_ips     = sort(values(service_discover_consul('neutron'))),
+  $neutron_listen_ports    = 9696,
+  $neutron_balancer_ports  = 9696,
   $min_members             = '3',
 ) {
 
@@ -33,6 +37,12 @@ class rjil::haproxy::contrail(
     $discovery_vip_orig = $discovery_server_vip
   } else {
     $discovery_vip_orig = $vip
+  }
+
+  if $neutron_server_vip {
+    $neutron_vip_orig = $neutron_server_vip
+  } else {
+    $neutron_vip_orig = $vip
   }
 
   if size($api_backend_ips) < $min_members or size($discovery_backend_ips) < $min_members {
@@ -65,6 +75,14 @@ class rjil::haproxy::contrail(
     listen_ports      => $discovery_listen_ports,
     balancer_ports    => $discovery_balancer_ports,
     cluster_addresses => $discovery_backend_ips,
+    require           => Runtime_fail['Haproxy_ready'],
+  }
+
+  rjil::haproxy_service { 'neutron':
+    vip               => $neutron_vip_orig,
+    listen_ports      => $neutron_listen_ports,
+    balancer_ports    => $neutron_balancer_ports,
+    cluster_addresses => $neutron_backend_ips,
     require           => Runtime_fail['Haproxy_ready'],
   }
 }

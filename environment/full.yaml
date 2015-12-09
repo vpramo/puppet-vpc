@@ -17,3 +17,9 @@ resources:
     image: trusty
     networks: default
     boot_volume: default_volume
+  keystone:
+    number: 1
+    flavor: small
+    image: trusty
+    networks: default
+    boot_volume: default_volume
