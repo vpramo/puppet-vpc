@@ -6,8 +6,8 @@ class rjil::contrail::server (
   $enable_dns       = false,
   $vm_domain        = undef,
   $dns_port         = '10000',
-  $api_virtual_ip   = service_discover_consul('pre-haproxy'),
-  $discovery_virtual_ip = service_discover_consul('pre-haproxy'),
+  $api_virtual_ip   = join(values(service_discover_consul('pre-haproxy')),""),
+  $discovery_virtual_ip = join(values(service_discover_consul('pre-haproxy')),""),
   $control_ip_list  = sort(values(service_discover_consul('pre-contrail'))),
   $zk_ip_list        = sort(values(service_discover_consul('zookeeper'))),
   $cassandra_ip_list = sort(values(service_discover_consul('cassandra'))),
@@ -94,8 +94,8 @@ class rjil::contrail::server (
   }
 
   class {'::contrail':
-    api_virtual_ip       => $api_virtual_ip['haproxy'],
-    discovery_virtual_ip => $discovery_virtual_ip['haproxy'],
+    api_virtual_ip       => $api_virtual_ip,
+    discovery_virtual_ip => $discovery_virtual_ip,
     control_ip_list      => $control_ip_list,
     zk_ip_list           => $zk_ip_list,
     cassandra_ip_list    => $cassandra_ip_list
