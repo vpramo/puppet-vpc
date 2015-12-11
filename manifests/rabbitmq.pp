@@ -24,14 +24,14 @@ class rjil::rabbitmq (
 ) {
 
   rjil::test { 'check_rabbitmq.sh': }
-
-  class {'::rabbitmq': 
-    config_cluster => $config_cluster,
-    cluster_nodes => $cluster_nodes,
-    erlang_cookie => $erlang_cookie,
-    wipe_db_on_cookie_change => true,
-    cluster_node_type => $cluster_node_type,
-  }
+  include ::rabbitmq
+  #class {'::rabbitmq': 
+  #  config_cluster => $config_cluster,
+  #  cluster_nodes => $cluster_nodes,
+  #  erlang_cookie => $erlang_cookie,
+  #  wipe_db_on_cookie_change => true,
+  #  cluster_node_type => $cluster_node_type,
+  #}
 
   rabbitmq_user { $rabbit_admin_user:
     admin    => true,
@@ -47,7 +47,7 @@ class rjil::rabbitmq (
  rjil::test::check { 'rabbitmq':
     type    => 'tcp',
     address => '127.0.0.1',
-    port    => 6379,
+    port    => 5672,
   }
 
   rjil::jiocloud::consul::service { 'rabbitmq':

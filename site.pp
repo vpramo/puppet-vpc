@@ -37,6 +37,7 @@ node /^keystone\d+/ {
   include rjil::base
   include rjil::keystone
   include rjil::db
+  include rjil::openstack_objects
 }
 
 node /^httpproxy\d+/ {
