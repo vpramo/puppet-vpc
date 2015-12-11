@@ -13,7 +13,7 @@
 class rjil::neutron::contrail(
   $keystone_admin_password,
   $fip_pools           = {},
-  $contrail_api_server = 'real.neutron.service.consul',
+  $contrail_api_server = 'lb.neutron.service.consul',
   $rt_number           = 10000,
   $router_asn          = 64512,
   $seed                = false,
@@ -32,6 +32,10 @@ class rjil::neutron::contrail(
   ##
   # Subscribe neutron-server to contrailplugin.ini
   ##
+  file { '/etc/default/neutron-server':
+    content => 'NEUTRON_PLUGIN_CONFIG="/etc/neutron/plugins/opencontrail/ContrailPlugin.ini"',
+    require => File['/etc/neutron/plugins/opencontrail/ContrailPlugin.ini'],
+  }
 
   File['/etc/neutron/plugins/opencontrail/ContrailPlugin.ini'] ~>
     Service['neutron-server']
