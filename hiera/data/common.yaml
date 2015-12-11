@@ -276,6 +276,8 @@ rjil::neutron::headers:
   - 'always set Access-Control-Expose-Headers "Accept, Content-Type, X-Auth-Token, X-Subject-Token"'
   - 'always set Access-Control-Allow-Methods "GET POST OPTIONS PUT DELETE PATCH"'
 
+rjil::neutron::contrail::tenants: ['mgmt_tenant','internal_tenant']
+
 ########### Neutron ovs configuration
 ######################################
 ##
