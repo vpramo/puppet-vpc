@@ -18,7 +18,7 @@ class rjil::rabbitmq (
   $config_cluster = true,
   $rabbit_admin_user = undef,
   $rabbit_admin_pass = undef,
-  $cluster_nodes = sort(values(service_discover_consul('pre-rabbitmq'))),
+  $cluster_nodes = keys(service_discover_consul('pre-rabbitmq')),
   $erlang_cookie = 'A_SECRET_COOKIE',
   $cluster_node_type = 'disc',
   $min_members = '3',
