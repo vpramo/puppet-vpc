@@ -18,24 +18,46 @@ class rjil::rabbitmq (
   $config_cluster = true,
   $rabbit_admin_user = undef,
   $rabbit_admin_pass = undef,
-  $cluster_nodes = sort(values(service_discover_consul('rabbitmq'))),
+  $cluster_nodes = sort(values(service_discover_consul('pre-rabbitmq'))),
   $erlang_cookie = 'A_SECRET_COOKIE',
   $cluster_node_type = 'disc',
+  $min_members = '3',
 ) {
 
   rjil::test { 'check_rabbitmq.sh': }
-  include ::rabbitmq
-  #class {'::rabbitmq': 
-  #  config_cluster => $config_cluster,
-  #  cluster_nodes => $cluster_nodes,
-  #  erlang_cookie => $erlang_cookie,
-  #  wipe_db_on_cookie_change => true,
-  #  cluster_node_type => $cluster_node_type,
-  #}
+
+
+  # forward non-seed failures when there is no leader in their cluster list
+  if size($cluster_members) < $min_members {
+    $fail = true
+  } else {
+    $fail = false
+  }
+
+  runtime_fail { 'rabbitmq_not_ready':
+    fail    => $fail,
+    message => "Waiting for ${min_members} rabbitmq members",
+  }
+
+  class {'::rabbitmq': 
+    config_cluster => $config_cluster,
+    cluster_nodes => $cluster_nodes,
+    erlang_cookie => $erlang_cookie,
+    wipe_db_on_cookie_change => true,
+    cluster_node_type => $cluster_node_type,
+    require => Runtime_fail['rabbitmq_not_ready']
+ }
 
   rabbitmq_user { $rabbit_admin_user:
     admin    => true,
     password => $rabbit_admin_pass,
+  }
+
+  # Add a check that always succeeds that we can use to know
+  # when we have enough members ready to configure a cluster.
+  rjil::jiocloud::consul::service { 'pre-rabbitmq':
+    check_command => '/bin/true',
+    tags => ['real', 'contrail']
   }
 
   rabbitmq_user_permissions { "${rabbit_admin_user}@/":
