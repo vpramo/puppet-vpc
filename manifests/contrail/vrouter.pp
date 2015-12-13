@@ -8,7 +8,7 @@
 ###
 
 class rjil::contrail::vrouter (
-  $discovery_address = join(service_discover_dns('real.neutron.service.consul','name')),
+  $discovery_address = join(service_discover_dns('lb.neutron.service.consul','name')),
   $api_address       = undef,
   $dns_nameserver_list    = ['127.0.0.1']
 ) {
