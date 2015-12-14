@@ -79,11 +79,6 @@ class rjil::haproxy::openstack(
     cluster_addresses => $glance_ips,
   }
 
-  rjil::haproxy_service { 'neutron':
-    balancer_ports    => $neutron_port,
-    cluster_addresses => $neutron_ips,
-  }
-
   rjil::haproxy_service { 'glance-registry':
     balancer_ports    => $glance_registry_port,
     cluster_addresses => $glance_ips,

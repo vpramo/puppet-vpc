@@ -15,5 +15,7 @@ define rjil::keystone::tenant (
     enabled     => $enabled,
   }
 
-
+  if $create_network {
+    rjil::keystone::default_network {$tenant_name: }
+  }
 }
