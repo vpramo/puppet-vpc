@@ -47,7 +47,7 @@ class rjil::neutron::contrail(
   # Create default network and fip pools including creation of network, subnet, fip pool etc
   ##
   if $seed {
-     create_resources(rjil::neutron::default_network,$tenants)
+     #create_resources(rjil::neutron::default_network,$tenants)
      $fip_pool_defaults = {
                           keystone_admin_password => $keystone_admin_password,
                           contrail_api_server     => $contrail_api_server,
