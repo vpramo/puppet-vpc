@@ -36,10 +36,8 @@ class rjil::neutron::contrail(
   file { '/etc/default/neutron-server':
     content => 'NEUTRON_PLUGIN_CONFIG="/etc/neutron/plugins/opencontrail/ContrailPlugin.ini"',
     require => File['/etc/neutron/plugins/opencontrail/ContrailPlugin.ini'],
+    notify  => Service['neutron-server'],
   }
-
-  File['/etc/neutron/plugins/opencontrail/ContrailPlugin.ini'] ~>
-    Service['neutron-server']
 
   include rjil::contrail::server
 
