@@ -69,9 +69,9 @@ mod 'puppetlabs/apt',
   :git => "#{base_url}/puppetlabs/puppetlabs-apt",
   :ref => '2.2.0'
 
-mod 'stackforge/cinder',
-  :git => "#{base_url}/stackforge/puppet-cinder",
-  :ref => 'stable/icehouse'
+mod 'openstack/cinder',
+  :git => "#{base_url}/openstack/puppet-cinder",
+  :ref => 'stable/kilo'
 
 mod 'stackforge/openstacklib',
   :git => "#{base_url}/jiocloud/puppet-openstacklib",
@@ -89,25 +89,25 @@ mod 'enovance/ceph',
   :git => "#{base_url}/jiocloud/puppet-ceph",
   :ref => 'svn_to_git_2'
 
-mod 'stackforge/glance',
-  :git => "#{base_url}/stackforge/puppet-glance",
-  :ref => 'f377c0229c006b02f43a14be4979553e983cb98e'
+mod 'openstack/glance',
+  :git => "#{base_url}/openstack/puppet-glance",
+  :ref => 'stable/kilo'
 
-mod 'puppetlabs/keystone',
-  :git => "#{base_url}/stackforge/puppet-keystone",
-  :ref => '89a650631189ffc2f857845d138666a046f0ae5f'
+mod 'openstack/keystone',
+  :git => "#{base_url}/openstack/puppet-keystone",
+  :ref => 'stable/kilo'
 
 mod 'puppetlabs/mysql',
   :git => "#{base_url}/puppetlabs/puppetlabs-mysql",
   :ref => '2.2.x'
 
-mod 'stackforge/neutron',
-  :git => "#{base_url}/jiocloud/puppet-neutron",
-  :ref => 'origin/master'
+mod 'openstack/neutron',
+  :git => "#{base_url}/openstack/puppet-neutron",
+  :ref => 'stable/kilo'
 
-mod 'stackforge/nova',
-  :git => "#{base_url}/jiocloud/puppet-nova",
-  :ref => 'origin/master'
+mod 'openstack/nova',
+  :git => "#{base_url}/openstack/puppet-nova",
+  :ref => 'stable/kilo'
 
 mod 'puppetlabs/rabbitmq',
   :git => "#{base_url}/puppetlabs/puppetlabs-rabbitmq",
@@ -121,9 +121,9 @@ mod 'stackforge/vswitch',
   :git => "#{base_url}/stackforge/puppet-vswitch",
   :ref => '0.3.0'
 
-mod 'stackforge/openstack_extras',
-  :git => "#{base_url}/jiocloud/puppet-openstack_extras",
-  :ref => 'origin/master'
+mod 'openstack/openstack_extras',
+  :git => "#{base_url}/openstack/puppet-openstack_extras",
+  :ref => 'stable/kilo'
 
 mod 'stackforge/heat',
   :git => "#{base_url}/stackforge/puppet-heat",
