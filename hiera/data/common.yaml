@@ -207,7 +207,8 @@ glance::api::bind_port: "%{hiera('glance_api_localbind_port')}"
 glance::api::debug: "%{hiera('debug')}"
 glance::api::verbose: "%{hiera('verbose')}"
 glance::api::show_image_direct_url: true
-
+glance::api::known_stores: ['rbd']
+glance::keystone::auth::service_description: 'Openstack Image Service'
 ##
 # glance-registry can be either connected to localhost using http or
 # can be connected to lb using https
@@ -249,8 +250,8 @@ neutron::server::mysql_module: 2.3
 neutron::rabbit_user: "%{hiera('rabbit_admin_user')}"
 neutron::rabbit_password: "%{hiera('rabbit_admin_pass')}"
 neutron::core_plugin: neutron_plugin_contrail.plugins.opencontrail.contrail_plugin.NeutronPluginContrailCoreV2
-neutron::service_plugins:
-  - neutron_plugin_contrail.plugins.opencontrail.loadbalancer.plugin.LoadBalancerPlugin
+#neutron::service_plugins:
+#  - neutron_plugin_contrail.plugins.opencontrail.loadbalancer.plugin.LoadBalancerPlugin
 neutron::quota::quota_driver: neutron_plugin_contrail.plugins.opencontrail.quota.driver.QuotaDriver
 neutron::plugins::ovs::tenant_network_type: vlan
 neutron::plugins::ovs::network_vlan_ranges: ctlplane
@@ -648,11 +649,12 @@ rjil::system::apt::repositories:
     repos: 'main restricted universe multiverse'
     include_src: false
   ubuntu_kilo:
-    location: http://ubuntu-cloud.archive.canonical.com/ubuntu
-    release: trusty-updates/kilo
-    repos: main
+    location: 'http://ubuntu-cloud.archive.canonical.com/ubuntu'
+    release: 'trusty-updates/kilo'
+    repos: 'main'
     include_src: false
-    key: 'EC4926EA'
+    pin: '700'
+    key: '5EDB1B62EC4926EA'
     key_content: |
       -----BEGIN PGP PUBLIC KEY BLOCK-----
       Version: GnuPG v1
@@ -706,6 +708,9 @@ rjil::system::apt::repositories:
       =xg4S
       -----END PGP PUBLIC KEY BLOCK-----
 
+rjil::system::apt::keys:
+  Canonical_Cloud_Archive:
+    id: '5EDB1B62EC4926EA'
 ########################################
 ########## Contrail Settings ###########
 ########################################

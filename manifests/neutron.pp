@@ -80,11 +80,11 @@ class rjil::neutron (
   Exec['empty_neutron_conf'] -> Neutron_config<||>
 
 
-  if $service_provider {
-    neutron_config { 'service_providers/service_provider':
-      value => $service_provider
-    }
-  }
+#  if $service_provider {
+#    neutron_config { 'service_providers/service_provider':
+#      value => $service_provider
+#    }
+#  }
 
   rjil::test::check { 'neutron':
     address => '127.0.0.1',
