@@ -3,8 +3,13 @@ Exec {
   logoutput => true
 }
 
+node /^vpc-service\d+/ {
+  include rjil::base
+  include rjil::haproxy
+  include rjil::haproxy::contrail
+}
 
-node /^ctseed\d+/{
+node /^vpc-cfg\d+/{
   include rjil::base
   include rjil::redis
   include rjil::cassandra
@@ -16,7 +21,7 @@ node /^ctseed\d+/{
 
 
 
-node /^ct\d+/ {
+node /^vpc-ctrl\d+/ {
   include rjil::base
   include rjil::redis
   include rjil::cassandra
@@ -25,9 +30,16 @@ node /^ct\d+/ {
   include rjil::contrail::server
   include rjil::neutron::contrail
 }
+
 
 
 node /^cp\d+/ {
+  include rjil::contrail::vrouter
+}
+
+#Adding CP nodes for full integration testing
+
+node /^vpc-cp\d+/ {
   include rjil::base
   include rjil::ceph
   include openstack_extras::client
@@ -97,7 +109,7 @@ node /^stmon\d+/ {
   Rjil::Service_blocker['stmonleader'] -> Class['rjil::ceph::mon::mon_config']
 }
 
-
+#Complete HAPROXY for testing
 node /^haproxy\d+/ {
   include rjil::base
   include rjil::haproxy
