@@ -6,24 +6,24 @@ Exec {
 
 node /^ctseed\d+/{
   include rjil::base
-  include rjil::redis
-  include rjil::cassandra
+#  include rjil::redis
+#  include rjil::cassandra
   include rjil::rabbitmq
-  include rjil::zookeeper
-  include rjil::contrail::server
-  include rjil::neutron::contrail
+#  include rjil::zookeeper
+#  include rjil::contrail::server
+#  include rjil::neutron::contrail
 }
 
 
 
 node /^ct\d+/ {
   include rjil::base
-  include rjil::redis
-  include rjil::cassandra
+#  include rjil::redis
+#  include rjil::cassandra
   include rjil::rabbitmq
-  include rjil::zookeeper
-  include rjil::contrail::server
-  include rjil::neutron::contrail
+#  include rjil::zookeeper
+#  include rjil::contrail::server
+#  include rjil::neutron::contrail
 }
 
 
