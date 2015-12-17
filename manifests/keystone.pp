@@ -97,15 +97,15 @@ class rjil::keystone(
   }
 
   ## Keystone cache configuration
-  if $cache_enabled {
-    keystone_config {
-      'cache/enabled':          value => 'True';
-      'cache/config_prefix':    value => $cache_config_prefix;
-      'cache/expiration_time':  value => $cache_expiration_time;
-      'cache/cache_backend':    value => $cache_backend;
-      'cache/backend_argument': value => $cache_backend_argument;
-    }
-  }
+ # if $cache_enabled {
+ #   keystone_config {
+ #     'cache/enabled':          value => 'True';
+ #     'cache/config_prefix':    value => $cache_config_prefix;
+ #     'cache/expiration_time':  value => $cache_expiration_time;
+ #     'cache/cache_backend':    value => $cache_backend;
+ #     'cache/backend_argument': value => $cache_backend_argument;
+ #   }
+ # }
 
   Class['rjil::keystone'] -> Rjil::Service_blocker<| title == 'keystone-admin' |>
 

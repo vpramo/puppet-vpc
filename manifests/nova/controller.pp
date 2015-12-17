@@ -164,19 +164,19 @@ class rjil::nova::controller (
     ##
     # Create flavors
     ##
-    Service['httpd'] -> Nova_flavor<||>
-    create_resources('nova_flavor', $flavors, {auth => $nova_auth})
+    #Service['httpd'] -> Nova_flavor<||>
+    #create_resources('nova_flavor', $flavors, {auth => $nova_auth})
 
-    class { 'rjil::test::nova_flavor':
-      flavors => $flavors,
-    }
+    #class { 'rjil::test::nova_flavor':
+    #  flavors => $flavors,
+    #}
 
     ##
     # Purge unmanaged flavors
     ##
-    resources {'nova_flavor':
-      purge => true,
-    }
+    #resources {'nova_flavor':
+    #  purge => true,
+    #}
   }
 
   ##

@@ -73,9 +73,9 @@ mod 'openstack/cinder',
   :git => "#{base_url}/openstack/puppet-cinder",
   :ref => 'stable/kilo'
 
-mod 'stackforge/openstacklib',
-  :git => "#{base_url}/jiocloud/puppet-openstacklib",
-  :ref => 'origin/master'
+mod 'openstack/openstacklib',
+  :git => "#{base_url}/openstack/puppet-openstacklib",
+  :ref => 'stable/kilo'
 
 mod 'stackforge/ironic',
   :git => "#{base_url}/jiocloud/puppet-ironic",
@@ -105,9 +105,9 @@ mod 'openstack/neutron',
   :git => "#{base_url}/openstack/puppet-neutron",
   :ref => 'stable/kilo'
 
-mod 'openstack/nova',
-  :git => "#{base_url}/openstack/puppet-nova",
-  :ref => 'stable/kilo'
+mod 'stackforge/nova',
+  :git => "#{base_url}/bodepd/puppet-nova",
+  :ref => 'kilo'
 
 mod 'puppetlabs/rabbitmq',
   :git => "#{base_url}/puppetlabs/puppetlabs-rabbitmq",
@@ -121,9 +121,9 @@ mod 'stackforge/vswitch',
   :git => "#{base_url}/stackforge/puppet-vswitch",
   :ref => '0.3.0'
 
-mod 'openstack/openstack_extras',
-  :git => "#{base_url}/openstack/puppet-openstack_extras",
-  :ref => 'stable/kilo'
+mod 'stackforge/openstack_extras',
+  :git => "#{base_url}/jiocloud/puppet-openstack_extras",
+  :ref => 'origin/master'
 
 mod 'stackforge/heat',
   :git => "#{base_url}/stackforge/puppet-heat",

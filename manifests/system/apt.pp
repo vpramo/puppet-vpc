@@ -15,6 +15,7 @@ class rjil::system::apt (
   $repositories      = {},
   $env_repositories  = {},
   $override_repo     = $::override_repo,
+  $keys              = {},
 ) {
 
   ## two settings to be overrided here in hiera
@@ -76,6 +77,12 @@ class rjil::system::apt (
       tag   => 'package',
     }
   }
+
+  package { 'ubuntu-cloud-keyring':
+    ensure => 'present'
+  }
+
+  create_resources(apt::key, $keys, {require => Package['ubuntu-cloud-keyring']} )
   create_resources(apt::source, $repositories, {'tag' => 'package'} )
   create_resources(apt::source, $env_repositories, {'tag' => 'package'} )
 }
