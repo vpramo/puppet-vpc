@@ -13,8 +13,9 @@ sudo mkdir -p /etc/facter/facts.d
 if [ -n "${git_protocol}" ]; then
   export git_protocol="${git_protocol}"
 fi
-export no_proxy="127.0.0.1,169.254.169.254,localhost,consul,jiocloud.com"
-echo no_proxy="'127.0.0.1,169.254.169.254,localhost,consul,jiocloud.com'" >> /etc/environment
+export no_proxy="127.0.0.1,169.254.169.254,localhost,consul,jiocloudservices.com"
+internal_subnet_exclusion=",${env_subnet}"
+echo no_proxy="'127.0.0.1,169.254.169.254,localhost,consul,jiocloudservices.com${internal_subnet_exclusion}'" >> /etc/environment
 if [ -n "${env_http_proxy}" ]
 then
   export http_proxy=${env_http_proxy}
