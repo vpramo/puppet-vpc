@@ -198,7 +198,7 @@ keystone_private_address: iam.staging.jiocloudservices.com
 keystone_port: 5000
 keystone_admin_port: 35357
 keystone_protocol: https
-
+keystone_version: 'v2.0'
 
 
 # Neutron Properties
@@ -229,6 +229,7 @@ neutron::bind_port: "%{hiera('neutron_localbind_port')}"
 neutron::server::auth_password: "%{hiera('neutron::keystone::auth::password')}"
 neutron::server::auth_host: "%{hiera('keystone_public_address')}"
 neutron::server::auth_protocol: "%{hiera('keystone_protocol')}"
+neutron::server::auth_uri: "%{hiera('keystone_protocol')}://%{hiera('neutron::server::auth_host')}:%{hiera('keystone_port')}/%{hiera('keystone_version')}"
 neutron::server::mysql_module: 2.3
 neutron::rabbit_user: "%{hiera('rabbit_admin_user')}"
 neutron::rabbit_password: "%{hiera('rabbit_admin_pass')}"
