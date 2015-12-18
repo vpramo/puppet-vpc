@@ -162,7 +162,7 @@ region: RegionOne
 
 # To be asked
 # IAM
-vpc_admin_password: 'admin'
+vpc_admin_password: 'Chang3M3'
 keystone_admin_token: 'token123'
 neutron_keystone_auth_password: 'neutron'
 
@@ -273,14 +273,15 @@ rjil::cassandra::local_ip: "%{hiera('private_address')}"
 # Contrail Settings
 #This needs to be verified during setup
 #contrail::vrouter::vrouter_physical_interface: eth1
-rjil::neutron::contrail::fip_pools:
-  public:
-    network_name: public
-    subnet_name: public_subnet
-    cidr: 100.1.0.0/24
-    subnet_ip_start: 100.1.0.11
-    subnet_ip_end: 100.1.0.254
-    public: true
+Creation of Public Network disabled till all the facts are clear
+#rjil::neutron::contrail::fip_pools:
+#  public:
+#    network_name: public
+#    subnet_name: public_subnet
+#    cidr: 100.1.0.0/24
+#    subnet_ip_start: 100.1.0.11
+#    subnet_ip_end: 100.1.0.254
+#    public: true
 contrail::keystone_address: "%{hiera('keystone_public_address')}"
 contrail::keystone_admin_token: "%{hiera('keystone_admin_token')}"
 contrail::keystone_admin_password: "%{hiera('vpc_admin_password')}"
