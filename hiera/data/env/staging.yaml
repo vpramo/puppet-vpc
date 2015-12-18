@@ -11,12 +11,10 @@ ssh::server::storeconfigs_enabled: false
 
 
 # Account Management
-rjil::system::accounts::active_users:
-[vpramo,naveenreddy,saju,dpak]
+rjil::system::accounts::active_users: [vpramo,naveenreddy,saju,dpak]
 rjil::system::accounts::sudo_users:
   admin:
-    users:
-[vpramo,naveenreddy,saju,dpak]
+    users: [vpramo,naveenreddy,saju,dpak]
 
 # Consul Properties
 rjil::jiocloud::consul::service::interval: 120s
@@ -273,7 +271,7 @@ rjil::cassandra::local_ip: "%{hiera('private_address')}"
 # Contrail Settings
 #This needs to be verified during setup
 #contrail::vrouter::vrouter_physical_interface: eth1
-Creation of Public Network disabled till all the facts are clear
+#Creation of Public Network disabled till all the facts are clear
 #rjil::neutron::contrail::fip_pools:
 #  public:
 #    network_name: public

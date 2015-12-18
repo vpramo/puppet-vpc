@@ -38,17 +38,20 @@ else
 fi
 wget -O jiocloud.deb -t 5 -T 30 \${jiocloud_repo_deb_url}
 dpkg -i puppet.deb jiocloud.deb
+echo "deb ${puppet_vpc_repo_url} jiocloud main" | tee -a /etc/apt/sources.list
+wget -qO - ${puppet_vpc_repo_url}/repo.key | apt-key add -
 if no_proxy= wget -t 2 -T 30 -O internal.deb http://apt.internal.jiocloud.com/internal.deb
 then
   dpkg -i internal.deb
 fi
 n=0
-while [ \$n -le 5 ]
-do
-  apt-get update && apt-get install -y puppet software-properties-common puppet-jiocloud jiocloud-ssl-certificate && break
-  n=\$((\$n+1))
-  sleep 5
-done
+#while [ \$n -le 5 ]
+#do
+apt-get update 
+apt-get install -y puppet software-properties-common puppet-vpc jiocloud-ssl-certificate
+  #n=\$((\$n+1))
+  #sleep 5
+#done
 if [ -n "${override_repo}" ]; then
   echo "override_repo=${override_repo}" > /etc/facter/facts.d/override_repo.txt
   time gem install faraday faraday_middleware --no-ri --no-rdoc;
