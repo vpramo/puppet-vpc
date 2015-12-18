@@ -160,8 +160,10 @@ region: RegionOne
 
 # To be asked
 # IAM
+vpc_admin_user: 'admin'
 vpc_admin_password: 'Chang3M3'
 keystone_admin_token: 'token123'
+neutron_keystone_auth_username: 'neutron'
 neutron_keystone_auth_password: 'neutron'
 
 # Compute
