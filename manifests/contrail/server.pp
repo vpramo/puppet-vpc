@@ -19,7 +19,6 @@ class rjil::contrail::server (
   ##
   $contrail_tests = ['ifmap.sh',
                       'contrail-control.sh',
-                      'contrail-schema.sh',
                       'contrail-webui-webserver.sh','contrail-webui-jobserver.sh']
   rjil::test {$contrail_tests:}
 
