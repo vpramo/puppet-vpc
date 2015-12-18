@@ -151,6 +151,7 @@ while true
 do
   # first install all packages to make the build as fast as possible
   puppet apply --detailed-exitcodes \`puppet config print default_manifest\` --config_version='echo packages' --tags package
+  apt-get update
   ret_code_package=\$?
   # now perform base config
   (echo 'File<| title == "/etc/consul" |> { purge => false }'; echo 'include rjil::jiocloud' ) | puppet apply --config_version='echo bootstrap' --detailed-exitcodes --debug
