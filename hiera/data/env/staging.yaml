@@ -1,8 +1,8 @@
 # System Settings
-public_address: "%{ipaddress_10_140_214_0_24}"
-public_interface: "%{interface_10_140_214_0_24}"
-private_address: "%{ipaddress_10_140_214_0_24}"
-private_interface: "%{interface_10_140_214_0_24}"
+public_address: "%{ipaddress_10_140_214_0_23}"
+public_interface: "%{interface_10_140_214_0_23}"
+private_address: "%{ipaddress_10_140_214_0_23}"
+private_interface: "%{interface_10_140_214_0_23}"
 rjil::base::self_signed_cert: true
 ntp::servers:
   - 10.140.214.14
