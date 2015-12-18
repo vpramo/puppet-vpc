@@ -15,7 +15,7 @@ if [ -n "${git_protocol}" ]; then
 fi
 export no_proxy="127.0.0.1,169.254.169.254,localhost,consul,jiocloudservices.com"
 internal_subnet_exclusion=",${env_subnet}"
-echo no_proxy="'127.0.0.1,169.254.169.254,localhost,consul,jiocloudservices.com${internal_subnet_exclusion}'" >> /etc/environment
+echo no_proxy="'127.0.0.1,169.254.169.254,localhost,consul,jiocloudservices.com\${internal_subnet_exclusion}'" >> /etc/environment
 if [ -n "${env_http_proxy}" ]
 then
   export http_proxy=${env_http_proxy}
