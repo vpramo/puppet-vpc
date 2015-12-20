@@ -20,6 +20,7 @@ if [ -n "${env_http_proxy}" ]
 then
   export http_proxy=${env_http_proxy}
   echo http_proxy="'${env_http_proxy}'" >> /etc/environment
+  echo "Acquire::http::Proxy \"${env_http_proxy}\";" > /etc/apt/apt.conf.d/03proxy
 fi
 if [ -n "${env_https_proxy}" ]
 then
@@ -38,8 +39,7 @@ else
 fi
 wget -O jiocloud.deb -t 5 -T 30 \${jiocloud_repo_deb_url}
 dpkg -i puppet.deb jiocloud.deb
-if [ -n "${puppet_vpc_repo_url}"]
-then
+if [ -n "${puppet_vpc_repo_url}"];then
   echo "deb [arch=amd64] ${puppet_vpc_repo_url} jiocloud main" | tee -a /etc/apt/sources.list
   wget -qO - ${puppet_vpc_repo_url}/repo.key | apt-key add -
 fi

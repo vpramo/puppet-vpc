@@ -11,7 +11,7 @@ class rjil::contrail::vrouter_standalone (
 
   include rjil::jiocloud
   include rjil::default_manifest
-
+  include rjil::test::base
 
   class {'::contrail::vrouter':
     discovery_address => $discovery_address,
