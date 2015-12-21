@@ -22,8 +22,8 @@ then
   export https_proxy=${env_https_proxy}
   echo https_proxy="'${env_https_proxy}'" >> /etc/environment
 fi
-if [ -n "${puppet_vpc_repo_url}"];then
-  if [ -z "grep '${puppet_vpc_repo_url}' /etc/apt/sources.list" ];then
+if [ -n "${puppet_vpc_repo_url}" ];then
+  if [ -z "\`grep '${puppet_vpc_repo_url}' /etc/apt/sources.list\`" ];then
     echo "deb [arch=amd64] ${puppet_vpc_repo_url} jiocloud main" | tee -a /etc/apt/sources.list
     wget -qO - ${puppet_vpc_repo_url}/repo.key | apt-key add -
   fi
