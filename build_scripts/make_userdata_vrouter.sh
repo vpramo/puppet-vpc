@@ -13,6 +13,7 @@ then
   export http_proxy=${env_http_proxy}
   echo http_proxy="'${env_http_proxy}'" >> /etc/environment
   internal_subnet_exclusion=",${env_subnet}"
+  echo 'Acquire::Http::Proxy "${env_http_proxy}";' >> /etc/apt/apt.conf.d/90Proxy
   export no_proxy="127.0.0.1,169.254.169.254,localhost,consul,jiocloudservices.com\${internal_subnet_exclusion}"
   echo no_proxy="'127.0.0.1,169.254.169.254,localhost,consul,jiocloudservices.com\${internal_subnet_exclusion}'" >> /etc/environment
 fi
@@ -27,6 +28,8 @@ if [ -n "${puppet_vpc_repo_url}"];then
     wget -qO - ${puppet_vpc_repo_url}/repo.key | apt-key add -
   fi
 fi
+wget -O puppet.deb -t 5 -T 30 http://apt.puppetlabs.com/puppetlabs-release-\${release}.deb
+dpkg -i puppet.deb
 apt-get update 
 apt-get install -y puppet software-properties-common puppet-vpc
 mkdir /etc/facter
