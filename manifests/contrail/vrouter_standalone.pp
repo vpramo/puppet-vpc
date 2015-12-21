@@ -9,9 +9,9 @@ class rjil::contrail::vrouter_standalone (
   $vrouter_physical_interface = 'eth1'
 ) {
 
-  include rjil::jiocloud
+  #include rjil::jiocloud
   include rjil::default_manifest
-  include rjil::test::base
+  #include rjil::test::base
 
   class {'::contrail::vrouter':
     discovery_address => $discovery_address,
