@@ -18,7 +18,7 @@ class rjil::neutron (
   ##
   # Rjil tests
   ##
-  include rjil::test::neutron
+  #include rjil::test::neutron
 
   ##
   # Python-six version >= 1.8.x is required for neutron server, and not handled in package. So

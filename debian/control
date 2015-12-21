@@ -1,13 +1,13 @@
-Source: puppet-jiocloud
+Source: puppet-vpc
 Section: admin
 Priority: optional
-Maintainer: Soren Hansen <Soren.Hansen@ril.com>
+Maintainer: Pramod Venkatesh <Pramod.Venkatesh@ril.com>
 Build-Depends: debhelper (>= 8)
 Standards-Version: 3.9.5
-Homepage: https://github.com/JioCloud/puppet-rjil
+Homepage: https://github.com/JiocloudVPC/puppet-vpc
 
-Package: puppet-jiocloud
+Package: puppet-vpc
 Architecture: all
 Depends: ${misc:Depends}, rsync
-Description: Complete collection of Puppet modules for JioCloud
- This package contains all the modules used to run JioCloud
+Description: Complete collection of Puppet modules for JioCloud VPC
+ This package contains all the modules used to run JioCloud VPC

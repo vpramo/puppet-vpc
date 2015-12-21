@@ -27,6 +27,10 @@ class rjil::haproxy::contrail(
   $min_members             = '3',
 ) {
 
+ # Add contrail discovery , contrail api tests here
+ $endpoint_tests=['contrail-api.sh','contrail-discovery.sh']
+ rjil::test{$endpoint_tests:}
+
   if $api_server_vip {
     $api_vip_orig = $api_server_vip
   } else {

@@ -13,8 +13,9 @@ sudo mkdir -p /etc/facter/facts.d
 if [ -n "${git_protocol}" ]; then
   export git_protocol="${git_protocol}"
 fi
-export no_proxy="127.0.0.1,169.254.169.254,localhost,consul,jiocloud.com"
-echo no_proxy="'127.0.0.1,169.254.169.254,localhost,consul,jiocloud.com'" >> /etc/environment
+export no_proxy="127.0.0.1,169.254.169.254,localhost,consul,jiocloudservices.com"
+internal_subnet_exclusion=",${env_subnet}"
+echo no_proxy="'127.0.0.1,169.254.169.254,localhost,consul,jiocloudservices.com\${internal_subnet_exclusion}'" >> /etc/environment
 if [ -n "${env_http_proxy}" ]
 then
   export http_proxy=${env_http_proxy}
@@ -37,17 +38,20 @@ else
 fi
 wget -O jiocloud.deb -t 5 -T 30 \${jiocloud_repo_deb_url}
 dpkg -i puppet.deb jiocloud.deb
+echo "deb [arch=amd64] ${puppet_vpc_repo_url} jiocloud main" | tee -a /etc/apt/sources.list
+wget -qO - ${puppet_vpc_repo_url}/repo.key | apt-key add -
 if no_proxy= wget -t 2 -T 30 -O internal.deb http://apt.internal.jiocloud.com/internal.deb
 then
   dpkg -i internal.deb
 fi
 n=0
-while [ \$n -le 5 ]
-do
-  apt-get update && apt-get install -y puppet software-properties-common puppet-jiocloud jiocloud-ssl-certificate && break
-  n=\$((\$n+1))
-  sleep 5
-done
+#while [ \$n -le 5 ]
+#do
+apt-get update 
+apt-get install -y puppet software-properties-common puppet-vpc jiocloud-ssl-certificate
+  #n=\$((\$n+1))
+  #sleep 5
+#done
 if [ -n "${override_repo}" ]; then
   echo "override_repo=${override_repo}" > /etc/facter/facts.d/override_repo.txt
   time gem install faraday faraday_middleware --no-ri --no-rdoc;
@@ -147,6 +151,7 @@ while true
 do
   # first install all packages to make the build as fast as possible
   puppet apply --detailed-exitcodes \`puppet config print default_manifest\` --config_version='echo packages' --tags package
+  apt-get update
   ret_code_package=\$?
   # now perform base config
   (echo 'File<| title == "/etc/consul" |> { purge => false }'; echo 'include rjil::jiocloud' ) | puppet apply --config_version='echo bootstrap' --detailed-exitcodes --debug

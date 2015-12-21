@@ -246,6 +246,7 @@ neutron::server::database_connection: "mysql://%{hiera('neutron_db_user')}:%{hie
 neutron::server::auth_password: "%{hiera('neutron::keystone::auth::password')}"
 neutron::server::auth_host: "%{hiera('keystone_public_address')}"
 neutron::server::auth_protocol: "%{hiera('rjil::keystone::protocol')}"
+neutron::server::auth_uri: "%{hiera('rjil::keystone::protocol')}://%{hiera('neutron::server::auth_host')}:%{hiera('keystone_port')}/%{hiera('rjil::keystone::version')}"
 neutron::server::mysql_module: 2.3
 neutron::rabbit_user: "%{hiera('rabbit_admin_user')}"
 neutron::rabbit_password: "%{hiera('rabbit_admin_pass')}"
