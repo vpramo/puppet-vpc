@@ -120,7 +120,7 @@ rjil::neutron::contrail::fip_pools:
     tenants: ['tempest']
 
 contrail::vrouter::vgw_subnets: ['100.1.0.0/24']
-contrail::vrouter::discovery_address: '192.168.100.75'
+rjil::contrail::vrouter_standalone::discovery_address: '192.168.100.75'
 rjil::system::apt::env_repositories:
   contrailv2:
     location: 'http://jiocloud.rustedhalo.com/contrailv2'
