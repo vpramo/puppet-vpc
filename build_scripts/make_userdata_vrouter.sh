@@ -4,6 +4,23 @@ cat <<EOF >userdata_vrouter.txt
 #!/bin/bash
 date
 set -x
+release="\$(lsb_release -cs)"
+if [ -n "${git_protocol}" ]; then
+  export git_protocol="${git_protocol}"
+fi
+if [ -n "${env_http_proxy}" ]
+then
+  export http_proxy=${env_http_proxy}
+  echo http_proxy="'${env_http_proxy}'" >> /etc/environment
+  internal_subnet_exclusion=",${env_subnet}"
+  export no_proxy="127.0.0.1,169.254.169.254,localhost,consul,jiocloudservices.com\${internal_subnet_exclusion}"
+  echo no_proxy="'127.0.0.1,169.254.169.254,localhost,consul,jiocloudservices.com\${internal_subnet_exclusion}'" >> /etc/environment
+fi
+if [ -n "${env_https_proxy}" ]
+then
+  export https_proxy=${env_https_proxy}
+  echo https_proxy="'${env_https_proxy}'" >> /etc/environment
+fi
 if [ -n "${puppet_vpc_repo_url}"];then
   if [ -z "grep '${puppet_vpc_repo_url}' /etc/apt/sources.list" ];then
     echo "deb [arch=amd64] ${puppet_vpc_repo_url} jiocloud main" | tee -a /etc/apt/sources.list
@@ -12,6 +29,8 @@ if [ -n "${puppet_vpc_repo_url}"];then
 fi
 apt-get update 
 apt-get install -y puppet software-properties-common puppet-vpc
+mkdir /etc/facter
+mkdir /etc/facter/facts.d
 if [ -n "${puppet_modules_source_repo}" ]; then
   apt-get install -y git
   git clone ${puppet_modules_source_repo} /tmp/rjil
@@ -60,10 +79,9 @@ while true
 do
   # first install all packages to make the build as fast as possible
   puppet apply --detailed-exitcodes \`puppet config print default_manifest\` --config_version='echo packages' --tags package
-  apt-get update
   ret_code_package=\$?
   # now perform base config
-  (echo 'File<| title == "/etc/consul" |> { purge => false }'; echo 'include rjil::jiocloud' ) | puppet apply --config_version='echo bootstrap' --detailed-exitcodes --debug
+  puppet apply --detailed-exitcodes --debug \`puppet config print default_manifest\`
   ret_code_jio=\$?
   if [[ \$ret_code_jio = 1 || \$ret_code_jio = 4 || \$ret_code_jio = 6 || \$ret_code_package = 1 || \$ret_code_package = 4 || \$ret_code_package = 6 ]]
   then
