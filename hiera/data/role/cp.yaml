@@ -1,4 +1,5 @@
 nova::network::neutron::network_api_class: 'nova_contrail_vif.contrailvif.ContrailNetworkAPI'
+rjil::system::apt::proxy: false
 contrail::vrouter::lbaas: false
 rjil::system::apt::env_repositories:
   contrailv2:
