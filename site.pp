@@ -34,7 +34,7 @@ node /^vpc-ctrl\d+/ {
 
 
 node /^cp\d+/ {
-  include rjil::contrail::vrouter
+  include rjil::contrail::vrouter_standalone
 }
 
 #Adding CP nodes for full integration testing
