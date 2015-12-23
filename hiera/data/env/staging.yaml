@@ -314,5 +314,5 @@ contrail::vrouter::manage_repo: false
 contrail::vrouter::debug: true
 contrail::vrouter::interface_is_dhcp: false
 rjil::contrail::vrouter_standalone::discovery_address: 'vpc.staging.jiocloudservices.com'
-rjil::contrail::vrouter_standalone::vrouter_physical_interface: "%{hiera('private_interface')}"
+rjil::contrail::vrouter_standalone::vrouter_physical_interface: 'em3'
 
