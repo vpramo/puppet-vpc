@@ -290,16 +290,12 @@ contrail::keystone_protocol: "%{hiera('keystone_protocol')}"
 contrail::nova_metadata_address: "%{hiera('nova_metadata_address')}"
 contrail::rabbit_user: "%{hiera('rabbit_admin_user')}"
 contrail::rabbit_password: "%{hiera('rabbit_admin_pass')}"
-contrail::vrouter::metadata_proxy_secret: "%{hiera('nova_metadata_proxy_secret')}"
-contrail::vrouter::keystone_admin_password: "%{hiera('vpc_admin_password')}"
 contrail::interface: "%{hiera('private_interface')}"
 contrail::manage_repo: false
-contrail::vrouter::manage_repo: false
 contrail::neutron_ip: "%{hiera('neutron_public_address')}"
 contrail::enable_analytics: false
 contrail::enable_dns: false
 contrail::dns_port: 10000
-contrail::vrouter::debug: true
 rjil::contrail::server::enable_analytics: false
 rjil::contrail::server::enable_dns: "%{hiera('contrail::enable_dns')}"
 rjil::contrail::server::dns_port: "%{hiera('contrail::dns_port')}"
@@ -311,4 +307,12 @@ contrail::config::quota_subnet: 20
 contrail::config::quota_virtual_machine_interface: 100
 contrail::config::quota_virtual_network: 5
 
+# Contrail Vrouter Settings
+contrail::vrouter::metadata_proxy_secret: "%{hiera('nova_metadata_proxy_secret')}"
+contrail::vrouter::keystone_admin_password: "%{hiera('vpc_admin_password')}"
+contrail::vrouter::manage_repo: false
+contrail::vrouter::debug: true
+contrail::vrouter::interface_is_dhcp: false
+rjil::contrail::vrouter_standalone::discovery_address: 'vpc.staging.jiocloudservices.com'
+rjil::contrail::vrouter_standalone::vrouter_physical_interface: 'em3'
 
