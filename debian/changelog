@@ -1,5 +1,5 @@
-puppet-jiocloud (0.9-1) unstable; urgency=low
+puppet-jiocloud (1.0-1) unstable; urgency=low
 
   * Initial release
 
- -- Soren Hansen <Soren.Hansen@ril.com>  Thu, 14 Aug 2014 10:53:30 +0200
+ -- Pramod Venkatesh <Pramod.Venkatesh@ril.com>  Thu, 24 Dec 2015 13:58:30 +0530
