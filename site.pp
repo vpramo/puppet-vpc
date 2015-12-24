@@ -37,6 +37,13 @@ node /^cp\d+/ {
   include rjil::contrail::vrouter_standalone
 }
 
+# VPC spare nodes will be utilized in staging environment for testing mixed services of contrail
+# For now this will used for deploying standalone vrouter
+
+node /^vpc-spare\d+/ { 
+  include rjil::contrail::vrouter_standalone
+}
+
 #Adding CP nodes for full integration testing
 
 node /^vpc-cp\d+/ {
