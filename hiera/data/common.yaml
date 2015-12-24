@@ -952,7 +952,6 @@ rjil::apache::ssl: true
 apache::default_vhost: false
 apache::server_signature: 'Off'
 apache::apache_version: '2.4'
-apache::default_ssl_chain: '/etc/ssl/certs/gd_bundle-g2-g1.crt'
 apache::default_ssl_cert: '/etc/ssl/certs/jiocloud.com.crt'
 apache::default_ssl_key: '/etc/ssl/keys/jiocloud.com.key'
 
