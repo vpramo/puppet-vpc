@@ -36,6 +36,7 @@ class rjil::cassandra (
   $thread_stack_size = 300,
   $version           = '1.2.18-1',
   $package_name      = 'dsc12',
+  $db_for_config     = true,
 ) {
 
   # if we are the seed, add ourselves to the list
@@ -76,13 +77,21 @@ class rjil::cassandra (
     require           => Host['localhost'],
   }
 
-  rjil::test::check { 'cassandra':
+
+  if $db_for_config {
+    $srv_name = 'cassandra'
+  } else {
+    $srv_name = $cluster_name
+  }
+
+
+  rjil::test::check { "$srv_name":
     type    => 'tcp',
     address => '127.0.0.1',
     port    => 9160,
   }
 
-  rjil::jiocloud::consul::service { 'cassandra':
+  rjil::jiocloud::consul::service { "$srv_name":
     port          => 9160,
     tags          => ['real', 'contrail', $tag],
   }

@@ -32,6 +32,13 @@ node /^vpc-ctrl\d+/ {
 }
 
 
+node /^vpc-analytics\d+/ {
+  include rjil::base
+  include rjil::redis
+  include rjil::cassandra
+  include rjil::contrail::analytics
+}
+
 
 node /^cp\d+/ {
   include rjil::contrail::vrouter_standalone
