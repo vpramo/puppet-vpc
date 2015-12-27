@@ -81,7 +81,7 @@ class rjil::cassandra (
   if $db_for_config {
     $srv_name = 'cassandra'
   } else {
-    $srv_name = $cluster_name
+    $srv_name = "cassandra-${cluster_name}"
   }
 
 

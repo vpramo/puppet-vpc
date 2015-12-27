@@ -1,0 +1,4 @@
+rjil::cassandra::seed: true
+rjil::cassandra::db_for_config: false
+rjil::cassandra::cluster_name: 'analytics'
+
