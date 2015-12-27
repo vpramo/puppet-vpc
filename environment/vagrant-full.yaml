@@ -5,12 +5,6 @@ resources:
     image: trusty
     networks: default
     boot_volume: default_volume
-  vpc-ctrl:
-    number: 2
-    flavor: large
-    image: trusty
-    networks: default
-    boot_volume: default_volume
   vpc-cfg:
     number: 1
     flavor: large

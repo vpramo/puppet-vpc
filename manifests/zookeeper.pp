@@ -79,7 +79,7 @@ class rjil::zookeeper (
   class { '::zookeeper':
     id        => $zk_id,
     client_ip => $local_ip,
-    servers   => [$hosts['vpc-cfg1'], $hosts['vpc-ctrl1'], $hosts['vpc-ctrl2']],
+    servers   => [$hosts['vpc-cfg1']],
     datastore => $datastore,
   }
 

@@ -1,1 +1,2 @@
 rjil::haproxy::consul_service_tags: ['global']
+rjil::jiocloud::consul_role: server

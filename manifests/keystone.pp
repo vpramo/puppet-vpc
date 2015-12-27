@@ -80,6 +80,7 @@ class rjil::keystone(
     proxy_pass      => [ { path => '/', url => "http://localhost:${public_port_internal}/"  } ],
     rewrites        => $rewrites,
     headers         => $headers,
+    notify          => Service['httpd']
   }
 
   ## Configure apache reverse proxy
@@ -94,6 +95,7 @@ class rjil::keystone(
     proxy_pass      => [ { path => '/', url => "http://localhost:${admin_port_internal}/"  } ],
     rewrites        => $rewrites,
     headers         => $headers,
+    notify          => Service['httpd']
   }
 
   ## Keystone cache configuration
