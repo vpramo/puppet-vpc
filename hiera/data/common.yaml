@@ -725,6 +725,7 @@ rjil::zookeeper::local_ip: "%{hiera('private_address')}"
 rjil::cassandra::local_ip: "%{hiera('private_address')}"
 
 contrail::keystone_address: "%{hiera('keystone_public_address')}"
+contrail::keystone_admin_user: 'admin'
 contrail::keystone_admin_token: "%{hiera('keystone::admin_token')}"
 contrail::keystone_admin_password: "%{hiera('admin_password')}"
 contrail::keystone_auth_password: "%{hiera('neutron::keystone::auth::password')}"
