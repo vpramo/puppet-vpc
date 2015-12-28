@@ -145,5 +145,7 @@ ntp::servers:
 
 rjil::zookeeper::min_members: 1
 rjil::rabbitmq::min_members: 1
+rjil::haproxy::contrail: 1
+rjil::contrail::server: 1
 
 
