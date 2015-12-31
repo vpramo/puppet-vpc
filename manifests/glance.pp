@@ -41,8 +41,6 @@ class rjil::glance (
 
   include rjil::apache
 
-  Service['glance-api'] -> Service['httpd']
-  Service['glance-registry'] -> Service['httpd']
 
   ## Configure apache reverse proxy
   apache::vhost { 'glance-api':
