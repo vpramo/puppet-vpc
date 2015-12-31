@@ -49,7 +49,6 @@ class rjil::nova::controller (
   }
 
   include rjil::apache
-  Service['nova-api'] -> Service['httpd']
 
   ## Configure apache reverse proxy
   apache::vhost { 'nova-osapi':

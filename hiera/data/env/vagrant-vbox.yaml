@@ -127,16 +127,15 @@ rjil::system::apt::env_repositories:
     release: 'trusty'
     repos: 'main'
     include_src: false
-  compute-team:
-    location: 'http://10.140.221.229/snapshots/c164c87e-2a91-4dba-a833-9e5d8c0d543c/10.140.221.229/apt/JioCloudComputeAdmin/JioCloudComputeAdmin'
+  glance-image:
+    location: 'http://10.140.221.229/apt/vpramo/glance'
     release: 'jiocloud'
     repos: 'main'
     include_src: false
-    pin: '800'
+    pin: 800
     key:
-      id: '' #Add ID
-      source: 'http://10.140.221.229/apt/JioCloudComputeAdmin/JioCloudComputeAdmin/repo.key
-
+      id: '53046A7C'
+      source: 'http://10.140.221.229/apt/vpramo/glance/repo.key'
 
 ntp::servers:
   - 10.140.221.235
@@ -145,7 +144,6 @@ ntp::servers:
 
 rjil::zookeeper::min_members: 1
 rjil::rabbitmq::min_members: 1
-rjil::haproxy::contrail: 1
-rjil::contrail::server: 1
-
+rjil::haproxy::contrail::min_members: 1
+rjil::contrail::server::min_members: 1
 
