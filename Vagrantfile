@@ -11,7 +11,7 @@ Vagrant.configure("2") do |config|
   # which effect the hiera hierarchy and the
   # cloud file that is used
   environment = ENV['env'] || 'vagrant-vbox'
-  layout = ENV['layout'] || 'full'
+  layout = ENV['layout'] || 'vagrant-full'
   map = ENV['map'] || environment
 
   config.vm.provider :virtualbox do |vb, override|

@@ -127,6 +127,15 @@ rjil::system::apt::env_repositories:
     release: 'trusty'
     repos: 'main'
     include_src: false
+  glance-image:
+    location: 'http://10.140.221.229/apt/vpramo/glance'
+    release: 'jiocloud'
+    repos: 'main'
+    include_src: false
+    pin: 800
+    key:
+      id: '53046A7C'
+      source: 'http://10.140.221.229/apt/vpramo/glance/repo.key'
 
 ntp::servers:
   - 10.140.221.235

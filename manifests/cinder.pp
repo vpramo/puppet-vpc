@@ -92,7 +92,6 @@ class rjil::cinder (
 
   include rjil::apache
 
-  Service['cinder-api'] -> Service['httpd']
 
   ##
   # Ceph backend causing lot of open sockets to ceph osds, so increasing
