@@ -176,11 +176,11 @@ rjil::apache::ssl: true
 apache::default_vhost: false
 apache::server_signature: 'Off'
 apache::apache_version: '2.4'
-apache::default_ssl_cert: '/etc/ssl/certs/vpc.staging.jiocloudservices.com.crt'
-apache::default_ssl_key: '/etc/ssl/keys/vpc.staging.jiocloudservices.com.key'
+apache::default_ssl_cert: '/etc/ssl/certs/vpc.ind-west-1.staging.jiocloudservices.com.crt'
+apache::default_ssl_key: '/etc/ssl/keys/vpc.ind-west-1.staging.jiocloudservices.com.key'
 apache::trace_enable: 'Off'
 apache::mod::ssl::ssl_cipher: "HIGH:MEDIUM:!aNULL:!MD5:!RC4"
-rjil::trust_selfsigned_cert::cert: '/etc/ssl/certs/vpc.staging.jiocloudservices.com.crt'
+rjil::trust_selfsigned_cert::cert: '/etc/ssl/certs/vpc.ind-west-1.staging.jiocloudservices.com.crt'
 
 
 
@@ -322,6 +322,6 @@ contrail::vrouter::keystone_admin_password: "%{hiera('vpc_admin_password')}"
 contrail::vrouter::manage_repo: false
 contrail::vrouter::debug: true
 contrail::vrouter::interface_is_dhcp: false
-rjil::contrail::vrouter_standalone::discovery_address: 'vpc.staging.jiocloudservices.com'
+rjil::contrail::vrouter_standalone::discovery_address: 'vpc.ind-west-1.staging.jiocloudservices.com'
 rjil::contrail::vrouter_standalone::vrouter_physical_interface: 'em3'
 
