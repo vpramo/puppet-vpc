@@ -167,7 +167,7 @@ neutron_keystone_auth_username: 'neutron_service_user'
 neutron_keystone_auth_password: '5a91bd4b2450e46261d100dcc7a09374'
 
 # Compute
-nova_metadata_address: 'compute.staging.jiocloudservices.com'
+nova_metadata_address: 'compute.ind-west-1.staging.jiocloudservices.com'
 nova_metadata_proxy_secret: 'neutron'
 
 
@@ -192,10 +192,10 @@ rjil::haproxy::default_timeout_server: 50000
 
 # Keystone Properties
 rjil::jiocloud::dns::entries:
-  iam.staging.jiocloudservices.com:
-    cname: iam.staging.jiocloudservices.com
-keystone_public_address: iam.staging.jiocloudservices.com
-keystone_private_address: iam.staging.jiocloudservices.com
+  iam.ind-west-1.staging.jiocloudservices.com:
+    cname: iam.ind-west-1.staging.jiocloudservices.com
+keystone_public_address: iam.ind-west-1.staging.jiocloudservices.com
+keystone_private_address: iam.ind-west-1.staging.jiocloudservices.com
 keystone_port: 5000
 keystone_admin_port: 35357
 keystone_protocol: https
@@ -205,8 +205,8 @@ keystone_version: 'v2.0'
 # Neutron Properties
 neutron_localbind_port: 19696
 neutron_port: 9696
-neutron_public_address: 'vpc.staging.jiocloudservices.com'
-neutron_internal_address: 'vpc.staging.jiocloudservices.com'
+neutron_public_address: 'vpc.ind-west-1.staging.jiocloudservices.com'
+neutron_internal_address: 'vpc.ind-west-1.staging.jiocloudservices.com'
 
 
 
