@@ -227,3 +227,7 @@ mod 'fnerdwq/omd',
 mod 'richardc/datacat',
   :git => "#{base_url}/richardc/puppet-datacat",
   :ref => 'master'
+
+mod 'puppetlabs/xinetd',
+  :git => "#{base_url}/jiocloud/puppetlabs-xinetd",
+  :ref => 'master'
