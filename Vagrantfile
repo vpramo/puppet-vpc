@@ -129,6 +129,9 @@ Vagrant.configure("2") do |config|
       nic_adapter= ENV['NIC_ADAPTER'] || `echo "No environment variable NIC_ADAPTER, set the NIC_ADAPTER you want to place the VM";exit 100`
       if node_name == 'httpproxy1'
         config.vm.network  "private_network", ip: "192.168.100.10", :name => nic_adapter, :adapter => 2, auto_config: false
+      if node_name == 'vpc-monitor1'
+        config.vm.network "private_network", :type => :dhcp, :name => nic_adapter, :adapter => 2
+        config.vm.network "forwarded_port", :guest => 80, :host => 8000
       else
         config.vm.network "private_network", :type => :dhcp, :name => nic_adapter, :adapter => 2
       end

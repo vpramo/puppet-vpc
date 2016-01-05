@@ -148,4 +148,9 @@ node /^httpproxy\d+/ {
 }
 
 
+node /^vpc-monitor\d+/ {
+  include rjil::base
+  include rjil::omd_client
+  include ::omd::server
+}
 
