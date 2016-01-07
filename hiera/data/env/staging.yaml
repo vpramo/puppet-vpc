@@ -192,10 +192,10 @@ rjil::haproxy::default_timeout_server: 50000
 
 # Keystone Properties
 rjil::jiocloud::dns::entries:
-  iam.ind-west-1.staging.jiocloudservices.com:
-    cname: iam.ind-west-1.staging.jiocloudservices.com
-keystone_public_address: iam.ind-west-1.staging.jiocloudservices.com
-keystone_private_address: iam.ind-west-1.staging.jiocloudservices.com
+  iam.ind-west-1.staging.deprecated.jiocloudservices.com:
+    cname: iam.ind-west-1.staging.deprecated.jiocloudservices.com
+keystone_public_address: iam.ind-west-1.staging.deprecated.jiocloudservices.com
+keystone_private_address: iam.ind-west-1.staging.deprecated.jiocloudservices.com
 keystone_port: 5000
 keystone_admin_port: 35357
 keystone_protocol: https
