@@ -240,9 +240,10 @@ neutron::core_plugin: neutron_plugin_contrail.plugins.opencontrail.contrail_plug
 neutron::quota::quota_driver: neutron_plugin_contrail.plugins.opencontrail.quota.driver.QuotaDriver
 neutron::api_extensions_path: extensions:/usr/lib/python2.7/dist-packages/neutron_plugin_contrail/extensions
 rjil::neutron::service_provider: LOADBALANCER:Opencontrail:neutron_plugin_contrail.plugins.opencontrail.loadbalancer.driver.OpencontrailLoadbalancerDriver:default
-rjil::neutron::contrail::keystone_admin_password: "%{hiera('vpc_admin_password')}"
+rjil::neutron::contrail::keystone_admin_password: "%{hiera('neutron_keystone_auth_password')}"
 rjil::neutron::contrail::public_network_name: "%{hiera('public_network_name')}"
-rjil::neutron::contrail::fip_pool::keystone_admin_password: "%{hiera('admin_password')}"
+rjil::neutron::contrail::fip_pool::keystone_admin_user: "%{hiera('neutron_keystone_auth_username')}"
+rjil::neutron::contrail::fip_pool::keystone_admin_password: "%{hiera('neutron_keystone_auth_password')}"
 rjil::neutron::server_name: "%{hiera('neutron_public_address')}"
 rjil::neutron::ssl: true
 rjil::neutron::rewrites:
@@ -292,9 +293,10 @@ contrail::edge_routers:
   router2: {host_address: '10.204.115.117'}
 contrail::keystone_address: "%{hiera('keystone_public_address')}"
 contrail::keystone_admin_token: "%{hiera('keystone_admin_token')}"
-contrail::keystone_admin_user: "%{hiera('vpc_admin_user')}"
-contrail::keystone_admin_password: "%{hiera('vpc_admin_password')}"
+contrail::keystone_admin_user: "%{hiera('neutron_keystone_auth_username')}"
+contrail::keystone_admin_password: "%{hiera('neutron_keystone_auth_password')}"
 contrail::keystone_auth_password: "%{hiera('neutron_keystone_auth_password')}"
+contrail::keystone_admin_tenant: 'services'
 contrail::keystone_protocol: "%{hiera('keystone_protocol')}"
 contrail::nova_metadata_address: "%{hiera('nova_metadata_address')}"
 contrail::rabbit_user: "%{hiera('rabbit_admin_user')}"
@@ -318,7 +320,9 @@ contrail::config::quota_virtual_network: 5
 
 # Contrail Vrouter Settings
 contrail::vrouter::metadata_proxy_secret: "%{hiera('nova_metadata_proxy_secret')}"
-contrail::vrouter::keystone_admin_password: "%{hiera('vpc_admin_password')}"
+contrail::vrouter::keystone_admin_tenant: "services"
+contrail::vrouter::keystone_admin_user: "%{hiera('neutron_keystone_auth_username')}"
+contrail::vrouter::keystone_admin_password: "%{hiera('neutron_keystone_auth_password')}"
 contrail::vrouter::manage_repo: false
 contrail::vrouter::debug: true
 contrail::vrouter::interface_is_dhcp: false
