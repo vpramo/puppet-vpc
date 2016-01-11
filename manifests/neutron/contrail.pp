@@ -11,6 +11,7 @@
 # on neutron server which is not the case as of now.
 
 class rjil::neutron::contrail(
+  $keystone_admin_user,
   $keystone_admin_password,
   $fip_pools           = {},
   $contrail_api_server = 'lb.neutron.service.consul',
@@ -47,6 +48,7 @@ class rjil::neutron::contrail(
   if $seed {
      #create_resources(rjil::neutron::default_network,$tenants)
      $fip_pool_defaults = {
+                          keystone_admin_user     => $keystone_admin_user,
                           keystone_admin_password => $keystone_admin_password,
                           contrail_api_server     => $contrail_api_server,
                           rt_number               => $rt_number,
