@@ -296,6 +296,7 @@ contrail::keystone_admin_token: "%{hiera('keystone_admin_token')}"
 contrail::keystone_admin_user: "%{hiera('neutron_keystone_auth_username')}"
 contrail::keystone_admin_password: "%{hiera('neutron_keystone_auth_password')}"
 contrail::keystone_auth_password: "%{hiera('neutron_keystone_auth_password')}"
+contrail::keystone_admin_tenant: 'services'
 contrail::keystone_protocol: "%{hiera('keystone_protocol')}"
 contrail::nova_metadata_address: "%{hiera('nova_metadata_address')}"
 contrail::rabbit_user: "%{hiera('rabbit_admin_user')}"
