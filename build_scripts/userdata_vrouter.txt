@@ -1,0 +1,94 @@
+#!/bin/bash
+date
+set -x
+release="$(lsb_release -cs)"
+if [ -n "https" ]; then
+  export git_protocol="https"
+fi
+if [ -n "" ]
+then
+  export http_proxy=
+  echo http_proxy="''" >> /etc/environment
+  internal_subnet_exclusion=","
+  echo 'Acquire::Http::Proxy "";' >> /etc/apt/apt.conf.d/90Proxy
+  export no_proxy="127.0.0.1,169.254.169.254,localhost,consul,jiocloudservices.com${internal_subnet_exclusion}"
+  echo no_proxy="'127.0.0.1,169.254.169.254,localhost,consul,jiocloudservices.com${internal_subnet_exclusion}'" >> /etc/environment
+fi
+if [ -n "" ]
+then
+  export https_proxy=
+  echo https_proxy="''" >> /etc/environment
+fi
+if [ -n "http://10.140.221.229/apt/vpcjiocloud/vpcjiocloud" ];then
+  if [ -z "`grep 'http://10.140.221.229/apt/vpcjiocloud/vpcjiocloud' /etc/apt/sources.list`" ];then
+    echo "deb [arch=amd64] http://10.140.221.229/apt/vpcjiocloud/vpcjiocloud jiocloud main" | tee -a /etc/apt/sources.list
+    wget -qO - http://10.140.221.229/apt/vpcjiocloud/vpcjiocloud/repo.key | apt-key add -
+  fi
+fi
+wget -O puppet.deb -t 5 -T 30 http://apt.puppetlabs.com/puppetlabs-release-${release}.deb
+dpkg -i puppet.deb
+apt-get update 
+apt-get install -y puppet software-properties-common puppet-vpc
+mkdir /etc/facter
+mkdir /etc/facter/facts.d
+if [ -n "" ]; then
+  apt-get install -y git
+  git clone  /tmp/rjil
+  if [ -n "" ]; then
+    pushd /tmp/rjil
+    git checkout 
+    popd
+  fi
+  if [ -n "" ]; then
+    pushd /tmp/rjil
+    git fetch origin pull//head:test_
+    git config user.email "testuser@localhost.com"
+    git config user.name "Test User"
+    git merge -m 'Merging Pull Request' test_
+    popd
+  fi
+  time gem install librarian-puppet-simple --no-ri --no-rdoc;
+  mkdir -p /etc/puppet/manifests.overrides
+  cp /tmp/rjil/site.pp /etc/puppet/manifests.overrides/
+  mkdir -p /etc/puppet/hiera.overrides
+  sed  -i "s/  :datadir: \/etc\/puppet\/hiera\/data/  :datadir: \/etc\/puppet\/hiera.overrides\/data/" /tmp/rjil/hiera/hiera.yaml
+  cp /tmp/rjil/hiera/hiera.yaml /etc/puppet
+  cp -Rf /tmp/rjil/hiera/data /etc/puppet/hiera.overrides
+  mkdir -p /etc/puppet/modules.overrides/rjil
+  cp -Rf /tmp/rjil/* /etc/puppet/modules.overrides/rjil/
+  if [ -n "" ]
+  then
+    cd /etc/puppet/modules.overrides
+    wget -O cache.tar.gz ""
+    tar xzf cache.tar.gz
+    time librarian-puppet update --puppetfile=/tmp/rjil/Puppetfile --path=/etc/puppet/modules.overrides
+  else
+    time librarian-puppet install --puppetfile=/tmp/rjil/Puppetfile --path=/etc/puppet/modules.overrides
+  fi
+  cat <<INISETTING | puppet apply --config_version='echo settings'
+  ini_setting { basemodulepath: path => "/etc/puppet/puppet.conf", section => main, setting => basemodulepath, value => "/etc/puppet/modules.overrides:/etc/puppet/modules" }
+  ini_setting { default_manifest: path => "/etc/puppet/puppet.conf", section => main, setting => default_manifest, value => "/etc/puppet/manifests.overrides/site.pp" }
+  ini_setting { disable_per_environment_manifest: path => "/etc/puppet/puppet.conf", section => main, setting => disable_per_environment_manifest, value => "true" }
+INISETTING
+else
+  puppet apply --config_version='echo settings' -e "ini_setting { default_manifest: path => \"/etc/puppet/puppet.conf\", section => main, setting => default_manifest, value => \"/etc/puppet/manifests/site.pp\" }"
+fi
+echo 'env='staging > /etc/facter/facts.d/env.txt
+echo 'cloud_provider=' > /etc/facter/facts.d/cloud_provider.txt
+while true
+do
+  # first install all packages to make the build as fast as possible
+  puppet apply --detailed-exitcodes `puppet config print default_manifest` --config_version='echo packages' --tags package
+  ret_code_package=$?
+  # now perform base config
+  puppet apply --detailed-exitcodes --debug `puppet config print default_manifest`
+  ret_code_jio=$?
+  if [[ $ret_code_jio = 1 || $ret_code_jio = 4 || $ret_code_jio = 6 || $ret_code_package = 1 || $ret_code_package = 4 || $ret_code_package = 6 ]]
+  then
+    echo "Puppet failed. Will retry in 5 seconds"
+    sleep 5
+  else
+    break
+  fi
+done
+date

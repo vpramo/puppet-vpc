@@ -17,6 +17,7 @@ define rjil::neutron::contrail::fip_pool (
   $network_name,
   $subnet_name,
   $cidr,
+  $keystone_admin_user,
   $keystone_admin_password,
   $contrail_api_server = 'real.neutron.service.consul',
   $rt_number           = 10000,
@@ -43,6 +44,9 @@ define rjil::neutron::contrail::fip_pool (
       network_fqname => "default-domain:${tenant_name}:${network_name}",
       api_server_address => $contrail_api_server,
       tenants        => $tenants,
+      admin_user     => $keystone_admin_user,
+      admin_password => $keystone_admin_password,
+      admin_tenant   => $tenant_name,
       require        => Neutron_network[$network_name],
     }
   }
@@ -73,6 +77,8 @@ define rjil::neutron::contrail::fip_pool (
     rt_number          => $rt_number,
     router_asn         => $router_asn,
     api_server_address => $contrail_api_server,
+    admin_tenant       => $tenant_name,
+    admin_user         => $keystone_admin_user,
     admin_password     => $keystone_admin_password,
     require            => Neutron_network[$network_name],
   }
