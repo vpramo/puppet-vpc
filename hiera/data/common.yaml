@@ -262,6 +262,7 @@ neutron::api_extensions_path: extensions:/usr/lib/python2.7/dist-packages/neutro
 # profile for now.
 
 rjil::neutron::service_provider: LOADBALANCER:Opencontrail:neutron_plugin_contrail.plugins.opencontrail.loadbalancer.driver.OpencontrailLoadbalancerDriver:default
+rjil::neutron::contrail::keystone_admin_user: 'admin'
 rjil::neutron::contrail::keystone_admin_password: "%{hiera('admin_password')}"
 rjil::neutron::contrail::public_network_name: "%{hiera('public_network_name')}"
 
@@ -734,10 +735,13 @@ contrail::nova_metadata_address: "lb.nova.service.consul"
 contrail::rabbit_user: "%{hiera('rabbit_admin_user')}"
 contrail::rabbit_password: "%{hiera('rabbit_admin_pass')}"
 contrail::vrouter::metadata_proxy_secret: "%{hiera('nova_metadata_proxy_secret')}"
+contrail::vrouter::keystone_admin_user: 'admin'
+contrail::vrouter::keystone_admin_tenant: 'openstack'
 contrail::vrouter::keystone_admin_password: "%{hiera('admin_password')}"
 contrail::interface: "%{hiera('private_interface')}"
 contrail::manage_repo: false
 contrail::vrouter::manage_repo: false
+
 
 contrail::neutron_ip: "%{hiera('neutron_public_address')}"
 contrail::enable_analytics: false
