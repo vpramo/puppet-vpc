@@ -40,7 +40,7 @@ ceph::conf::mon_timecheck_interval: 30
 #                   using. It will take some time (typically 3-4 hours at this
 #                   moment) from when the package got created to reach here.
 ##
-rustedhalo_apt_repo_release: 'trusty-testing'
+rustedhalo_apt_repo_release: 'trusty'
 apt::purge:
   sources.list: true
 
@@ -129,7 +129,7 @@ rjil::system::apt::env_repositories:
     repos: 'main'
     include_src: false
   puppet-vpc:
-    localion: 'http://10.140.221.229/apt/vpcjiocloud/vpcjiocloud'
+    location: 'http://10.140.221.229/apt/vpcjiocloud/vpcjiocloud'
     release: 'jiocloud'
     repos: 'main'
     include_src: false

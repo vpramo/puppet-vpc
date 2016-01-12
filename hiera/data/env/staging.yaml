@@ -36,7 +36,7 @@ rjil::system::apt::env_repositories:
     repos: 'main'
     include_src: false
   puppet-vpc:
-    localion: 'http://10.140.221.229/apt/vpcjiocloud/vpcjiocloud'
+    location: 'http://10.140.221.229/apt/vpcjiocloud/vpcjiocloud'
     release: 'jiocloud'
     repos: 'main'
     include_src: false
