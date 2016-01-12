@@ -25,17 +25,39 @@ rjil::jiocloud::consul::bootstrapserver::bind_addr: "%{hiera('private_address')}
 rjil::jiocloud::consul::agent::bind_addr: "%{hiera('private_address')}"
 
 # Repo Properties
-rustedhalo_apt_repo_release: 'trusty-testing'
+rustedhalo_apt_repo_release: 'trusty'
+apt::purge:
+  sources.list: true
 rjil::system::apt::enable_puppetlabs: true
 rjil::system::apt::env_repositories:
   contrailv2:
-    location: 'http://jiocloud.rustedhalo.com/contrailv2'
+    location: 'http://10.140.221.229/snapshots/cbda4e14-562e-44d1-81d2-8a92fc216105/jiocloud.rustedhalo.com/contrailv2/'
     release: 'trusty'
     repos: 'main'
     include_src: false
+  puppet-vpc:
+    localion: 'http://10.140.221.229/apt/vpcjiocloud/vpcjiocloud'
+    release: 'jiocloud'
+    repos: 'main'
+    include_src: false
+    key:
+      id: '5DC149F6'
+      source: 'http://10.140.221.229/apt/vpcjiocloud/vpcjiocloud/repo.key'
+  contrail-main:
+    location: 'http://10.140.221.229/snapshots/8e813082-9334-41bb-9a6c-74b3a4b2cb19/10.140.221.229/apt/vpcjiocloud/contrail/'
+    release: 'jiocloud'
+    repos: 'main'
+    include_src: false
+    pin:
+      release: 'jiocloud'
+      priority: '1002'
+      label: 'contrail'
+    key:
+      id: 'DD62245F'
+      source: 'http://10.140.221.229/apt/vpcjiocloud/contrail/repo.key'
 rjil::system::apt::repositories:
   rustedhalo:
-    location: 'http://jiocloud.rustedhalo.com/ubuntu/'
+    location: 'http://10.140.221.229/snapshots/8f23f6d7-719b-4898-a201-d4672cd37773/jiocloud.rustedhalo.com/ubuntu/'
     release: "%{hiera('rustedhalo_apt_repo_release')}"
     repos: 'main'
     include_src: false
@@ -72,26 +94,29 @@ rjil::system::apt::repositories:
       =iZW7
       -----END PGP PUBLIC KEY BLOCK-----
   ubuntu:
-    location: 'http://in.archive.ubuntu.com/ubuntu'
+    location: 'http://10.140.221.229/snapshots/5b1646b3-6124-4e6b-a42b-e1af7428c5d9/in.archive.ubuntu.com/ubuntu'
     release: 'trusty'
     repos: 'main restricted universe multiverse'
     include_src: false
   ubuntu_updates:
-    location: 'http://in.archive.ubuntu.com/ubuntu'
+    location: 'http://10.140.221.229/snapshots/5b1646b3-6124-4e6b-a42b-e1af7428c5d9/in.archive.ubuntu.com/ubuntu'
     release: 'trusty-updates'
     repos: 'main restricted universe multiverse'
     include_src: false
   ubuntu_security:
-    location: 'http://in.archive.ubuntu.com/ubuntu'
+    location: 'http://10.140.221.229/snapshots/5b1646b3-6124-4e6b-a42b-e1af7428c5d9/in.archive.ubuntu.com/ubuntu'
     release: 'trusty-security'
     repos: 'main restricted universe multiverse'
     include_src: false
   ubuntu_kilo:
-    location: 'http://ubuntu-cloud.archive.canonical.com/ubuntu'
+    location: 'http://10.140.221.229/snapshots/5b1646b3-6124-4e6b-a42b-e1af7428c5d9/ubuntu-cloud.archive.canonical.com/ubuntu'
     release: 'trusty-updates/kilo'
     repos: 'main'
     include_src: false
-    pin: '700'
+    pin:
+      release: 'trusty-updates'
+      priority: '700'
+      originator: 'Canonical'
     key: '5EDB1B62EC4926EA'
     key_content: |
       -----BEGIN PGP PUBLIC KEY BLOCK-----

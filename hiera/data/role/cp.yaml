@@ -1,15 +1,28 @@
-nova::network::neutron::network_api_class: 'nova_contrail_vif.contrailvif.ContrailNetworkAPI'
 rjil::system::apt::proxy: false
 contrail::vrouter::lbaas: false
+apt::purge:
+  sources.list: false
 rjil::system::apt::env_repositories:
   contrailv2:
-    location: 'http://jiocloud.rustedhalo.com/contrailv2'
+    location: 'http://10.140.221.229/snapshots/cbda4e14-562e-44d1-81d2-8a92fc216105/jiocloud.rustedhalo.com/contrailv2/'
     release: 'trusty'
     repos: 'main'
     include_src: false
+  contrail-main:
+    location: 'http://10.140.221.229/snapshots/8e813082-9334-41bb-9a6c-74b3a4b2cb19/10.140.221.229/apt/vpcjiocloud/contrail/'
+    release: 'jiocloud'
+    repos: 'main'
+    include_src: false
+    pin:
+      release: 'jiocloud'
+      priority: '1002'
+      label: 'contrail'
+    key:
+      id: 'DD62245F'
+      source: 'http://10.140.221.229/apt/vpcjiocloud/contrail/repo.key'
 rjil::system::apt::repositories:
   rustedhalo:
-    location: 'http://jiocloud.rustedhalo.com/ubuntu/'
+    location: 'http://10.140.221.229/snapshots/8f23f6d7-719b-4898-a201-d4672cd37773/jiocloud.rustedhalo.com/ubuntu/'
     release: "%{hiera('rustedhalo_apt_repo_release')}"
     repos: 'main'
     include_src: false
