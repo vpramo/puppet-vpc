@@ -94,17 +94,17 @@ rjil::system::apt::repositories:
       =iZW7
       -----END PGP PUBLIC KEY BLOCK-----
   ubuntu:
-    location: 'http://10.140.221.229/snapshots/5b1646b3-6124-4e6b-a42b-e1af7428c5d9/in.archive.ubuntu.com/ubuntu'
+    location: 'http://10.140.221.229/snapshots/5f7eac30-afdf-47ad-8ca2-4c2f9ce49930/in.archive.ubuntu.com/ubuntu'
     release: 'trusty'
     repos: 'main restricted universe multiverse'
     include_src: false
   ubuntu_updates:
-    location: 'http://10.140.221.229/snapshots/5b1646b3-6124-4e6b-a42b-e1af7428c5d9/in.archive.ubuntu.com/ubuntu'
+    location: 'http://10.140.221.229/snapshots/d84b8cc3-846b-4b64-9688-827b437b73b1/in.archive.ubuntu.com/ubuntu'
     release: 'trusty-updates'
     repos: 'main restricted universe multiverse'
     include_src: false
   ubuntu_security:
-    location: 'http://10.140.221.229/snapshots/5b1646b3-6124-4e6b-a42b-e1af7428c5d9/in.archive.ubuntu.com/ubuntu'
+    location: 'http://10.140.221.229/snapshots/b538b5c0-80e3-47c7-9791-a98f6ef37093/in.archive.ubuntu.com/ubuntu'
     release: 'trusty-security'
     repos: 'main restricted universe multiverse'
     include_src: false
