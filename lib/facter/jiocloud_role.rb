@@ -3,6 +3,6 @@
 #
 Facter.add(:jiocloud_role) do
   setcode do
-    Facter.value(:hostname).gsub(/^(.*)\d+?/, '\1')
+    Facter.value(:hostname).gsub(/^(.*)\d+.*?/, '\1')
   end
 end
