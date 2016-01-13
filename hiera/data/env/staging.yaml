@@ -35,11 +35,13 @@ rjil::system::apt::env_repositories:
     release: 'trusty'
     repos: 'main'
     include_src: false
+    architecture: 'amd64'
   puppet-vpc:
     location: 'http://10.140.221.229/apt/vpcjiocloud/vpcjiocloud'
     release: 'jiocloud'
     repos: 'main'
     include_src: false
+    architecture: 'amd64'
     key:
       id: '5DC149F6'
       source: 'http://10.140.221.229/apt/vpcjiocloud/vpcjiocloud/repo.key'
@@ -48,6 +50,7 @@ rjil::system::apt::env_repositories:
     release: 'jiocloud'
     repos: 'main'
     include_src: false
+    architecture: 'amd64'
     pin:
       release: 'jiocloud'
       priority: '1002'
@@ -61,6 +64,7 @@ rjil::system::apt::repositories:
     release: "%{hiera('rustedhalo_apt_repo_release')}"
     repos: 'main'
     include_src: false
+    architecture: 'amd64'
     key: '85596F7A'
     key_content: |
       -----BEGIN PGP PUBLIC KEY BLOCK-----
@@ -98,21 +102,25 @@ rjil::system::apt::repositories:
     release: 'trusty'
     repos: 'main restricted universe multiverse'
     include_src: false
+    architecture: 'amd64'
   ubuntu_updates:
     location: 'http://10.140.221.229/snapshots/d84b8cc3-846b-4b64-9688-827b437b73b1/in.archive.ubuntu.com/ubuntu'
     release: 'trusty-updates'
     repos: 'main restricted universe multiverse'
     include_src: false
+    architecture: 'amd64'
   ubuntu_security:
     location: 'http://10.140.221.229/snapshots/b538b5c0-80e3-47c7-9791-a98f6ef37093/in.archive.ubuntu.com/ubuntu'
     release: 'trusty-security'
     repos: 'main restricted universe multiverse'
     include_src: false
+    architecture: 'amd64'
   ubuntu_kilo:
     location: 'http://10.140.221.229/snapshots/5b1646b3-6124-4e6b-a42b-e1af7428c5d9/ubuntu-cloud.archive.canonical.com/ubuntu'
     release: 'trusty-updates/kilo'
     repos: 'main'
     include_src: false
+    architecture: 'amd64'
     pin:
       release: 'trusty-updates'
       priority: '700'
