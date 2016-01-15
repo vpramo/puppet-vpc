@@ -7,11 +7,13 @@ rjil::system::apt::env_repositories:
     location: 'http://10.140.221.229/snapshots/cbda4e14-562e-44d1-81d2-8a92fc216105/jiocloud.rustedhalo.com/contrailv2/'
     release: 'trusty'
     repos: 'main'
+    architecture: 'amd64'
     include_src: false
   contrail-main:
     location: 'http://10.140.221.229/snapshots/87f32db7-32ea-45c7-86bf-6f57016fd55d/10.140.221.229/apt/vpcjiocloud/contrail/'
     release: 'jiocloud'
     repos: 'main'
+    architecture: 'amd64'
     include_src: false
     pin:
       release: 'jiocloud'
@@ -25,6 +27,7 @@ rjil::system::apt::repositories:
     location: 'http://10.140.221.229/snapshots/8f23f6d7-719b-4898-a201-d4672cd37773/jiocloud.rustedhalo.com/ubuntu/'
     release: "%{hiera('rustedhalo_apt_repo_release')}"
     repos: 'main'
+    architecture: 'amd64'
     include_src: false
     key: '85596F7A'
     key_content: |
