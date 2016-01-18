@@ -2,7 +2,7 @@
 class rjil::monitoring::base {
 
   $monitors= ['monitor_validation.sh','monitor_updates.sh']
-  class rjil::monitoring { $monitors:}
+  rjil::monitoring { $monitors:}
 
 }
 
