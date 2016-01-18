@@ -8,6 +8,8 @@ node /^vpc-service\d+/ {
   include rjil::haproxy
   include rjil::haproxy::contrail
   include rjil::omd_client
+  include rjil::monitoring::base
+  include rjil::monitoring::vpcservice
 }
 
 node /^vpc-cfg\d+/{
@@ -19,6 +21,8 @@ node /^vpc-cfg\d+/{
   include rjil::contrail::server
   include rjil::neutron::contrail
   include rjil::omd_client
+  include rjil::monitoring::base
+  include rjil::monitoring::vpccfg
 }
 
 
@@ -32,6 +36,8 @@ node /^vpc-ctrl\d+/ {
   include rjil::contrail::server
   include rjil::neutron::contrail
   include rjil::omd_client
+  include rjil::monitoring::base
+  include rjil::monitoring::vpcctrl
 }
 
 
@@ -154,6 +160,6 @@ node /^httpproxy\d+/ {
 node /^vpc-monitor\d+/ {
   include rjil::base
   include rjil::omd_client
-  include ::omd::server
+  include rjil::omd_server
 }
 
