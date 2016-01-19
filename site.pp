@@ -7,6 +7,9 @@ node /^vpc-service\d+/ {
   include rjil::base
   include rjil::haproxy
   include rjil::haproxy::contrail
+  include rjil::omd_client
+  include rjil::monitoring::base
+  include rjil::monitoring::vpcservice
 }
 
 node /^vpc-cfg\d+/{
@@ -17,6 +20,9 @@ node /^vpc-cfg\d+/{
   include rjil::zookeeper
   include rjil::contrail::server
   include rjil::neutron::contrail
+  include rjil::omd_client
+  include rjil::monitoring::base
+  include rjil::monitoring::vpccfg
 }
 
 
@@ -29,12 +35,17 @@ node /^vpc-ctrl\d+/ {
   include rjil::zookeeper
   include rjil::contrail::server
   include rjil::neutron::contrail
+  include rjil::omd_client
+  include rjil::monitoring::base
+  include rjil::monitoring::vpcctrl
 }
 
 
 
 node /^cp\d+/ {
   include rjil::contrail::vrouter_standalone
+  include rjil::omd_client
+  include rjil::monitoring::cp
 }
 
 # VPC spare nodes will be utilized in staging environment for testing mixed services of contrail
@@ -148,4 +159,9 @@ node /^httpproxy\d+/ {
 }
 
 
+node /^vpc-monitor\d+/ {
+  include rjil::base
+  include rjil::omd_client
+  include rjil::omd_server
+}
 
