@@ -44,6 +44,8 @@ node /^vpc-ctrl\d+/ {
 
 node /^cp\d+/ {
   include rjil::contrail::vrouter_standalone
+  include rjil::omd_client
+  include rjil::monitoring::cp
 }
 
 # VPC spare nodes will be utilized in staging environment for testing mixed services of contrail
