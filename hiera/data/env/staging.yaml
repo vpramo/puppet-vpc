@@ -232,7 +232,8 @@ keystone_private_address: iam.ind-west-1.staging.deprecated.jiocloudservices.com
 keystone_port: 5000
 keystone_admin_port: 35357
 keystone_protocol: https
-keystone_version: 'v2.0'
+keystone_version: 'v3'
+
 
 
 # Neutron Properties
@@ -265,7 +266,7 @@ neutron::server::auth_user: "%{hiera('neutron_keystone_auth_username')}"
 neutron::server::auth_password: "%{hiera('neutron_keystone_auth_password')}"
 neutron::server::auth_host: "%{hiera('keystone_public_address')}"
 neutron::server::auth_protocol: "%{hiera('keystone_protocol')}"
-neutron::server::auth_uri: "%{hiera('keystone_protocol')}://%{hiera('neutron::server::auth_host')}:%{hiera('keystone_port')}/%{hiera('keystone_version')}"
+neutron::server::auth_uri: "%{hiera('keystone_protocol')}://%{hiera('neutron::server::auth_host')}:%{hiera('keystone_admin_port')}/%{hiera('keystone_version')}"
 neutron::server::mysql_module: 2.3
 neutron::rabbit_user: "%{hiera('rabbit_admin_user')}"
 neutron::rabbit_password: "%{hiera('rabbit_admin_pass')}"
@@ -332,6 +333,7 @@ contrail::keystone_admin_password: "%{hiera('neutron_keystone_auth_password')}"
 contrail::keystone_auth_password: "%{hiera('neutron_keystone_auth_password')}"
 contrail::keystone_admin_tenant: 'services'
 contrail::keystone_protocol: "%{hiera('keystone_protocol')}"
+contrail::keystone_auth_url: "%{hiera('keystone_protocol')}://%{hiera('neutron::server::auth_host')}:%{hiera('keystone_admin_port')}/%{hiera('keystone_version')}"
 contrail::nova_metadata_address: "%{hiera('nova_metadata_address')}"
 contrail::rabbit_user: "%{hiera('rabbit_admin_user')}"
 contrail::rabbit_password: "%{hiera('rabbit_admin_pass')}"
