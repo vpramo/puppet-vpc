@@ -1,0 +1,7 @@
+resources:
+  vpc-aws:
+    number: 1
+    flavor: medium
+    image: trusty
+    networks: default
+    boot_volume: default_volume

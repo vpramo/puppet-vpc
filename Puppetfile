@@ -231,3 +231,8 @@ mod 'richardc/datacat',
 mod 'puppetlabs/xinetd',
   :git => "#{base_url}/jiocloud/puppetlabs-xinetd",
   :ref => 'master'
+
+mod 'vpramo/ec2api',
+  :git => "#{base_url}/vpramo/puppet-ec2api",
+  :ref => 'enable_puppet_ec2api' 
+
