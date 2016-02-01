@@ -1,11 +1,2 @@
-rjil::system::apt::env_repositories:
-  ec2api:
-    location: 'http://10.140.221.229/apt/vpramo/vpramo'
-    release: 'jiocloud'
-    repos: 'main'
-    include_src: false
-    architecture: 'amd64'
-    key:
-      id: 'F710C852'
-      source: 'http://10.140.221.229/apt/vpramo/vpramo/repo.key'
+
 
