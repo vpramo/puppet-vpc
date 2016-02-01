@@ -24,6 +24,10 @@ class rjil::haproxy::contrail(
   $neutron_backend_ips     = sort(values(service_discover_consul('neutron','real'))),
   $neutron_listen_ports    = 9696,
   $neutron_balancer_ports  = 9696,
+  $ec2api_server_vip       = undef,
+  $ec2api_backend_ips      = sort(values(service_discover_consul('ec2api'))),
+  $ec2api_listen_ports     = 8788,
+  $ec2api_balancer_port    = 8788,
   $min_members             = '3',
 ) {
 
@@ -49,6 +53,11 @@ class rjil::haproxy::contrail(
     $neutron_vip_orig = $vip
   }
 
+  if $ec2api_server_vip {
+    $ec2api_vip_orig = $ec2api_server_vip
+  } else {
+    $ec2api_vip_orig = $vip
+  }
   if size($api_backend_ips) < $min_members or size($discovery_backend_ips) < $min_members {
      $fail= true
   } else {
@@ -89,5 +98,14 @@ class rjil::haproxy::contrail(
     cluster_addresses => $neutron_backend_ips,
     require           => Runtime_fail['Haproxy_ready'],
   }
+
+  rjil::haproxy_service { 'ec2api':
+    vip               => $ec2api_vip_orig,
+    listen_ports      => $ec2api_listen_ports,
+    balancer_ports    => $ec2api_balancer_ports,
+    cluster_addresses => $ec2api_backend_ips,
+    require           => Runtime_fail['Haproxy_ready'],
+  }
+
 }
 

@@ -46,7 +46,7 @@ rjil::system::apt::env_repositories:
       id: '5DC149F6'
       source: 'http://10.140.221.229/apt/vpcjiocloud/vpcjiocloud/repo.key'
   contrail-main:
-    location: 'http://10.140.221.229/snapshots/228f7316-7fc6-447c-818b-30ca57da7a7d/10.140.221.229/apt/vpcjiocloud/contrail/'
+    location: 'http://10.140.221.229/snapshots/a02df3e4-5d29-4db5-83dc-0157865c53e7/10.140.221.229/apt/vpcjiocloud/contrail/'
     release: 'jiocloud'
     repos: 'main'
     include_src: false
@@ -365,3 +365,34 @@ contrail::vrouter::interface_is_dhcp: false
 rjil::contrail::vrouter_standalone::discovery_address: 'vpc.ind-west-1.staging.jiocloudservices.com'
 rjil::contrail::vrouter_standalone::vrouter_physical_interface: 'em3'
 
+# EC2API Settings
+rjil::contrail::ec2api::db_provision: false
+ec2api::ec2api_config:
+  DEFAULT/external_network:
+    value: 'public'
+  DEFAULT/full_vpc_support:
+    value: True
+  DEFAULT/keystone_url:
+    value: "%{hiera('neutron::server::auth_uri')}"
+  DEFAULT/verbose:
+    value: True
+  DEFAULT/log_dir:
+    value: '/var/log'
+  DEFAULT/api_paste_config:
+    value: '/etc/ec2api/api-paste.ini'
+  DEFAULT/ec2api_use_ssl:
+    value: true
+  DEFAULT/ssl_cert_file:
+    value: '/etc/ssl/certs/vpc.ind-west-1.staging.jiocloudservices.com.crt'
+  DEFAULT/ssl_key_file:
+    value: '/etc/ssl/keys/vpc.ind-west-1.staging.jiocloudservices.com.key'
+  database/connection:
+    value: 'mysql://rwuser:4fEUAG@10.140.214.73/ec2api'
+  keystone_authtoken/auth_port:
+    value: "%{hiera('keystone_admin_port')}"
+  keystone_authtoken/auth_protocol:
+    value: "%{hiera('keystone_protocol')}"
+  keystone_authtoken/auth_host:
+    value: "%{hiera('keystone_public_address')}"
+  keystone_authtoken/signing_dir:
+    value: '/var/cache/ec2api'

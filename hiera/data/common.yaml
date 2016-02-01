@@ -1102,3 +1102,38 @@ squid3::refresh_patterns:
 rjil::haproxy::default_timeout_connect: 50000
 rjil::haproxy::default_timeout_client: 50000
 rjil::haproxy::default_timeout_server: 50000
+
+
+#### Ec2 API Configuration ###
+ec2api::db::mysql::password: 'ec2api'
+ec2api::ec2api_config:
+  DEFAULT/external_network:
+    value: 'public'
+  DEFAULT/full_vpc_support:
+    value: True
+  DEFAULT/keystone_url:
+    value: "%{hiera('rjil::keystone::protocol')}://%{hiera('nova::api::auth_host')}:%{hiera('keystone_port')}/%{hiera('rjil::keystone::version')}"
+  DEFAULT/verbose:
+    value: True
+  DEFAULT/log_dir:
+    value: '/var/log'
+  DEFAULT/api_paste_config:
+    value: '/etc/ec2api/api-paste.ini'
+  DEFAULT/ec2api_use_ssl:
+    value: true
+  DEFAULT/ssl_cert_file:
+    value: '/etc/ssl/certs/jiocloud.com.crt'
+  DEFAULT/ssl_key_file:
+    value: '/etc/ssl/keys/jiocloud.com.key'
+  database/connection:
+    value: 'mysql://ec2api:ec2api@127.0.0.1/ec2api?charset=utf8'
+  keystone_authtoken/auth_port:
+    value: 35357
+  keystone_authtoken/auth_protocol:
+    value: https
+  keystone_authtoken/auth_host:
+    value: 'identity.jiocloud.com'
+  keystone_authtoken/signing_dir:
+    value: '/var/cache/ec2api'
+
+

@@ -48,6 +48,12 @@ node /^cp\d+/ {
   include rjil::monitoring::cp
 }
 
+
+node /^vpc-aws\d+/ {
+  include rjil::base
+  include rjil::contrail::ec2api
+  include rjil::omd_client
+}
 # VPC spare nodes will be utilized in staging environment for testing mixed services of contrail
 # For now this will used for deploying standalone vrouter
 
