@@ -46,7 +46,7 @@ rjil::system::apt::env_repositories:
       id: '5DC149F6'
       source: 'http://10.140.221.229/apt/vpcjiocloud/vpcjiocloud/repo.key'
   contrail-main:
-    location: 'http://10.140.221.229/snapshots/87f32db7-32ea-45c7-86bf-6f57016fd55d/10.140.221.229/apt/vpcjiocloud/contrail/'
+    location: 'http://10.140.221.229/snapshots/228f7316-7fc6-447c-818b-30ca57da7a7d/10.140.221.229/apt/vpcjiocloud/contrail/'
     release: 'jiocloud'
     repos: 'main'
     include_src: false
@@ -232,7 +232,8 @@ keystone_private_address: iam.ind-west-1.staging.deprecated.jiocloudservices.com
 keystone_port: 5000
 keystone_admin_port: 35357
 keystone_protocol: https
-keystone_version: 'v2.0'
+keystone_version: 'v3'
+keystone_auth_url: "%{hiera('keystone_protocol')}://%{hiera('keystone_public_address')}:%{hiera('keystone_admin_port')}/%{hiera('keystone_version')}"
 
 
 # Neutron Properties
@@ -265,7 +266,7 @@ neutron::server::auth_user: "%{hiera('neutron_keystone_auth_username')}"
 neutron::server::auth_password: "%{hiera('neutron_keystone_auth_password')}"
 neutron::server::auth_host: "%{hiera('keystone_public_address')}"
 neutron::server::auth_protocol: "%{hiera('keystone_protocol')}"
-neutron::server::auth_uri: "%{hiera('keystone_protocol')}://%{hiera('neutron::server::auth_host')}:%{hiera('keystone_port')}/%{hiera('keystone_version')}"
+neutron::server::auth_uri: "%{hiera('keystone_auth_url')}"
 neutron::server::mysql_module: 2.3
 neutron::rabbit_user: "%{hiera('rabbit_admin_user')}"
 neutron::rabbit_password: "%{hiera('rabbit_admin_pass')}"
@@ -332,6 +333,7 @@ contrail::keystone_admin_password: "%{hiera('neutron_keystone_auth_password')}"
 contrail::keystone_auth_password: "%{hiera('neutron_keystone_auth_password')}"
 contrail::keystone_admin_tenant: 'services'
 contrail::keystone_protocol: "%{hiera('keystone_protocol')}"
+contrail::keystone_auth_url: "%{hiera('keystone_auth_url')}"
 contrail::nova_metadata_address: "%{hiera('nova_metadata_address')}"
 contrail::rabbit_user: "%{hiera('rabbit_admin_user')}"
 contrail::rabbit_password: "%{hiera('rabbit_admin_pass')}"
