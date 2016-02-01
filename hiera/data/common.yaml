@@ -1118,6 +1118,12 @@ ec2api::ec2api_config:
     value: '/var/log'
   DEFAULT/api_paste_config:
     value: '/etc/ec2api/api-paste.ini'
+  DEFAULT/ec2api_use_ssl:
+    value: true
+  DEFAULT/ssl_cert_file:
+    value: '/etc/ssl/certs/jiocloud.com.crt'
+  DEFAULT/ssl_key_file:
+    value: '/etc/ssl/keys/jiocloud.com.key'
   database/connection:
     value: 'mysql://ec2api:ec2api@127.0.0.1/ec2api?charset=utf8'
   keystone_authtoken/auth_port:
