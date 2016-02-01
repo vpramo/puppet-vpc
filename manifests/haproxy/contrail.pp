@@ -99,7 +99,7 @@ class rjil::haproxy::contrail(
     require           => Runtime_fail['Haproxy_ready'],
   }
 
-  rjil::haproxy_service { 'ec2api':
+  rjil::haproxy_service { 'ec2-api':
     vip               => $ec2api_vip_orig,
     listen_ports      => $ec2api_listen_ports,
     balancer_ports    => $ec2api_balancer_ports,
