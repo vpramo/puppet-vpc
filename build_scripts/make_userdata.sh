@@ -42,8 +42,7 @@ n=0
 #do
 apt-get update 
 apt-get install -y puppet software-properties-common puppet-vpc
-mkdir /etc/facter
-mkdir /etc/facter/facts.d
+mkdir -p /etc/facter/facts.d
 #n=\$((\$n+1))
   #sleep 5
 #done
