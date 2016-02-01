@@ -26,7 +26,7 @@ class rjil::contrail::ec2api (
   }
 
   rjil::jiocloud::consul::service { 'ec2api':
-    tags          => 'real',
+    tags          => ['real'],
     port          => $ec2api_public_port,
   }
 
