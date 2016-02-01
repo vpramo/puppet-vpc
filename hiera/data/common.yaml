@@ -1112,7 +1112,7 @@ ec2api::ec2api_config:
   DEFAULT/full_vpc_support:
     value: True
   DEFAULT/keystone_url:
-    value: 'https://identity.jiocloud.com:5000/v2.0/'
+    value: "%{hiera('rjil::keystone::protocol')}://%{hiera('nova::api::auth_host')}:%{hiera('keystone_port')}/%{hiera('rjil::keystone::version')}"
   DEFAULT/verbose:
     value: True
   DEFAULT/log_dir:
