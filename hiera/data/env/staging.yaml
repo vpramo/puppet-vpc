@@ -4,6 +4,8 @@ public_interface: "%{interface_10_140_214_0_23}"
 private_address: "%{ipaddress_10_140_214_0_23}"
 private_interface: "%{interface_10_140_214_0_23}"
 rjil::base::self_signed_cert: true
+upstream_ntp_servers:
+  - 10.140.214.14
 ntp::servers:
   - 10.140.214.14
 localbind_host: 127.0.0.1
