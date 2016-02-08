@@ -30,26 +30,20 @@ if [ -n "${dns_override}" ]; then
   echo 'nameserver ${dns_override}' > /etc/resolv.conf
 fi
 wget -O puppet.deb -t 5 -T 30 http://apt.puppetlabs.com/puppetlabs-release-\${release}.deb
-if [ "${env}" == "at" ]
-then
-  jiocloud_repo_deb_url=http://jiocloud.rustedhalo.com/ubuntu/jiocloud-apt-\${release}-testing.deb
-else
-  jiocloud_repo_deb_url=http://jiocloud.rustedhalo.com/ubuntu/jiocloud-apt-\${release}.deb
-fi
-wget -O jiocloud.deb -t 5 -T 30 \${jiocloud_repo_deb_url}
-dpkg -i puppet.deb jiocloud.deb
-echo "deb [arch=amd64] ${puppet_vpc_repo_url} jiocloud main" | tee -a /etc/apt/sources.list
-wget -qO - ${puppet_vpc_repo_url}/repo.key | apt-key add -
-if no_proxy= wget -t 2 -T 30 -O internal.deb http://apt.internal.jiocloud.com/internal.deb
-then
-  dpkg -i internal.deb
+dpkg -i puppet.deb
+if [ -n "${puppet_vpc_repo_url}" ];then
+  if [ -z "\`grep '${puppet_vpc_repo_url}' /etc/apt/sources.list\`" ];then
+    echo "deb [arch=amd64] ${puppet_vpc_repo_url} jiocloud main" | tee -a /etc/apt/sources.list
+    wget -qO - ${puppet_vpc_repo_url}/repo.key | apt-key add -
+  fi
 fi
 n=0
 #while [ \$n -le 5 ]
 #do
 apt-get update 
-apt-get install -y puppet software-properties-common puppet-vpc jiocloud-ssl-certificate
-  #n=\$((\$n+1))
+apt-get install -y puppet software-properties-common puppet-vpc
+mkdir -p /etc/facter/facts.d
+#n=\$((\$n+1))
   #sleep 5
 #done
 if [ -n "${override_repo}" ]; then
