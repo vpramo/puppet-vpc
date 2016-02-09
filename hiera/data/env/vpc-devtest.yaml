@@ -3,9 +3,17 @@ public_interface: "%{interface_10_140_15_0_24}"
 private_address: "%{ipaddress_10_140_15_0_24}"
 private_interface: "%{interface_10_140_15_0_24}"
 
-rjil::ceph::osd::autogenerate: true
-rjil::ceph::osd::autodisk_size: 10
-rjil::ceph::osd::osd_journal_size: 2
+rjil::ceph::osd::osds:
+ - sdb
+
+ceph::conf::pool_default_pg_num: 128
+ceph::conf::pool_default_pgp_num: 128
+
+
+#Disable autogenerate to specify osds like rjil::ceph::osd::osds: -sdb
+rjil::ceph::osd::autogenerate: false
+#rjil::ceph::osd::autodisk_size: 10
+rjil::ceph::osd::osd_journal_size: 10
 
 # Only Qemu is supported on virtual testing environment
 nova::compute::libvirt::libvirt_virt_type: qemu

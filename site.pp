@@ -102,7 +102,7 @@ node /^stmonleader1/ {
   include rjil::base
   include rjil::ceph
   include rjil::ceph::mon
-  include rjil::ceph::osd
+  #include rjil::ceph::osd
   include rjil::ceph::radosgw
 
   rjil::jiocloud::consul::service { 'stmonleader':
@@ -124,7 +124,7 @@ node /^stmon\d+/ {
   include rjil::base
   include rjil::ceph
   include rjil::ceph::mon
-  include rjil::ceph::osd
+  #include rjil::ceph::osd
   include rjil::ceph::radosgw
   ensure_resource('rjil::service_blocker', 'stmonleader', {
   }
