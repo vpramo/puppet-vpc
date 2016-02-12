@@ -48,7 +48,7 @@ rjil::system::apt::env_repositories:
       id: '5DC149F6'
       source: 'http://10.140.221.229/apt/vpcjiocloud/vpcjiocloud/repo.key'
   contrail-main:
-    location: 'http://10.140.221.229/snapshots/a02df3e4-5d29-4db5-83dc-0157865c53e7/10.140.221.229/apt/vpcjiocloud/contrail/'
+    location: 'http://10.140.221.229/snapshots/cf0b5774-c3cc-4532-b774-85e20fa6b6ee/10.140.221.229/apt/vpcjiocloud/contrail/'
     release: 'jiocloud'
     repos: 'main'
     include_src: false
@@ -352,9 +352,9 @@ contrail::config::quota_floating_ip: 5
 contrail::config::quota_logical_router: 10
 contrail::config::quota_security_group: 100
 contrail::config::quota_security_group_rule: 50
-contrail::config::quota_subnet: 20
+contrail::config::quota_subnet: 200
 contrail::config::quota_virtual_machine_interface: 100
-contrail::config::quota_virtual_network: 5
+contrail::config::quota_virtual_network: 1000
 
 # Contrail Vrouter Settings
 contrail::vrouter::metadata_proxy_secret: "%{hiera('nova_metadata_proxy_secret')}"
