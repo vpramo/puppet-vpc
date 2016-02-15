@@ -40,7 +40,7 @@ ceph::conf::mon_timecheck_interval: 30
 #                   using. It will take some time (typically 3-4 hours at this
 #                   moment) from when the package got created to reach here.
 ##
-rustedhalo_apt_repo_release: 'trusty-testing'
+rustedhalo_apt_repo_release: 'trusty'
 
 
 rjil::jiocloud::consul::encrypt: "%{consul_gossip_encrypt}"
