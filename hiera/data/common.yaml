@@ -179,11 +179,11 @@ rjil::glance::ssl: true
 ## default one is rbd, which need ceph to be setup
 ## if ceph is not setup, use file
 
-rjil::glance::backend: rbd
+rjil::glance::backend: file
 
 ### Start: rbd backend specific settings
-rjil::glance::ceph_mon_key: "%{hiera('rjil::ceph::mon::key')}"
-rjil::glance::rbd_user: glance
+#rjil::glance::ceph_mon_key: "%{hiera('rjil::ceph::mon::key')}"
+#rjil::glance::rbd_user: glance
 rjil::glance::admin_email: "%{hiera('admin_email')}"
 rjil::glance::server_name: "%{hiera('glance_public_address')}"
 rjil::glance::api_localbind_port: "%{hiera('glance_api_localbind_port')}"
@@ -199,15 +199,15 @@ rjil::glance::headers:
   - 'always set Access-Control-Allow-Headers "Accept, Content-Type, X-Auth-Token, X-Subject-Token"'
   - 'always set Access-Control-Expose-Headers "Accept, Content-Type, X-Auth-Token, X-Subject-Token"'
   - 'always set Access-Control-Allow-Methods "GET POST OPTIONS PUT DELETE PATCH"'
-glance::backend::rbd::rbd_store_user: "%{hiera('rjil::glance::rbd_user')}"
-glance::backend::rbd::rbd_store_pool: images
+#glance::backend::rbd::rbd_store_user: "%{hiera('rjil::glance::rbd_user')}"
+#glance::backend::rbd::rbd_store_pool: images
 ### End: rbd backend specific settings
 glance::api::bind_host: "%{hiera('localbind_host')}"
 glance::api::bind_port: "%{hiera('glance_api_localbind_port')}"
 glance::api::debug: "%{hiera('debug')}"
 glance::api::verbose: "%{hiera('verbose')}"
 glance::api::show_image_direct_url: true
-glance::api::known_stores: ['rbd']
+#glance::api::known_stores: ['rbd']
 glance::keystone::auth::service_description: 'Openstack Image Service'
 ##
 # glance-registry can be either connected to localhost using http or
@@ -598,7 +598,7 @@ rustedhalo_apt_repo_release: 'trusty'
 rjil::system::apt::enable_puppetlabs: true
 rjil::system::apt::repositories:
   rustedhalo:
-    location: 'http://jiocloud.rustedhalo.com/ubuntu/'
+    location: 'https://aasemble.com/mirrors/29e7249e-8092-4c0c-8ee7-5a8c6292010b/aasemble.com/mirrors/026ca961-7661-4115-8bfd-19aa59380349/jiocloud.rustedhalo.com/ubuntu'
     release: "%{hiera('rustedhalo_apt_repo_release')}"
     repos: 'main'
     include_src: false

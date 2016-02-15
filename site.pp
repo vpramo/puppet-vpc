@@ -129,7 +129,6 @@ node /^keystone\d+/ {
   include rjil::keystone
   include rjil::memcached
   include openstack_extras::client
-  include rjil::cinder
   include rjil::glance
   include rjil::nova::controller
   include rjil::openstack_zeromq
