@@ -17,6 +17,10 @@ run_puppet() {
         export OS_PROJECT_DOMAIN_NAME='default'
         export OS_USER_DOMAIN_NAME='default'
         export OS_IDENTITY_API_VERSION=3
+        host=`hostname`
+        if [ $host eq 'keystone1']; then
+                export OS_AUTH_URL='https://identity.jiocloud.com:35357/v3/'
+        fi
         puppet apply --config_version='python -m jiocloud.orchestrate current_version' --detailed-exitcodes --logdest=syslog `puppet config print default_manifest`
         # publish the results of that run
         ret_code=$?
