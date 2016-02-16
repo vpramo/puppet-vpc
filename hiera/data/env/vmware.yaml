@@ -130,9 +130,9 @@ rjil::system::apt::env_repositories:
 
 
 ntp::servers:
-  - 10.140.221.235
-  - 10.140.221.232
-  - 10.140.221.236
+  - 0.pool.ntp.org
+  - 1.pool.ntp.org
+  - 2.pool.ntp.org
 
 rjil::zookeeper::min_members: 1
 rjil::rabbitmq::min_members: 1
