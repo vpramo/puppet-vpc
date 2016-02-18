@@ -27,7 +27,7 @@ class rjil::haproxy::contrail(
   $ec2api_server_vip       = undef,
   $ec2api_backend_ips      = sort(values(service_discover_consul('ec2api'))),
   $ec2api_listen_ports     = 443,
-  $ec2api_balancer_port    = 8788,
+  $ec2api_balancer_port    = 443,
   $min_members             = '3',
 ) {
 

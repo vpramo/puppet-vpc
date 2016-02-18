@@ -384,6 +384,12 @@ ec2api::ec2api_config:
     value: '/etc/ec2api/api-paste.ini'
   DEFAULT/ec2api_use_ssl:
     value: true
+  DEFAULT/ec2api_listen_port:
+    value: '443'
+  DEFAULT/neutron_endpoint_url:
+    value: 'https://vpc.ind-west-1.staging.jiocloudservices.com:9696'
+  DEFAULT/nova_endpoint_url:
+    value: 'https://compute.ind-west-1.staging.jiocloudservices.com:8774/v2'
   DEFAULT/ssl_cert_file:
     value: '/etc/ssl/certs/vpc.ind-west-1.staging.jiocloudservices.com.crt'
   DEFAULT/ssl_key_file:
