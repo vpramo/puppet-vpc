@@ -48,7 +48,7 @@ rjil::system::apt::env_repositories:
       id: '5DC149F6'
       source: 'http://10.140.221.229/apt/vpcjiocloud/vpcjiocloud/repo.key'
   contrail-main:
-    location: 'http://10.140.221.229/snapshots/0d43ab0d-6f17-4b1c-a07f-1f455d9c0c9a/10.140.221.229/apt/vpcjiocloud/contrail/'
+    location: 'http://10.140.221.229/snapshots/85d43f48-b063-467d-8532-daa2998646fa/10.140.221.229/apt/vpcjiocloud/contrail/'
     release: 'jiocloud'
     repos: 'main'
     include_src: false
@@ -227,10 +227,10 @@ rjil::haproxy::default_timeout_server: 50000
 
 # Keystone Properties
 rjil::jiocloud::dns::entries:
-  iam.ind-west-1.staging.deprecated.jiocloudservices.com:
-    cname: iam.ind-west-1.staging.deprecated.jiocloudservices.com
-keystone_public_address: iam.ind-west-1.staging.deprecated.jiocloudservices.com
-keystone_private_address: iam.ind-west-1.staging.deprecated.jiocloudservices.com
+  iam.ind-west-1.staging.jiocloudservices.com:
+    cname: iam.ind-west-1.staging.jiocloudservices.com
+keystone_public_address: iam.ind-west-1.staging.jiocloudservices.com
+keystone_private_address: iam.ind-west-1.staging.jiocloudservices.com
 keystone_port: 5000
 keystone_admin_port: 35357
 keystone_protocol: https
@@ -384,6 +384,12 @@ ec2api::ec2api_config:
     value: '/etc/ec2api/api-paste.ini'
   DEFAULT/ec2api_use_ssl:
     value: true
+  DEFAULT/ec2api_listen_port:
+    value: '443'
+  DEFAULT/neutron_endpoint_url:
+    value: 'https://vpc.ind-west-1.staging.jiocloudservices.com:9696'
+  DEFAULT/nova_endpoint_url:
+    value: 'https://compute.ind-west-1.staging.jiocloudservices.com:8774/v2'
   DEFAULT/ssl_cert_file:
     value: '/etc/ssl/certs/vpc.ind-west-1.staging.jiocloudservices.com.crt'
   DEFAULT/ssl_key_file:
