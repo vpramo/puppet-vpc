@@ -127,6 +127,7 @@ rjil::system::apt::env_repositories:
     release: 'trusty'
     repos: 'main'
     include_src: false
+    architecture: 'amd64'
 
 
 ntp::servers:

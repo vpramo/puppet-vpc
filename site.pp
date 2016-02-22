@@ -48,7 +48,6 @@ node /^vpc-spare\d+/ {
 
 node /^vpc-cp\d+/ {
   include rjil::base
-  include rjil::ceph
   include openstack_extras::client
   include rjil::contrail::vrouter
   include rjil::openstack_zeromq

@@ -602,6 +602,7 @@ rjil::system::apt::repositories:
     release: "%{hiera('rustedhalo_apt_repo_release')}"
     repos: 'main'
     include_src: false
+    architecture: 'amd64'
     key: '85596F7A'
     key_content: |
       -----BEGIN PGP PUBLIC KEY BLOCK-----
