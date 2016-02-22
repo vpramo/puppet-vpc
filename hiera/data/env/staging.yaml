@@ -285,6 +285,7 @@ rjil::neutron::contrail::keystone_admin_password: "%{hiera('neutron_keystone_aut
 rjil::neutron::contrail::public_network_name: "%{hiera('public_network_name')}"
 rjil::neutron::contrail::fip_pool::keystone_admin_user: "%{hiera('neutron_keystone_auth_username')}"
 rjil::neutron::contrail::fip_pool::keystone_admin_password: "%{hiera('neutron_keystone_auth_password')}"
+rjil::neutron::contrail::new_iam: true
 rjil::neutron::server_name: "%{hiera('neutron_public_address')}"
 rjil::neutron::ssl: true
 rjil::neutron::rewrites:
