@@ -275,6 +275,10 @@ neutron::rabbit_password: "%{hiera('rabbit_admin_pass')}"
 neutron::core_plugin: neutron_plugin_contrail.plugins.opencontrail.contrail_plugin.NeutronPluginContrailCoreV2
 neutron::quota::quota_driver: neutron_plugin_contrail.plugins.opencontrail.quota.driver.QuotaDriver
 neutron::api_extensions_path: extensions:/usr/lib/python2.7/dist-packages/neutron_plugin_contrail/extensions
+neutron::policy::policies:
+  neutron-admin_only:
+    key: 'admin_only
+    value: 'rule:context_is_admin or tenant_id:%(tenant_id)s'
 rjil::neutron::service_provider: LOADBALANCER:Opencontrail:neutron_plugin_contrail.plugins.opencontrail.loadbalancer.driver.OpencontrailLoadbalancerDriver:default
 rjil::neutron::contrail::keystone_admin_user: "%{hiera('neutron_keystone_auth_username')}"
 rjil::neutron::contrail::keystone_admin_password: "%{hiera('neutron_keystone_auth_password')}"
