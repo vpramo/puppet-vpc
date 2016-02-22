@@ -19,6 +19,7 @@ class rjil::neutron::contrail(
   $router_asn          = 64512,
   $seed                = false,
   $tenants             = undef,
+  $new_iam             = false,
 ) {
 
   include ::rjil::neutron
@@ -54,6 +55,12 @@ class rjil::neutron::contrail(
                           rt_number               => $rt_number,
                           router_asn              => $router_asn
                         }
-     create_resources(rjil::neutron::contrail::fip_pool,$fip_pools,$fip_pool_defaults)
+     if $new_iam {
+       create_resources(rjil::neutron::contrail::new_iam_fip_pool,$fip_pools,$fip_pool_defaults)
+     }
+     else
+     {
+       create_resources(rjil::neutron::contrail::fip_pool,$fip_pools,$fip_pool_defaults)
+     }
   }
 }
