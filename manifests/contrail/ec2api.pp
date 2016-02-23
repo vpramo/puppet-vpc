@@ -5,7 +5,7 @@
 class rjil::contrail::ec2api (
   $db_provision = true,
   $keystone_user_create = false,
-  $ec2api_public_port  = 8788,
+  $ec2api_public_port  = 443,
 ){
 
   if $db_provision {
