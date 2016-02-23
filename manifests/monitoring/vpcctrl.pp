@@ -4,5 +4,6 @@ class rjil::monitoring::vpcctrl {
   ## Example: $monitors = ['monitor_xmpp.sh','monitor_cassandra.sh']
   $monitors=['contrail_control_introspect.sh','contrail_config_introspect.sh']
   rjil::monitoring { $monitors:}
+  package{'python-jpype':}
 
 }
