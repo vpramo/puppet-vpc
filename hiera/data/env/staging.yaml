@@ -394,7 +394,7 @@ ec2api::ec2api_config:
   DEFAULT/neutron_endpoint_url:
     value: 'https://vpc.ind-west-1.staging.jiocloudservices.com:9696'
   DEFAULT/nova_endpoint_url:
-    value: 'https://compute.ind-west-1.staging.jiocloudservices.com:8774/v2/'
+    value: 'https://compute.ind-west-1.staging.deprecated.jiocloudservices.com:8774/v2/'
   DEFAULT/ssl_cert_file:
     value: '/etc/ssl/certs/vpc.ind-west-1.staging.jiocloudservices.com.crt'
   DEFAULT/ssl_key_file:
