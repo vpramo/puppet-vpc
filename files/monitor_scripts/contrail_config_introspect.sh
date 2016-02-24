@@ -334,11 +334,11 @@ if __name__ == "__main__":
 
     for fun in pipe:
 	res = None
-	#try:
-	res = fun()
-	#except Exception as ex:
-	#    print OUTPUT_FORMAT.format(status=STATUS.get("critical"), entity="Monitoring Script:{script}".format(script=fun.__name__),
-	#	message="CRITICAL: {reason}".format(reason=str(ex)))
+	try:
+	    res = fun()
+	except:
+	    print OUTPUT_FORMAT.format(status=STATUS.get("critical"), entity="Monitoring Script:{script}".format(script=fun.__name__),
+		message="CRITICAL: Monitoring script failed")
 
 	if res:
 	    if isinstance(res, list):
