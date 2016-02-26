@@ -367,6 +367,7 @@ contrail::vrouter::keystone_admin_tenant: "services"
 contrail::vrouter::keystone_admin_user: "%{hiera('neutron_keystone_auth_username')}"
 contrail::vrouter::keystone_admin_password: "%{hiera('neutron_keystone_auth_password')}"
 contrail::vrouter::manage_repo: false
+contrail::vrouter::package_ensure: 'latest'
 contrail::vrouter::debug: true
 contrail::vrouter::interface_is_dhcp: false
 rjil::contrail::vrouter_standalone::discovery_address: 'vpc.ind-west-1.staging.jiocloudservices.com'
