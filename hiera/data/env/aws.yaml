@@ -1,7 +1,7 @@
 public_address: "%{ipaddress_172_31_0_0_16}"
-public_interface: "%{ipaddress_172_31_0_0_16}"
+public_interface: "%{interface_172_31_0_0_16}"
 private_address: "%{ipaddress_172_31_0_0_16}"
-private_interface: "%{ipaddress_172_31_0_0_16}"
+private_interface: "%{interface_172_31_0_0_16}"
 
 rjil::ceph::osd::autogenerate: true
 rjil::ceph::osd::autodisk_size: 10
@@ -128,7 +128,7 @@ rjil::system::apt::env_repositories:
     repos: 'main'
     include_src: false
     architecture: 'amd64'
-    allow_unsigned: 'true'
+    allow_unsigned: true
 
 ntp::servers:
   - 0.pool.ntp.org
