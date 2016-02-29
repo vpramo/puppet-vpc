@@ -3,6 +3,7 @@ import telnetlib
 import jpype
 from jpype import java
 from jpype import javax
+import subprocess
 
 SUCCESS = 0
 FAIL 	= 1
@@ -15,6 +16,8 @@ ZKWARNLAT   = 500
 ZKCRITLAT   = 2000
 ZKWARNREQ   = 5000
 ZKCRITREQ   = 10000
+ZKLDRELPRT  = 3888
+ZKLDRCONPRT = 2888
 
 #Cassandra constants
 CASSPORT            =7199
@@ -43,26 +46,32 @@ OUTPUT_FORMAT   = "{status} {entity} - {message}"
 PERF_FORMAT     = "{type}={value};{warning};{critical}"
 OUTPERF_FORMAT  = "P {entity} {perf} {message}" 
 
+class Netstat(object):
+    @classmethod
+    def tcp_check(cls, port):
+        cmd = "netstat -t --numeric-hosts | grep "+str(port)
+        return subprocess.check_output(cmd,shell=True)
+
 #Telnet class
 class Tel(object):
     def __init__(self, host, port):
-	self.obj = telnetlib.Telnet(host, port)
+        self.obj = telnetlib.Telnet(host, port)
 
     def request(self, cmd):
-	self.obj.write(cmd)
-	return self.obj.read_all()
+        self.obj.write(cmd)
+        return self.obj.read_all()
 
 #JMX class
 class JMXConnector(object):
     def __init__(self, host, port, user, passwd):
-	URL = "service:jmx:rmi:///jndi/rmi://%s:%d/jmxrmi" % (host, port)
-	jpype.startJVM("/usr/lib/jvm/default-java/jre/lib/amd64/server/libjvm.so")
-	jhash = java.util.HashMap()
-	jarray=jpype.JArray(java.lang.String)([user,passwd])
-	jhash.put (javax.management.remote.JMXConnector.CREDENTIALS, jarray);
-	jmxurl = javax.management.remote.JMXServiceURL(URL)
-	jmxsoc = javax.management.remote.JMXConnectorFactory.connect(jmxurl,jhash)
-	self.connection = jmxsoc.getMBeanServerConnection();
+        URL = "service:jmx:rmi:///jndi/rmi://%s:%d/jmxrmi" % (host, port)
+        jpype.startJVM("/usr/lib/jvm/default-java/jre/lib/amd64/server/libjvm.so")
+        jhash = java.util.HashMap()
+        jarray=jpype.JArray(java.lang.String)([user,passwd])
+        jhash.put (javax.management.remote.JMXConnector.CREDENTIALS, jarray);
+        jmxurl = javax.management.remote.JMXServiceURL(URL)
+        jmxsoc = javax.management.remote.JMXConnectorFactory.connect(jmxurl,jhash)
+        self.connection = jmxsoc.getMBeanServerConnection();
 
     def get_attr(self, object, attribute):
         return self.connection.getAttribute(javax.management.ObjectName(object),attribute)
@@ -259,23 +268,61 @@ class ZkMonitor(object):
         return OUTPUT_FORMAT.format(status=status, entity="Zookeeper:Status", message=msg)
 
     @classmethod
-    def process_zk_cluster_status(cls, stats):
-        cl_count = 0
-        stats.strip()
-        clients = stats.split("\n")
-        for client in clients:
-            client.rstrip()
-            if len(client) == 0:
-                continue
-            if "127.0.0.1" not in client:
-                cl_count = cl_count + 1
-        if cl_count == 2:
+    def process_zk_cluster_status(cls, stats, lep_stat, lcp_stat):
+        res = list()
+        lepcount = 0
+        lcpcount = 0
+        pdest = list()
+        ldest = list()
+
+        if "follower" in stats:
+            mode = "follower"
+        else:
+            mode = "leader"
+
+        lep_lines = lep_stat.split("\n")
+        for line in lep_lines:
+            if "ESTABLISHED" in line:
+                lepcount = lepcount + 1
+                words = line.split()
+                destword = words[4]
+                dest = destword.split(":")[0]
+                pdest.append(dest)
+
+        lcp_lines = lcp_stat.split("\n")
+        for line in lcp_lines:
+            if "ESTABLISHED" in line:
+                lcpcount = lcpcount + 1
+                words = line.split()
+                destword = words[4]
+                dest = destword.split(":")[0]
+                ldest.append(dest)
+
+        if lepcount == 2:
             status = STATUS.get("success")
-            msg = "OK: "+"Connected to two clients"
+            msg = "OK: Connected to two peers " + str(pdest)
         else:
             status = STATUS.get("critical")
-            msg = "CRITICAL: "+"Connected to "+str(cl_count)+" clients"
-        return OUTPUT_FORMAT.format(status=status, entity="Zookeeper:Cluster", message=msg)
+            msg = "CRITICAL: Connected to "+str(lepcount)+" peer(s). Peer list : "+str(pdest)
+        res.append(OUTPUT_FORMAT.format(status=status, entity="Zookeeper:ClusterPeers", message=msg))
+            
+        if mode == "follower":
+            if lcpcount == 1:
+                status = STATUS.get("success")
+                msg = "OK: Connected to leader as follower"
+            else:
+                status = STATUS.get("critical")
+                msg = "CRITICAL: Not connected to leader"
+        else:
+            if lcpcount == 2:
+                status = STATUS.get("success")
+                msg = "OK: Connected to two followers as leader"
+            else:
+                status = STATUS.get("critical")
+                msg = "CRITICAL: Connected to "+str(lepcount)+" follower(s). Follower list : "+str(ldest)
+        res.append(OUTPUT_FORMAT.format(status=status, entity="Zookeeper:ClusterConn", message=msg))
+
+        return res
 
     @classmethod
     def process_zk_stats(cls, stats):
@@ -314,10 +361,12 @@ class ZkMonitor(object):
 
     @classmethod
     def check_zk_cluster_status(cls):
-        resp_code, resp = cls.process_zkcmd("cons")
+        resp_code, resp = cls.process_zkcmd("srvr")
         if resp_code == FAIL:
             return resp
-        return cls.process_zk_cluster_status(resp)	
+        lep_status = Netstat.tcp_check(ZKLDRELPRT)
+        lcp_status = Netstat.tcp_check(ZKLDRCONPRT)
+        return cls.process_zk_cluster_status(resp, lep_status, lcp_status)
 
 
 if __name__ == "__main__":
