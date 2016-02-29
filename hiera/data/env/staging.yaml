@@ -62,7 +62,7 @@ rjil::system::apt::env_repositories:
       source: 'http://10.140.221.229/apt/vpcjiocloud/contrail/repo.key'
 rjil::system::apt::repositories:
   rustedhalo:
-    location: 'http://10.140.221.229/snapshots/8f23f6d7-719b-4898-a201-d4672cd37773/jiocloud.rustedhalo.com/ubuntu/'
+    location: 'http://10.140.221.229/snapshots/022a99f7-ff8a-4151-b36f-f231314cc687/jiocloud.rustedhalo.com/ubuntu/'
     release: "%{hiera('rustedhalo_apt_repo_release')}"
     repos: 'main'
     include_src: false
@@ -381,7 +381,7 @@ ec2api::ec2api_config:
   DEFAULT/full_vpc_support:
     value: True
   DEFAULT/keystone_url:
-    value: "%{hiera('neutron::server::auth_uri')}"
+    value: "%{hiera('keystone_protocol')}://%{hiera('keystone_public_address')}:%{hiera('keystone_port')}"
   DEFAULT/verbose:
     value: True
   DEFAULT/log_dir:
@@ -403,7 +403,7 @@ ec2api::ec2api_config:
   database/connection:
     value: 'mysql://rwuser:4fEUAG@10.140.214.73/ec2api'
   keystone_authtoken/auth_port:
-    value: "%{hiera('keystone_admin_port')}"
+    value: "%{hiera('keystone_port')}"
   keystone_authtoken/auth_protocol:
     value: "%{hiera('keystone_protocol')}"
   keystone_authtoken/auth_host:
