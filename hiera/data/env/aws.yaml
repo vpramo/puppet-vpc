@@ -1,7 +1,7 @@
-public_address: "%{ipaddress_172_31_0_0_16}"
-public_interface: "%{interface_172_31_0_0_16}"
-private_address: "%{ipaddress_172_31_0_0_16}"
-private_interface: "%{interface_172_31_0_0_16}"
+public_address: "%{ipaddress_172_31_32_0_20}"
+public_interface: "%{interface_172_31_32_0_20}"
+private_address: "%{ipaddress_172_31_32_0_20}"
+private_interface: "%{interface_172_31_32_0_20}"
 
 rjil::ceph::osd::autogenerate: true
 rjil::ceph::osd::autodisk_size: 10
