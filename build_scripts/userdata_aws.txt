@@ -7,6 +7,7 @@ export LANGUAGE=en_US.UTF-8
 export layout=""
 release="$(lsb_release -cs)"
 sudo mkdir -p /etc/facter/facts.d
+echo 'APT::Get::AllowUnauthenticated "true";' > /etc/apt/apt.conf
 if [ -n "https" ]; then
   export git_protocol="https"
 fi
@@ -94,9 +95,9 @@ INISETTING
 else
   puppet apply --config_version='echo settings' -e "ini_setting { default_manifest: path => \"/etc/puppet/puppet.conf\", section => main, setting => default_manifest, value => \"/etc/puppet/manifests/site.pp\" }"
 fi
-echo 'consul_discovery_token='3e8d1fff121743a9b87b780616f33cea > /etc/facter/facts.d/consul.txt
+echo 'consul_discovery_token='7e0ad1e3a72f403eb5cbd04fa035ff91 > /etc/facter/facts.d/consul.txt
 # default to first 16 bytes of discovery token
-echo 'consul_gossip_encrypt'=M2U4ZDFmZmYxMjE3NDNhCg== >> /etc/facter/facts.d/consul.txt
+echo 'consul_gossip_encrypt'=N2UwYWQxZTNhNzJmNDAzCg== >> /etc/facter/facts.d/consul.txt
 echo 'current_version=' > /etc/facter/facts.d/current_version.txt
 echo 'env='aws > /etc/facter/facts.d/env.txt
 echo 'cloud_provider=' > /etc/facter/facts.d/cloud_provider.txt

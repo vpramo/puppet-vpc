@@ -1,7 +1,7 @@
 rjil::haproxy::consul_service_tags: ['global']
 rjil::jiocloud::consul_role: server
-public_address: "%{ipaddress_172_20_0_102_32}"
-public_interface: "%{interface_172_20_0_102_32}"
-private_address: "%{ipaddress_172_20_0_102_32}"
-private_interface: "%{interface_172_20_0_102_32}"
+#public_address: "%{ipaddress_172_20_0_102_32}"
+#public_interface: "%{interface_172_20_0_102_32}"
+#private_address: "%{ipaddress_172_20_0_102_32}"
+#private_interface: "%{interface_172_20_0_102_32}"
 
