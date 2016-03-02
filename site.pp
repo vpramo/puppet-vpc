@@ -65,7 +65,6 @@ node /^vpc-spare\d+/ {
 
 node /^vpc-cp\d+/ {
   include rjil::base
-  include rjil::ceph
   include openstack_extras::client
   include rjil::contrail::vrouter
   include rjil::openstack_zeromq
@@ -138,6 +137,7 @@ node /^haproxy\d+/ {
   include rjil::base
   include rjil::haproxy
   include rjil::haproxy::contrail
+  include rjil::contrail::ec2api
   include rjil::haproxy::openstack
 }
 
@@ -146,12 +146,10 @@ node /^keystone\d+/ {
   include rjil::keystone
   include rjil::memcached
   include openstack_extras::client
-  include rjil::cinder
   include rjil::glance
   include rjil::nova::controller
   include rjil::openstack_zeromq
   include rjil::db
-  include rjil::openstack_objects
 }
 
 node /^httpproxy\d+/ {

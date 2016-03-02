@@ -23,24 +23,6 @@ resources:
     image: trusty
     networks: default
     boot_volume: default_volume
-  stmonleader:
-    number: 1
-    flavor: storage
-    image: trusty
-    networks: default
-    boot_volume: default_volume
-  stmon:
-    number: 2
-    flavor: storage
-    image: trusty
-    networks: default
-    boot_volume: default_volume
-  st:
-    number: 1
-    flavor: storage
-    image: trusty
-    networks: default
-    boot_volume: default_volume
   vpc-cp:
     number: 1
     flavor: large
@@ -49,7 +31,7 @@ resources:
     boot_volume: default_volume
   vpc-monitor:
     number: 1
-    flavor: large
+    flavor: medium
     image: trusty
     networks: default
     boot_volume: default_volume
