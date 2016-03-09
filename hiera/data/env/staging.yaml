@@ -353,7 +353,7 @@ contrail::dns_port: 10000
 rjil::contrail::server::enable_analytics: false
 rjil::contrail::server::enable_dns: "%{hiera('contrail::enable_dns')}"
 rjil::contrail::server::dns_port: "%{hiera('contrail::dns_port')}"
-contrail::config::quota_floating_ip: 20
+contrail::config::quota_floating_ip: 5
 contrail::config::quota_logical_router: 5
 contrail::config::quota_security_group: 100
 contrail::config::quota_security_group_rule: 50
