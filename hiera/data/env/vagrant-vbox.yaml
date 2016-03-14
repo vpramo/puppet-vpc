@@ -121,6 +121,8 @@ rjil::neutron::contrail::fip_pools:
     public: false
     tenants: ['tempest']
 
+rjil::neutron::contrail::new_iam: true
+
 contrail::vrouter::vgw_subnets: ['100.1.0.0/24']
 rjil::system::apt::env_repositories:
   contrailv2:
@@ -160,32 +162,6 @@ rjil::system::apt::env_repositories:
     key:
       id: '53046A7C'
       source: 'http://10.140.221.229/apt/vpramo/glance/repo.key'
-  iam_repo:
-    location: 'http://10.140.221.229/apt/jioiambot/iamrepo'
-    release: 'jiocloud'
-    repos: 'main'
-    include_src: false
-    architecture: 'amd64'
-    pin:
-      release: 'jiocloud'
-      priority: '1002'
-      label: 'iamrepo'
-    key:
-      id: '8911ABA0'
-      source: 'http://10.140.221.229/apt/jioiambot/iamrepo/repo.key'
-  nova_repo:
-    location: ' http://10.140.221.229/snapshots/e0b7ee6a-e4ab-4729-a06a-b24837423858/10.140.221.229/apt/JioCloudComputeAdmin/JioCloudComputeAdmin'
-    release: 'jiocloud'
-    repos: 'main'
-    include_src: false
-    architecture: 'amd64'
-    pin:
-      release: 'jiocloud'
-      priority: '1002'
-      label: 'JioCloudComputeAdmin'
-    key:
-      id: '52F93B14'
-      source: 'http://10.140.221.229/apt/JioCloudComputeAdmin/JioCloudComputeAdmin/repo.key'
 
 rjil::system::apt::repositories:
   rustedhalo:
@@ -328,4 +304,8 @@ rjil::jiocloud::dns::entries:
   ironic.jiocloud.com:
     cname: lb.ironic.service.consul
 
+neutron::policy::policies:
+  neutron-admin_only:
+    key: 'admin_only'
+    value: 'rule:context_is_admin or tenant_id:%(tenant_id)s'
 
