@@ -737,7 +737,7 @@ contrail::rabbit_user: "%{hiera('rabbit_admin_user')}"
 contrail::rabbit_password: "%{hiera('rabbit_admin_pass')}"
 contrail::vrouter::metadata_proxy_secret: "%{hiera('nova_metadata_proxy_secret')}"
 contrail::vrouter::keystone_admin_user: 'admin'
-contrail::vrouter::keystone_tenant: 'openstack'
+contrail::vrouter::keystone_admin_tenant: 'openstack'
 contrail::vrouter::keystone_admin_password: "%{hiera('admin_password')}"
 contrail::interface: "%{hiera('private_interface')}"
 contrail::manage_repo: false
