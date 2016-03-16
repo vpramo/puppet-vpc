@@ -140,3 +140,5 @@ rjil::rabbitmq::min_members: 1
 rjil::haproxy::contrail::min_members: 1
 rjil::contrail::server::min_members: 1
 
+rjil::nova::compute::rbd_enabled: false
+
