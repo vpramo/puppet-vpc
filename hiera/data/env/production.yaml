@@ -392,6 +392,8 @@ ec2api::ec2api_config:
     value: true
   DEFAULT/ec2api_listen_port:
     value: '443'
+  DEFAULT/ec2api_workers:
+    value: '32'
   DEFAULT/neutron_endpoint_url:
     value: 'https://vpc.ind-west-1.jiocloudservices.com:9696'
   DEFAULT/nova_endpoint_url:
