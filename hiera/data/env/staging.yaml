@@ -235,7 +235,7 @@ keystone_port: 5000
 keystone_admin_port: 35357
 keystone_protocol: https
 keystone_version: 'v3'
-keystone_auth_url: "%{hiera('keystone_protocol')}://%{hiera('keystone_public_address')}:%{hiera('keystone_admin_port')}/%{hiera('keystone_version')}"
+keystone_auth_url: "%{hiera('keystone_protocol')}://%{hiera('keystone_public_address')}:%{hiera('keystone_port')}/%{hiera('keystone_version')}"
 
 
 # Neutron Properties
