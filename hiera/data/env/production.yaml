@@ -211,8 +211,8 @@ rjil::apache::ssl: true
 apache::default_vhost: false
 apache::server_signature: 'Off'
 apache::apache_version: '2.4'
-apache::default_ssl_cert: '/etc/ssl/certs/vpc.ind-west-1.jiocloudservices.com.crt'
-apache::default_ssl_key: '/etc/ssl/keys/vpc.ind-west-1.jiocloudservices.com.key'
+apache::default_ssl_cert: '/etc/ssl/certs/vpc.ind-west-1.internal.jiocloudservices.com.crt'
+apache::default_ssl_key: '/etc/ssl/keys/vpc.ind-west-1.internal.jiocloudservices.com.key'
 apache::trace_enable: 'Off'
 apache::mod::ssl::ssl_cipher: "HIGH:MEDIUM:!aNULL:!MD5:!RC4"
 rjil::trust_selfsigned_cert::cert: '/etc/ssl/certs/vpc.ind-west-1.jiocloudservices.com.crt'
