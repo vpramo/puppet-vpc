@@ -320,19 +320,19 @@ rjil::cassandra::local_ip: "%{hiera('private_address')}"
 #This needs to be verified during setup
 #contrail::vrouter::vrouter_physical_interface: eth1
 #Creation of Public Network disabled till all the facts are clear
-#rjil::neutron::contrail::rt_number: '10003'
-#rjil::neutron::contrail::fip_pools:
-#  public:
-#    network_name: public
-#    subnet_name: public_subnet
-#    cidr: 10.140.200.0/22
-#    subnet_ip_start: 10.140.200.5
-#    subnet_ip_end: 10.140.203.254
-#    public: true
+rjil::neutron::contrail::rt_number: '40000'
+rjil::neutron::contrail::fip_pools:
+  public:
+    network_name: public
+    subnet_name: public_subnet
+    cidr: 10.140.200.0/22
+    subnet_ip_start: 10.140.200.5
+    subnet_ip_end: 10.140.203.254
+    public: true
 # Add MX routers for Contrail
-#contrail::edge_routers:
-#  router1: {host_address: '10.204.115.116'}
-#  router2: {host_address: '10.204.115.117'}
+contrail::edge_routers:
+  router1: {host_address: '10.204.115.116'}
+  router2: {host_address: '10.204.115.117'}
 contrail::keystone_address: "%{hiera('keystone_public_address')}"
 contrail::keystone_admin_token: "%{hiera('keystone_admin_token')}"
 contrail::keystone_admin_user: "%{hiera('neutron_keystone_auth_username')}"
