@@ -202,7 +202,7 @@ neutron_keystone_auth_username: 'neutron_service_user'
 neutron_keystone_auth_password: '5a91bd4b2450e46261d100dcc7a09374'
 
 # Compute
-nova_metadata_address: 'compute.ind-west-1.jiocloudservices.com'
+nova_metadata_address: 'compute.ind-west-1.internal.jiocloudservices.com'
 nova_metadata_proxy_secret: 'neutron'
 
 
@@ -227,10 +227,10 @@ rjil::haproxy::default_timeout_server: 50000
 
 # Keystone Properties
 rjil::jiocloud::dns::entries:
-  iam.ind-west-1.jiocloudservices.com:
-    cname: iam.ind-west-1.jiocloudservices.com
-keystone_public_address: iam.ind-west-1.jiocloudservices.com
-keystone_private_address: iam.ind-west-1.jiocloudservices.com
+  iam.ind-west-1.internal.jiocloudservices.com:
+    cname: iam.ind-west-1.internal.jiocloudservices.com
+keystone_public_address: iam.ind-west-1.internal.jiocloudservices.com
+keystone_private_address: iam.ind-west-1.internal.jiocloudservices.com
 keystone_port: 443
 keystone_admin_port: 443
 keystone_protocol: https
@@ -241,8 +241,8 @@ keystone_auth_url: "%{hiera('keystone_protocol')}://%{hiera('keystone_public_add
 # Neutron Properties
 neutron_localbind_port: 19696
 neutron_port: 9696
-neutron_public_address: 'vpc.ind-west-1.jiocloudservices.com'
-neutron_internal_address: 'vpc.ind-west-1.jiocloudservices.com'
+neutron_public_address: 'vpc.ind-west-1.internal.jiocloudservices.com'
+neutron_internal_address: 'vpc.ind-west-1.internal.jiocloudservices.com'
 
 
 
@@ -395,13 +395,13 @@ ec2api::ec2api_config:
   DEFAULT/ec2api_workers:
     value: '32'
   DEFAULT/neutron_endpoint_url:
-    value: 'https://vpc.ind-west-1.jiocloudservices.com:9696'
+    value: 'https://vpc.ind-west-1.internal.jiocloudservices.com:9696'
   DEFAULT/nova_endpoint_url:
     value: 'https://compute.ind-west-1.internal.jiocloudservices.com:8774/v2/'
   DEFAULT/ssl_cert_file:
-    value: '/etc/ssl/certs/vpc.ind-west-1.jiocloudservices.com.crt'
+    value: '/etc/ssl/certs/vpc.ind-west-1.internal.jiocloudservices.com.crt'
   DEFAULT/ssl_key_file:
-    value: '/etc/ssl/keys/vpc.ind-west-1.jiocloudservices.com.key'
+    value: '/etc/ssl/keys/vpc.ind-west-1.internal.jiocloudservices.com.key'
   database/connection:
     value: 'mysql://vpcjcsapi:yFZ5srcS@10.140.210.9/ec2api'
   keystone_authtoken/auth_port:
