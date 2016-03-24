@@ -129,6 +129,14 @@ rjil::system::apt::env_repositories:
     include_src: false
     architecture: 'amd64'
     allow_unsigned: true
+  glance:
+    location: 'http://54.213.121.28/apt/vpramo/vpramo/'
+    release: 'aasemble'
+    repos: 'main'
+    include_src: false
+    architecture: 'amd64'
+    allow_unsigned: true
+    pin: 800
 
 ntp::servers:
   - 0.pool.ntp.org
