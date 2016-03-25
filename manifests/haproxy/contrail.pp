@@ -24,6 +24,9 @@ class rjil::haproxy::contrail(
   $neutron_backend_ips     = sort(values(service_discover_consul('neutron','real'))),
   $neutron_listen_ports    = 9696,
   $neutron_balancer_ports  = 9696,
+  $consul_listen_ports     = 18500,
+  $consul_balancer_ports   = 8500,
+  $consul_backend_ips       = ['127.0.0.1'],
   $min_members             = '3',
 ) {
 
@@ -87,6 +90,14 @@ class rjil::haproxy::contrail(
     #listen_ports      => $neutron_listen_ports,
     balancer_ports    => $neutron_balancer_ports,
     cluster_addresses => $neutron_backend_ips,
+    require           => Runtime_fail['Haproxy_ready'],
+  }
+
+  rjil::haproxy_service { 'consul':
+    #vip               => $neutron_vip_orig,
+    listen_ports      => $consul_listen_ports,
+    balancer_ports    => $consul_balancer_ports,
+    cluster_addresses => $consul_backend_ips,
     require           => Runtime_fail['Haproxy_ready'],
   }
 }
