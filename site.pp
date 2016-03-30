@@ -32,6 +32,17 @@ node /^vpc-ctrl\d+/ {
 }
 
 
+node /^contrail-ctrl\d+/ {
+  include rjil::base
+  include rjil::redis
+  include rjil::cassandra
+  include rjil::rabbitmq
+  include rjil::zookeeper
+  include rjil::contrail::server
+  include rjil::neutron::contrail
+}
+
+
 
 node /^cp\d+/ {
   include rjil::contrail::vrouter_standalone
@@ -46,7 +57,7 @@ node /^vpc-spare\d+/ {
 
 #Adding CP nodes for full integration testing
 
-node /^vpc-cp\d+/ {
+node /^contrail-cp\d+/ {
   include rjil::base
   include openstack_extras::client
   include rjil::contrail::vrouter
@@ -116,14 +127,14 @@ node /^stmon\d+/ {
 }
 
 #Complete HAPROXY for testing
-node /^haproxy\d+/ {
+node /^service-lb\d+/ {
   include rjil::base
   include rjil::haproxy
   include rjil::haproxy::contrail
   include rjil::haproxy::openstack
 }
 
-node /^keystone\d+/ {
+node /^openstack-ctrl\d+/ {
   include rjil::base
   include rjil::keystone
   include rjil::memcached

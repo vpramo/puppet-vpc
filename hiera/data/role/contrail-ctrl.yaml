@@ -1,0 +1,4 @@
+rjil::zookeeper::seed: false
+rjil::cassandra::seed: false
+contrail::seed: false
+rjil::jiocloud::consul_role: server

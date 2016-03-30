@@ -53,7 +53,7 @@ class rjil::zookeeper (
   # the non-seed nodes should not configure themselves until
   # there is at least one active seed node
   if ! $seed {
-    $zk_id = regsubst($::hostname, '^vpc-ctrl(\d+)$','\1')+1
+    $zk_id = regsubst($::hostname, '^contrail-ctrl(\d+)$','\1')
     notice($zk_id)
     notice($::hostname)
     #rjil::service_blocker { "zookeeper":
@@ -79,7 +79,7 @@ class rjil::zookeeper (
   class { '::zookeeper':
     id        => $zk_id,
     client_ip => $local_ip,
-    servers   => [$hosts['vpc-cfg1']],
+    servers   => [$hosts['contrail-ctrl1'],$hosts['contrail-ctrl2'],$hosts['contrail-ctrl3']],
     datastore => $datastore,
   }
 

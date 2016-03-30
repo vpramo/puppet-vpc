@@ -32,6 +32,7 @@ class rjil::haproxy::contrail(
 
  # Add contrail discovery , contrail api tests here
  $endpoint_tests=['contrail-api.sh','contrail-discovery.sh']
+ package{'python-neutronclient':}
  rjil::test{$endpoint_tests:}
 
   if $api_server_vip {

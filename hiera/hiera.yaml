@@ -7,6 +7,7 @@
 :hierarchy:
   - "clientcert/%{::clientcert}"
   - "secrets/%{env}"
+  - "role/%{hostname}"
   - "role/%{env}/%{jiocloud_role}"
   - "role/%{jiocloud_role}"
   - "hw/%{cloud_provider}/%{productname}"

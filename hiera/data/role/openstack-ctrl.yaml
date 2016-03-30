@@ -1,0 +1,8 @@
+rjil::keystone::disable_db_sync: false
+rjil::jiocloud::consul_role: server
+#public_address: "%{ipaddress_172_20_0_101_32}"
+#public_interface: "%{interface_172_20_0_101_32}"
+#private_address: "%{ipaddress_172_20_0_101_32}"
+#private_interface: "%{interface_172_20_0_101_32}"
+
+

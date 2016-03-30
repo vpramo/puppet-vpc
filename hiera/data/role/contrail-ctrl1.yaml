@@ -1,0 +1,16 @@
+rjil::zookeeper::seed: true
+rjil::cassandra::seed: true
+rjil::neutron::contrail::seed: true
+rjil::jiocloud::consul_role: bootstrapserver
+# etcd serves as the ntp server
+rjil::system::ntp::server: true
+rjil::system::ntp::run_ntpdate: false
+
+ntp::servers: "%{lookup_array('upstream_ntp_servers')}"
+ntp::udlc: yes
+#public_address: "%{ipaddress_172_20_0_104_32}"
+#public_interface: "%{interface_172_20_0_104_32}"
+#private_address: "%{ipaddress_172_20_0_104_32}"
+#private_interface: "%{interface_172_20_0_104_32}"
+
+
