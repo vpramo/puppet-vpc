@@ -48,7 +48,7 @@ rjil::system::apt::env_repositories:
       id: '5DC149F6'
       source: 'http://10.140.221.229/apt/vpcjiocloud/vpcjiocloud/repo.key'
   contrail-main:
-    location: 'http://10.140.221.229/snapshots/5bee8bdf-d503-4fe2-9e01-aa0b1b8f257b/10.140.221.229/apt/vpcjiocloud/contrail/'
+    location: 'http://10.140.221.229/snapshots/611717e2-9ad6-478c-80cf-444a41ba3e06/10.140.221.229/apt/vpcjiocloud/contrail/'
     release: 'jiocloud'
     repos: 'main'
     include_src: false
@@ -231,12 +231,12 @@ rjil::jiocloud::dns::entries:
     cname: iam.ind-west-1.staging.jiocloudservices.com
 keystone_public_address: iam.ind-west-1.staging.jiocloudservices.com
 keystone_private_address: iam.ind-west-1.staging.jiocloudservices.com
-keystone_port: 5000
-keystone_admin_port: 35357
+keystone_port: 443
+keystone_admin_port: 443
 keystone_protocol: https
-keystone_version: 'v3'
-keystone_auth_url: "%{hiera('keystone_protocol')}://%{hiera('keystone_public_address')}:%{hiera('keystone_port')}/%{hiera('keystone_version')}"
-
+#keystone_version: 
+#keystone_auth_url: "%{hiera('keystone_protocol')}://%{hiera('keystone_public_address')}:%{hiera('keystone_port')}/%{hiera('keystone_version')}"
+keystone_auth_url: "%{hiera('keystone_protocol')}://%{hiera('keystone_public_address')}:%{hiera('keystone_port')}"
 
 # Neutron Properties
 neutron_localbind_port: 19696
