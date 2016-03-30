@@ -231,10 +231,10 @@ rjil::jiocloud::dns::entries:
     cname: iam.ind-west-1.staging.jiocloudservices.com
 keystone_public_address: iam.ind-west-1.staging.jiocloudservices.com
 keystone_private_address: iam.ind-west-1.staging.jiocloudservices.com
-keystone_port: 5000
-keystone_admin_port: 35357
+keystone_port: 443
+keystone_admin_port: 443
 keystone_protocol: https
-keystone_version: 'v3'
+keystone_version: 
 keystone_auth_url: "%{hiera('keystone_protocol')}://%{hiera('keystone_public_address')}:%{hiera('keystone_port')}/%{hiera('keystone_version')}"
 
 
