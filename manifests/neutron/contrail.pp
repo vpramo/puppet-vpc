@@ -19,6 +19,7 @@ class rjil::neutron::contrail(
   $router_asn          = 64512,
   $seed                = false,
   $tenants             = undef,
+  $tenant_name         = 'services',
   $new_iam             = false,
 ) {
 
@@ -53,7 +54,8 @@ class rjil::neutron::contrail(
                           keystone_admin_password => $keystone_admin_password,
                           contrail_api_server     => $contrail_api_server,
                           rt_number               => $rt_number,
-                          router_asn              => $router_asn
+                          router_asn              => $router_asn,
+                          tenant_name             => $tenant_name
                         }
      if $new_iam {
        create_resources(rjil::neutron::contrail::new_iam_fip_pool,$fip_pools,$fip_pool_defaults)
