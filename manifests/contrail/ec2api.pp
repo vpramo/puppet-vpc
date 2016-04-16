@@ -35,7 +35,9 @@ class rjil::contrail::ec2api (
   $ec2_api_logs=['ec2api', 'ec2-api']
 
   rjil::jiocloud::logrotate { $ec2_api_logs:
-    logdir => '/var/log'
+    logdir => '/var/log',
+    su => true,
+    su_owner => 'root',
   }
 
 }

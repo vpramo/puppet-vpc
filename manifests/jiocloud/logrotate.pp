@@ -13,6 +13,8 @@ define rjil::jiocloud::logrotate(
   $postrotate    = undef,
   $sharedscripts = undef,
   $missingok     = undef,
+  $su            = undef,
+  $su_owner      = undef
 ) {
   if ( !$logfile ){
       if ($logdir =~ /\/$/) {
@@ -36,5 +38,7 @@ define rjil::jiocloud::logrotate(
     postrotate    => $postrotate,
     sharedscripts => $sharedscripts,
     missingok     => $missingok,
+    su            => $su,
+    su_owner      => $su_owner,
   }
 }
