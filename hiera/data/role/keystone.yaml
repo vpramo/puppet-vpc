@@ -51,7 +51,7 @@ rjil::system::apt::env_repositories:
       id: '8911ABA0'
       source: 'http://10.140.221.229/apt/jioiambot/iamrepo/repo.key'
   nova_repo:
-    location: 'http://10.140.221.229/snapshots/e256f124-85b9-42cf-8358-a2bf065eead0/10.140.221.229/apt/JioCloudComputeAdmin/JioCloudComputeAdmin'
+    location: 'http://10.140.221.229/snapshots/9346dd6e-f27d-4044-83d2-1deb63282358/10.140.221.229/apt/JioCloudComputeAdmin/JioCloudComputeAdmin'
     release: 'jiocloud'
     repos: 'main'
     include_src: false

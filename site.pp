@@ -143,9 +143,7 @@ node /^haproxy\d+/ {
 
 node /^keystone\d+/ {
   include rjil::base
-  include rjil::keystone
-  include rjil::memcached
-  include openstack_extras::client
+  #include openstack_extras::client
   include rjil::glance
   include rjil::nova::controller
   include rjil::openstack_zeromq

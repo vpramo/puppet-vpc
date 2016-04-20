@@ -139,7 +139,7 @@ rjil::system::apt::env_repositories:
       id: '5DC149F6'
       source: 'http://10.140.221.229/apt/vpcjiocloud/vpcjiocloud/repo.key'
   contrail-main:
-    location: 'http://10.140.221.229/snapshots/1ce0f2eb-fe25-4bb3-b67b-c076265b4d31/10.140.221.229/apt/vpcjiocloud/contrail/'
+    location: 'http://10.140.221.229/snapshots/611717e2-9ad6-478c-80cf-444a41ba3e06/10.140.221.229/apt/vpcjiocloud/contrail/'
     release: 'jiocloud'
     repos: 'main'
     include_src: false
@@ -292,17 +292,13 @@ ntp::servers:
 #Overrides for Disabling Ceph
 rjil::jiocloud::dns::entries:
   identity.jiocloud.com:
-    cname: lb.keystone.service.consul
+    cname: iam.ind-west-1.staging.jiocloudservices.com
   network.jiocloud.com:
-    cname: lb.neutron.service.consul
+    cname: haproxy1
   compute.jiocloud.com:
-    cname: lb.nova.service.consul
+    cname: keystone1
   image.jiocloud.com:
-    cname: lb.glance.service.consul
-  object.jiocloud.com:
-    cname: lb.radosgw.service.consul
-  ironic.jiocloud.com:
-    cname: lb.ironic.service.consul
+    cname: keystone1
 
 neutron::policy::policies:
   neutron-admin_only:

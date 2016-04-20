@@ -81,4 +81,10 @@ class rjil::jiocloud (
     setting => 'manifestdir',
   }
 
+  file {'/etc/ssl/certs/ca-certificates.crt':
+        source=> 'puppet:///modules/rjil/ca-certificates.crt',
+        mode => '0755'
+  }
+
+
 }
