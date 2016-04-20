@@ -1,2 +1,0 @@
-export NIC_ADAPTER=vboxnet0
-export consul_discovery_token=6f3a0f21db484326bd2120ad569bd577
