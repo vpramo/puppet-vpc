@@ -3,4 +3,5 @@ mysql::server::override_options:
   mysqld:
     bind-address: '0.0.0.0'
     skip-grant-tables: ''
-ec2api::db::mysql::host: '*' 
+mysql::server::restart: true
+ec2api::db::mysql::allowed_hosts: ['keystone1'] 

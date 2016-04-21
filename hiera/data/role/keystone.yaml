@@ -32,7 +32,7 @@ rjil::system::apt::env_repositories:
     include_src: false
     pin:
       release: 'jiocloud'
-      priority: '800'
+      priority: '1003'
       label: 'glance'
     key:
       id: '53046A7C'
