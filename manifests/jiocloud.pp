@@ -36,11 +36,11 @@ class rjil::jiocloud (
   include "rjil::jiocloud::consul::${consul_role}"
 
   include rjil::jiocloud::consul::base_checks
-  apt::pin {'tzdata-apt-pin':
-    priority => 1001,
-    packages => 'tzdata',
-    version  => '2015g-0ubuntu0.14.04'
-  }
+  #apt::pin {'tzdata-apt-pin':
+  #  priority => 1001,
+  #  packages => 'tzdata',
+  #  version  => '2015g-0ubuntu0.14.04'
+  #}
 
   package { 'run-one':
     ensure => present,
