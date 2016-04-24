@@ -121,6 +121,8 @@ rjil::neutron::contrail::fip_pools:
     public: false
     tenants: ['tempest']
 
+rjil::neutron::contrail::new_iam: true
+
 contrail::vrouter::vgw_subnets: ['100.1.0.0/24']
 rjil::system::apt::env_repositories:
   contrailv2:
@@ -137,7 +139,7 @@ rjil::system::apt::env_repositories:
       id: '5DC149F6'
       source: 'http://10.140.221.229/apt/vpcjiocloud/vpcjiocloud/repo.key'
   contrail-main:
-    location: 'http://10.140.221.229/snapshots/1ce0f2eb-fe25-4bb3-b67b-c076265b4d31/10.140.221.229/apt/vpcjiocloud/contrail/'
+    location: 'http://10.140.221.229/snapshots/611717e2-9ad6-478c-80cf-444a41ba3e06/10.140.221.229/apt/vpcjiocloud/contrail/'
     release: 'jiocloud'
     repos: 'main'
     include_src: false
@@ -160,32 +162,6 @@ rjil::system::apt::env_repositories:
     key:
       id: '53046A7C'
       source: 'http://10.140.221.229/apt/vpramo/glance/repo.key'
-  iam_repo:
-    location: 'http://10.140.221.229/apt/jioiambot/iamrepo'
-    release: 'jiocloud'
-    repos: 'main'
-    include_src: false
-    architecture: 'amd64'
-    pin:
-      release: 'jiocloud'
-      priority: '1002'
-      label: 'iamrepo'
-    key:
-      id: '8911ABA0'
-      source: 'http://10.140.221.229/apt/jioiambot/iamrepo/repo.key'
-  nova_repo:
-    location: ' http://10.140.221.229/snapshots/e0b7ee6a-e4ab-4729-a06a-b24837423858/10.140.221.229/apt/JioCloudComputeAdmin/JioCloudComputeAdmin'
-    release: 'jiocloud'
-    repos: 'main'
-    include_src: false
-    architecture: 'amd64'
-    pin:
-      release: 'jiocloud'
-      priority: '1002'
-      label: 'JioCloudComputeAdmin'
-    key:
-      id: '52F93B14'
-      source: 'http://10.140.221.229/apt/JioCloudComputeAdmin/JioCloudComputeAdmin/repo.key'
 
 rjil::system::apt::repositories:
   rustedhalo:
@@ -316,16 +292,16 @@ ntp::servers:
 #Overrides for Disabling Ceph
 rjil::jiocloud::dns::entries:
   identity.jiocloud.com:
-    cname: lb.keystone.service.consul
+    cname: iam.ind-west-1.staging.jiocloudservices.com
   network.jiocloud.com:
-    cname: lb.neutron.service.consul
+    cname: haproxy1
   compute.jiocloud.com:
-    cname: lb.nova.service.consul
+    cname: keystone1
   image.jiocloud.com:
-    cname: lb.glance.service.consul
-  object.jiocloud.com:
-    cname: lb.radosgw.service.consul
-  ironic.jiocloud.com:
-    cname: lb.ironic.service.consul
+    cname: keystone1
 
+neutron::policy::policies:
+  neutron-admin_only:
+    key: 'admin_only'
+    value: 'rule:context_is_admin or tenant_id:%(tenant_id)s'
 

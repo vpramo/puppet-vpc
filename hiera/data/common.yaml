@@ -63,7 +63,7 @@ rjil::jiocloud::dns::entries:
   network.jiocloud.com:
     cname: lb.neutron.service.consul
   compute.jiocloud.com:
-    cname: lb.nova.service.consul
+    cname: keystone1
   image.jiocloud.com:
     cname: lb.glance.service.consul
   object.jiocloud.com:
@@ -75,8 +75,8 @@ rjil::jiocloud::dns::entries:
 ######## Openstack configs #########
 ####################################
 
-keystone_public_address: identity.jiocloud.com
-keystone_private_address: identity.jiocloud.com
+keystone_public_address: iam.ind-west-1.staging.jiocloudservices.com
+keystone_private_address: iam.ind-west-1.staging.jiocloudservices.com
 
 nova_public_address: compute.jiocloud.com
 nova_internal_address: compute.jiocloud.com
@@ -149,9 +149,9 @@ cinder_localbind_port: 18776
 cinder_port: 8776
 
 keystone_localbind_port: 15000
-keystone_port: 5000
+keystone_port: 443
 keystone_admin_localbind_port: 35358
-keystone_admin_port: 35357
+keystone_admin_port: 443
 
 glance_api_localbind_port: 19292
 glance_api_port: 9292
@@ -251,7 +251,7 @@ neutron::server::database_connection: "mysql://%{hiera('neutron_db_user')}:%{hie
 neutron::server::auth_password: "%{hiera('neutron::keystone::auth::password')}"
 neutron::server::auth_host: "%{hiera('keystone_public_address')}"
 neutron::server::auth_protocol: "%{hiera('rjil::keystone::protocol')}"
-neutron::server::auth_uri: "%{hiera('rjil::keystone::protocol')}://%{hiera('neutron::server::auth_host')}:%{hiera('keystone_admin_port')}/v3"
+neutron::server::auth_uri: "%{hiera('rjil::keystone::protocol')}://%{hiera('neutron::server::auth_host')}:%{hiera('keystone_port')}"
 neutron::server::mysql_module: 2.3
 neutron::rabbit_user: "%{hiera('rabbit_admin_user')}"
 neutron::rabbit_password: "%{hiera('rabbit_admin_pass')}"
@@ -1117,7 +1117,7 @@ ec2api::ec2api_config:
   DEFAULT/full_vpc_support:
     value: True
   DEFAULT/keystone_url:
-    value: "%{hiera('rjil::keystone::protocol')}://%{hiera('nova::api::auth_host')}:%{hiera('keystone_port')}/%{hiera('rjil::keystone::version')}"
+    value: "%{hiera('rjil::keystone::protocol')}://%{hiera('nova::api::auth_host')}:%{hiera('keystone_port')}"
   DEFAULT/verbose:
     value: True
   DEFAULT/log_dir:
@@ -1126,6 +1126,12 @@ ec2api::ec2api_config:
     value: '/etc/ec2api/api-paste.ini'
   DEFAULT/ec2api_use_ssl:
     value: true
+  DEFAULT/ec2api_listen_port:
+    value: '443'
+  DEFAULT/neutron_endpoint_url:
+    value: 'https://network.jiocloud.com:9696'
+  DEFAULT/nova_endpoint_url:
+    value: 'https://compute.jiocloud.com:8774/v2/'
   DEFAULT/ssl_cert_file:
     value: '/etc/ssl/certs/jiocloud.com.crt'
   DEFAULT/ssl_key_file:
@@ -1133,7 +1139,7 @@ ec2api::ec2api_config:
   database/connection:
     value: 'mysql://ec2api:ec2api@127.0.0.1/ec2api?charset=utf8'
   keystone_authtoken/auth_port:
-    value: 35357
+    value: 443
   keystone_authtoken/auth_protocol:
     value: https
   keystone_authtoken/auth_host:
