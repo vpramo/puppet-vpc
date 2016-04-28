@@ -1,13 +1,13 @@
 # System Settings
-public_address: "%{ipaddress_10_140_214_0_23}"
-public_interface: "%{interface_10_140_214_0_23}"
-private_address: "%{ipaddress_10_140_214_0_23}"
-private_interface: "%{interface_10_140_214_0_23}"
+public_address: "%{ipaddress_10_140_210_0_23}"
+public_interface: "%{interface_10_140_210_0_23}"
+private_address: "%{ipaddress_10_140_210_0_23}"
+private_interface: "%{interface_10_140_210_0_23}"
 rjil::base::self_signed_cert: true
 upstream_ntp_servers:
-  - 10.140.214.14
+  - 10.140.192.4
 ntp::servers:
-  - 10.140.214.14
+  - 10.140.192.4
 localbind_host: 127.0.0.1
 ssh::server::storeconfigs_enabled: false
 
@@ -33,7 +33,7 @@ apt::purge:
 rjil::system::apt::enable_puppetlabs: true
 rjil::system::apt::env_repositories:
   contrailv2:
-    location: 'http://10.140.221.229/snapshots/cbda4e14-562e-44d1-81d2-8a92fc216105/jiocloud.rustedhalo.com/contrailv2/'
+    location: "http://10.140.221.229/snapshots/%{hiera('contrail_old_snap')}/jiocloud.rustedhalo.com/contrailv2/"
     release: 'trusty'
     repos: 'main'
     include_src: false
@@ -48,7 +48,7 @@ rjil::system::apt::env_repositories:
       id: '5DC149F6'
       source: 'http://10.140.221.229/apt/vpcjiocloud/vpcjiocloud/repo.key'
   contrail-main:
-    location: 'http://10.140.221.229/snapshots/2010676d-75a5-47fe-a276-b3881a55a004/10.140.221.229/apt/vpcjiocloud/contrail/'
+    location: "http://10.140.221.229/snapshots/%{hiera('contrail_main_snap')}/10.140.221.229/apt/vpcjiocloud/contrail/"
     release: 'jiocloud'
     repos: 'main'
     include_src: false
@@ -62,7 +62,7 @@ rjil::system::apt::env_repositories:
       source: 'http://10.140.221.229/apt/vpcjiocloud/contrail/repo.key'
 rjil::system::apt::repositories:
   rustedhalo:
-    location: 'http://10.140.221.229/snapshots/8f23f6d7-719b-4898-a201-d4672cd37773/jiocloud.rustedhalo.com/ubuntu/'
+    location: "http://10.140.221.229/snapshots/%{hiera('rustedhalo_snap')}/jiocloud.rustedhalo.com/ubuntu/"
     release: "%{hiera('rustedhalo_apt_repo_release')}"
     repos: 'main'
     include_src: false
@@ -100,25 +100,25 @@ rjil::system::apt::repositories:
       =iZW7
       -----END PGP PUBLIC KEY BLOCK-----
   ubuntu:
-    location: 'http://10.140.221.229/snapshots/5f7eac30-afdf-47ad-8ca2-4c2f9ce49930/in.archive.ubuntu.com/ubuntu'
+    location: "http://10.140.221.229/snapshots/%{hiera('ubuntu_main_snap')}/in.archive.ubuntu.com/ubuntu"
     release: 'trusty'
     repos: 'main restricted universe multiverse'
     include_src: false
     architecture: 'amd64'
   ubuntu_updates:
-    location: 'http://10.140.221.229/snapshots/d84b8cc3-846b-4b64-9688-827b437b73b1/in.archive.ubuntu.com/ubuntu'
+    location: "http://10.140.221.229/snapshots/%{hiera('ubuntu_updates_snap')}/in.archive.ubuntu.com/ubuntu"
     release: 'trusty-updates'
     repos: 'main restricted universe multiverse'
     include_src: false
     architecture: 'amd64'
   ubuntu_security:
-    location: 'http://10.140.221.229/snapshots/b538b5c0-80e3-47c7-9791-a98f6ef37093/in.archive.ubuntu.com/ubuntu'
+    location: "http://10.140.221.229/snapshots/%{hiera('ubuntu_security_snap')}/in.archive.ubuntu.com/ubuntu"
     release: 'trusty-security'
     repos: 'main restricted universe multiverse'
     include_src: false
     architecture: 'amd64'
   ubuntu_kilo:
-    location: 'http://10.140.221.229/snapshots/5b1646b3-6124-4e6b-a42b-e1af7428c5d9/ubuntu-cloud.archive.canonical.com/ubuntu'
+    location: "http://10.140.221.229/snapshots/%{hiera('ubuntu_kilo_snap')}/ubuntu-cloud.archive.canonical.com/ubuntu"
     release: 'trusty-updates/kilo'
     repos: 'main'
     include_src: false
@@ -202,7 +202,7 @@ neutron_keystone_auth_username: 'neutron_service_user'
 neutron_keystone_auth_password: '5a91bd4b2450e46261d100dcc7a09374'
 
 # Compute
-nova_metadata_address: 'compute.ind-west-1.staging.jiocloudservices.com'
+nova_metadata_address: 'compute.ind-west-1.internal.jiocloudservices.com'
 nova_metadata_proxy_secret: 'neutron'
 
 
@@ -211,11 +211,11 @@ rjil::apache::ssl: true
 apache::default_vhost: false
 apache::server_signature: 'Off'
 apache::apache_version: '2.4'
-apache::default_ssl_cert: '/etc/ssl/certs/vpc.ind-west-1.staging.jiocloudservices.com.crt'
-apache::default_ssl_key: '/etc/ssl/keys/vpc.ind-west-1.staging.jiocloudservices.com.key'
+apache::default_ssl_cert: '/etc/ssl/certs/vpc.ind-west-1.internal.jiocloudservices.com.crt'
+apache::default_ssl_key: '/etc/ssl/keys/vpc.ind-west-1.internal.jiocloudservices.com.key'
 apache::trace_enable: 'Off'
 apache::mod::ssl::ssl_cipher: "HIGH:MEDIUM:!aNULL:!MD5:!RC4"
-rjil::trust_selfsigned_cert::cert: '/etc/ssl/certs/vpc.ind-west-1.staging.jiocloudservices.com.crt'
+rjil::trust_selfsigned_cert::cert: '/etc/ssl/certs/vpc.ind-west-1.jiocloudservices.com.crt'
 
 
 
@@ -227,22 +227,22 @@ rjil::haproxy::default_timeout_server: 50000
 
 # Keystone Properties
 rjil::jiocloud::dns::entries:
-  iam.ind-west-1.staging.jiocloudservices.com:
-    cname: iam.ind-west-1.staging.jiocloudservices.com
-keystone_public_address: iam.ind-west-1.staging.jiocloudservices.com
-keystone_private_address: iam.ind-west-1.staging.jiocloudservices.com
+  iam.ind-west-1.internal.jiocloudservices.com:
+    cname: iam.ind-west-1.internal.jiocloudservices.com
+keystone_public_address: iam.ind-west-1.internal.jiocloudservices.com
+keystone_private_address: iam.ind-west-1.internal.jiocloudservices.com
 keystone_port: 443
 keystone_admin_port: 443
 keystone_protocol: https
-#keystone_version: 
-#keystone_auth_url: "%{hiera('keystone_protocol')}://%{hiera('keystone_public_address')}:%{hiera('keystone_port')}/%{hiera('keystone_version')}"
-keystone_auth_url: "%{hiera('keystone_protocol')}://%{hiera('keystone_public_address')}:%{hiera('keystone_port')}"
+keystone_version: 'v3'
+keystone_auth_url: "%{hiera('keystone_protocol')}://%{hiera('keystone_public_address')}:%{hiera('keystone_admin_port')}/"
+
 
 # Neutron Properties
 neutron_localbind_port: 19696
 neutron_port: 9696
-neutron_public_address: 'vpc.ind-west-1.staging.jiocloudservices.com'
-neutron_internal_address: 'vpc.ind-west-1.staging.jiocloudservices.com'
+neutron_public_address: 'vpc.ind-west-1.internal.jiocloudservices.com'
+neutron_internal_address: 'vpc.ind-west-1.internal.jiocloudservices.com'
 
 
 
@@ -286,6 +286,7 @@ rjil::neutron::contrail::public_network_name: "%{hiera('public_network_name')}"
 rjil::neutron::contrail::fip_pool::keystone_admin_user: "%{hiera('neutron_keystone_auth_username')}"
 rjil::neutron::contrail::fip_pool::keystone_admin_password: "%{hiera('neutron_keystone_auth_password')}"
 rjil::neutron::contrail::new_iam: true
+rjil::neutron::contrail::tenant_name: 'Customer-00000000000000000000723220141072'
 rjil::neutron::server_name: "%{hiera('neutron_public_address')}"
 rjil::neutron::ssl: true
 rjil::neutron::rewrites:
@@ -320,14 +321,14 @@ rjil::cassandra::local_ip: "%{hiera('private_address')}"
 #This needs to be verified during setup
 #contrail::vrouter::vrouter_physical_interface: eth1
 #Creation of Public Network disabled till all the facts are clear
-rjil::neutron::contrail::rt_number: '10003'
+rjil::neutron::contrail::rt_number: '40000'
 rjil::neutron::contrail::fip_pools:
   public:
     network_name: public
     subnet_name: public_subnet
-    cidr: 10.140.213.0/24
-    subnet_ip_start: 10.140.213.5
-    subnet_ip_end: 10.140.213.254
+    cidr: 10.140.200.0/22
+    subnet_ip_start: 10.140.200.5
+    subnet_ip_end: 10.140.203.254
     public: true
 # Add MX routers for Contrail
 contrail::edge_routers:
@@ -370,8 +371,9 @@ contrail::vrouter::manage_repo: false
 contrail::vrouter::package_ensure: 'latest'
 contrail::vrouter::debug: true
 contrail::vrouter::interface_is_dhcp: false
-rjil::contrail::vrouter_standalone::discovery_address: 'vpc.ind-west-1.staging.jiocloudservices.com'
-rjil::contrail::vrouter_standalone::vrouter_physical_interface: 'em3'
+rjil::contrail::vrouter_standalone::discovery_address: 'vpc.ind-west-1.internal.jiocloudservices.com'
+rjil::contrail::vrouter_standalone::vrouter_physical_interface: 'em49'
+rjil::contrail::vrouter_standalone::vrouter_physical_interface_backup: 'em3'
 
 # EC2API Settings
 rjil::contrail::ec2api::db_provision: false
@@ -392,16 +394,18 @@ ec2api::ec2api_config:
     value: true
   DEFAULT/ec2api_listen_port:
     value: '443'
+  DEFAULT/ec2api_workers:
+    value: '32'
   DEFAULT/neutron_endpoint_url:
-    value: 'https://vpc.ind-west-1.staging.jiocloudservices.com:9696'
+    value: 'https://vpc.ind-west-1.internal.jiocloudservices.com:9696'
   DEFAULT/nova_endpoint_url:
-    value: 'https://compute.ind-west-1.staging.deprecated.jiocloudservices.com:8774/v2/'
+    value: 'https://compute.ind-west-1.internal.jiocloudservices.com:8774/v2/'
   DEFAULT/ssl_cert_file:
-    value: '/etc/ssl/certs/vpc.ind-west-1.staging.jiocloudservices.com.crt'
+    value: '/etc/ssl/certs/vpc.ind-west-1.internal.jiocloudservices.com.crt'
   DEFAULT/ssl_key_file:
-    value: '/etc/ssl/keys/vpc.ind-west-1.staging.jiocloudservices.com.key'
+    value: '/etc/ssl/keys/vpc.ind-west-1.internal.jiocloudservices.com.key'
   database/connection:
-    value: 'mysql://rwuser:4fEUAG@10.140.214.73/ec2api'
+    value: 'mysql://vpcjcsapi:yFZ5srcS@10.140.210.9/ec2api'
   keystone_authtoken/auth_port:
     value: "%{hiera('keystone_port')}"
   keystone_authtoken/auth_protocol:

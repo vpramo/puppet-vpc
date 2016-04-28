@@ -49,7 +49,7 @@ OUTPERF_FORMAT  = "P {entity} {perf} {message}"
 class Netstat(object):
     @classmethod
     def tcp_check(cls, port):
-        cmd = "netstat -t --numeric-hosts | grep "+str(port)
+        cmd = 'netstat -t --numeric-hosts | grep ":{} "'.format(str(port))
         return subprocess.check_output(cmd,shell=True)
 
 #Telnet class

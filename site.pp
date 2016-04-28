@@ -48,6 +48,11 @@ node /^cp\d+/ {
   include rjil::monitoring::cp
 }
 
+node /^prod-cp\d+/ {
+  include rjil::contrail::vrouter_standalone
+  include rjil::omd_client
+  include rjil::monitoring::cp
+}
 
 node /^vpc-aws\d+/ {
   include rjil::base
