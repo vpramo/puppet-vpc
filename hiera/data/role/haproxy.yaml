@@ -2,6 +2,5 @@ rjil::haproxy::consul_service_tags: ['global']
 mysql::server::override_options:
   mysqld:
     bind-address: '0.0.0.0'
-    skip-grant-tables: true
 mysql::server::restart: true
-ec2api::db::mysql::allowed_hosts: ['keystone1'] 
+ec2api::db::mysql::allowed_hosts: ['keystone1','image.jiocloud.com','compute.jiocloud.com'] 
