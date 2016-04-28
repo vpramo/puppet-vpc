@@ -144,6 +144,7 @@ node /^haproxy\d+/ {
   include rjil::haproxy
   include rjil::haproxy::contrail
   include rjil::haproxy::openstack
+  include rjil::pacemaker
 }
 
 node /^keystone\d+/ {

@@ -234,5 +234,10 @@ mod 'puppetlabs/xinetd',
 
 mod 'vpramo/ec2api',
   :git => "#{base_url}/vpramo/puppet-ec2api",
-  :ref => 'enable_puppet_ec2api' 
+  :ref => 'enable_puppet_ec2api'
+
+mod 'puppetlabs/corosync',
+  :git => "#{base_url}/puppet-community/puppet-corosync",
+  :ref => 'master'
+
 

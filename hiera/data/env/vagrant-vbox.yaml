@@ -285,3 +285,5 @@ ntp::servers:
   - 10.140.221.232
   - 10.140.221.236
 
+rjil::pacemaker::ipaddress: "%{ipaddress_eth1}"
+

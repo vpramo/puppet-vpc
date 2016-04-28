@@ -75,20 +75,6 @@ class rjil::pacemaker(
     operations      => { 'monitor' => { 'interval' => $haproxy_monitor_interval } },
   }
 
-  cs_clone { 'haproxy_vip_clone' :
-    ensure    => present,
-    primitive => 'haproxy_vip',
-    clone_max => $vip_clone_max,
-    clone_node_max => $vip_clone_node_max,
-    globally_unique => true,
-    require   => Cs_primitive['haproxy_vip'],
-  }
-
-  cs_clone { 'haproxy_clone' :
-    ensure    => present,
-    primitive => 'haproxy',
-    require   => Cs_primitive['haproxy'],
-  }
 
   cs_colocation { 'vip_with_service':
     primitives => [ 'haproxy_vip', 'haproxy' ],
