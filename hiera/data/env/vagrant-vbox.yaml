@@ -305,3 +305,4 @@ neutron::policy::policies:
     key: 'admin_only'
     value: 'rule:context_is_admin or tenant_id:%(tenant_id)s'
 
+rjil::haproxy::contrail::ec2api_listen_ports: '1443'
