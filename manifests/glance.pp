@@ -30,14 +30,15 @@ class rjil::glance (
   # ensure that we don't even try to configure the
   # database connection until the service is up
   ensure_resource( 'rjil::service_blocker', 'mysql', {})
-  Rjil::Service_blocker['mysql'] -> Glance_api_config<| title == 'database/connection' |>
-  Rjil::Service_blocker['mysql'] -> Glance_registry_config<| title == 'database/connection' |>
+  exec{'glance-manage db sync':}
+  Rjil::Service_blocker['mysql'] -> Exec['glance-manage db sync']
+  #Rjil::Service_blocker['mysql'] -> Glance_registry_config<| title == 'database/connection' |>
 
   ## setup glance api
-  include ::glance::api
+  #include ::glance::api
 
   ## Setup glance registry
-  include ::glance::registry
+  #include ::glance::registry
 
   include rjil::apache
 
@@ -77,43 +78,43 @@ class rjil::glance (
     logfile => '/var/log/glance/registry.log'
   }
 
-  if($backend == 'swift') {
+  #if($backend == 'swift') {
     ## Swift backend
-    include ::glance::backend::swift
-  } elsif($backend == 'file') {
+    #include ::glance::backend::swift
+  #} elsif($backend == 'file') {
     # File storage backend
-    include ::glance::backend::file
-  } elsif($backend == 'rbd') {
+    #include ::glance::backend::file
+  #} elsif($backend == 'rbd') {
     # Rbd backend
-    include rjil::ceph
-    include rjil::ceph::mon_config
-    ensure_resource('rjil::service_blocker', 'stmon', {})
-    Rjil::Service_blocker['stmon'] -> Class['rjil::ceph::mon_config'] ->
-    Class['::glance::backend::rbd']
-    Class['glance::api'] -> Ceph::Auth['glance_client']
+    #include rjil::ceph
+    #include rjil::ceph::mon_config
+    #ensure_resource('rjil::service_blocker', 'stmon', {})
+    #Rjil::Service_blocker['stmon'] -> Class['rjil::ceph::mon_config'] ->
+    #Class['::glance::backend::rbd']
+    #Class['glance::api'] -> Ceph::Auth['glance_client']
 
-    if ! $ceph_mon_key {
-      fail("Parameter ceph_mon_key is not defined")
-    }
-    ::ceph::auth {'glance_client':
-      mon_key      => $ceph_mon_key,
-      client       => $rbd_user,
-      file_owner   => $ceph_keyring_file_owner,
-      keyring_path => $ceph_keyring_path,
-      cap          => $ceph_keyring_cap,
-    }
+    #if ! $ceph_mon_key {
+    #  fail("Parameter ceph_mon_key is not defined")
+    #}
+    #::ceph::auth {'glance_client':
+    #  mon_key      => $ceph_mon_key,
+   #   client       => $rbd_user,
+    #  file_owner   => $ceph_keyring_file_owner,
+     # keyring_path => $ceph_keyring_path,
+     # cap          => $ceph_keyring_cap,
+    #}#
 
-    ::ceph::conf::clients {'glance':
-      keyring => $ceph_keyring_path,
-    }
+    #::ceph::conf::clients {'glance':
+    #  keyring => $ceph_keyring_path,
+    #}
 
-    include ::glance::backend::rbd
-  } elsif($backend == 'cinder') {
+    #include ::glance::backend::rbd
+  #} elsif($backend == 'cinder') {
     # Cinder backend
-    include ::glance::backend::cinder
-  } else {
-    fail("Unsupported backend ${backend}")
-  }
+  #  include ::glance::backend::cinder
+ # } else {
+   # fail("Unsupported backend ${backend}")
+  #}
 
   rjil::test::check { 'glance':
     type    => 'http',
@@ -137,12 +138,11 @@ class rjil::glance (
     tags          => ['real'],
     port          => $::glance::registry::bind_port,
   }
-
-  file { "/etc/glance/policy.json":
-    ensure  => file,
-    owner   => 'root',
-    mode    => '0644',
-    content => template('rjil/glance_policy.erb'),
-    notify  => Service['glance-api'],
-  }
+#  file { "/etc/glance/policy.json":
+#    ensure  => file,
+#    owner   => 'root',
+#    mode    => '0644',
+#    content => template('rjil/glance_policy.erb'),
+#    notify  => Service['glance-api'],
+#  }
 }

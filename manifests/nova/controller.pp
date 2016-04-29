@@ -39,14 +39,14 @@ class rjil::nova::controller (
 ) {
 
 # Tests
-  include rjil::test::nova_controller
+  #include rjil::test::nova_controller
 
-  nova_config {
-    'DEFAULT/default_floating_pool':      value => $default_floating_pool;
-    'DEFAULT/osapi_compute_listen_port':  value => $osapi_localbind_port;
-    'DEFAULT/ec2_listen_port':            value => $ec2_localbind_port;
-    'DEFAULT/max_local_block_devices':    value => $max_local_block_devices;
-  }
+  #nova_config {
+  #  'DEFAULT/default_floating_pool':      value => $default_floating_pool;
+  #  'DEFAULT/osapi_compute_listen_port':  value => $osapi_localbind_port;
+  #  'DEFAULT/ec2_listen_port':            value => $ec2_localbind_port;
+  #  'DEFAULT/max_local_block_devices':    value => $max_local_block_devices;
+  #}
 
   include rjil::apache
 
@@ -89,10 +89,10 @@ class rjil::nova::controller (
     $fail = false
   }
 
-  runtime_fail {'fail_before_nova':
-    fail    => $fail,
-    message => 'Memcache serverlist cannot be empty',
-  }
+ # runtime_fail {'fail_before_nova':
+ #   fail    => $fail,
+ #   message => 'Memcache serverlist cannot be empty',
+ # }
 
   ##
   # Adding service blocker for mysql which make sure mysql is available before
@@ -100,39 +100,44 @@ class rjil::nova::controller (
   ##
 
   ensure_resource( 'rjil::service_blocker', 'mysql', {})
-  Rjil::Service_blocker['mysql'] ->
-  Nova_config<| title == 'database/connection' |>
+  exec{'nova-manage db sync':
+  }
+  
+Rjil::Service_blocker['mysql'] -> Exec['nova-manage db sync']
+  #Nova_config<| title == 'database/connection' |>
 
   ##
   # memcached service blocker to make sure memcached is up before memcached
   # configuration in nova.
   ##
-  ensure_resource('rjil::service_blocker','memcached',{})
-  Rjil::Service_blocker['memcached'] ->
-  Runtime_fail['fail_before_nova'] ->
-  Nova_config<| title == 'DEFAULT/memcached_servers' |>
+  #ensure_resource('rjil::service_blocker','memcached',{})
+  include rjil::os_config
+  #Rjil::Service_blocker['memcached'] ->
+  #Runtime_fail['fail_before_nova'] ->
+  #Nova_config<| title == 'DEFAULT/memcached_servers' |>
 
   ##
   # db_sync fail if nova-manage.log is writable by nova user, so making the file
   # with appropriate ownership before setup database configuration.
   ##
 
-  File['/var/log/nova/nova-manage.log'] ->
-  Nova_config<| title == 'database/connection' |>
+  #File['/var/log/nova/nova-manage.log'] ->
+  #Nova_config<| title == 'database/connection' |>
 
   ##
   # Make sure nova services refreshed on matchmakerring config changes.
   ##
 
-  Matchmakerring_config<||> ~> Exec['post-nova_config']
-
+  Matchmakerring_config<||> ~> Service['nova-api']
+  Matchmakerring_config<||> ~> Service['nova-conductor']
+  Matchmakerring_config<||> ~> Service['nova-scheduler']
   ##
   # python-six(1.8.x) is required which are not handled in the package.
   # So handling here.
   ##
   ensure_resource('package','python-six',{ensure => latest})
 
-  Package['python-six'] -> Class['nova::api']
+  #Package['python-six'] -> Class['nova::api']
 
   ##
   # Python-memcache is a dependancy to use memcache, but not handled in the
@@ -140,31 +145,31 @@ class rjil::nova::controller (
   ##
   package {'python-memcache': ensure => installed }
 
-  Package['python-memcache'] -> Class['nova']
+  #Package['python-memcache'] -> Class['nova']
 
 
-  $memcache_url = split(inline_template('<%= @memcached_servers.map{ |ip| "#{ip}:#{@memcached_port}" }.join(",") %>'),',')
+  #$memcache_url = split(inline_template('<%= @memcached_servers.map{ |ip| "#{ip}:#{@memcached_port}" }.join(",") %>'),',')
 
   include ::rjil::nova::zmq_config
-  include ::nova::client
-  class {'::nova':
-    memcached_servers => $memcache_url
-  }
-  include ::nova::scheduler
-  include ::nova::api
-  include ::nova::network::neutron
-  include ::nova::conductor
-  include ::nova::cert
-  include ::nova::consoleauth
-  include ::nova::vncproxy
-  include ::nova::quota
+ # include ::nova::client
+  #class {'::nova':
+  #  memcached_servers => $memcache_url
+  #}
+  #include ::nova::scheduler
+  #include ::nova::api
+  #include ::nova::network::neutron
+  #include ::nova::conductor
+ # include ::nova::cert
+ # include ::nova::consoleauth
+ # include ::nova::vncproxy
+ # include ::nova::quota
 
   if $manage_flavors {
     ##
     # Create flavors
     ##
-    #Service['httpd'] -> Nova_flavor<||>
-    #create_resources('nova_flavor', $flavors, {auth => $nova_auth})
+   # Service['httpd'] -> Nova_flavor<||>
+   # create_resources('nova_flavor', $flavors, {auth => $nova_auth})
 
     #class { 'rjil::test::nova_flavor':
     #  flavors => $flavors,

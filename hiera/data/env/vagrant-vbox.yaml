@@ -121,6 +121,8 @@ rjil::neutron::contrail::fip_pools:
     public: false
     tenants: ['tempest']
 
+rjil::neutron::contrail::new_iam: true
+
 contrail::vrouter::vgw_subnets: ['100.1.0.0/24']
 rjil::system::apt::env_repositories:
   contrailv2:
@@ -137,7 +139,7 @@ rjil::system::apt::env_repositories:
       id: '5DC149F6'
       source: 'http://10.140.221.229/apt/vpcjiocloud/vpcjiocloud/repo.key'
   contrail-main:
-    location: 'http://10.140.221.229/snapshots/5bee8bdf-d503-4fe2-9e01-aa0b1b8f257b/10.140.221.229/apt/vpcjiocloud/contrail/'
+    location: 'http://10.140.221.229/snapshots/611717e2-9ad6-478c-80cf-444a41ba3e06/10.140.221.229/apt/vpcjiocloud/contrail/'
     release: 'jiocloud'
     repos: 'main'
     include_src: false
@@ -160,6 +162,7 @@ rjil::system::apt::env_repositories:
     key:
       id: '53046A7C'
       source: 'http://10.140.221.229/apt/vpramo/glance/repo.key'
+
 rjil::system::apt::repositories:
   rustedhalo:
     location: 'http://10.140.221.229/snapshots/8f23f6d7-719b-4898-a201-d4672cd37773/jiocloud.rustedhalo.com/ubuntu/'
@@ -199,17 +202,17 @@ rjil::system::apt::repositories:
       =iZW7
       -----END PGP PUBLIC KEY BLOCK-----
   ubuntu:
-    location: 'http://10.140.221.229/snapshots/5f7eac30-afdf-47ad-8ca2-4c2f9ce49930/in.archive.ubuntu.com/ubuntu'
+    location: 'http://10.140.221.229/snapshots/57ef43ab-492d-42cc-8109-8c6b4acdd0f6/in.archive.ubuntu.com/ubuntu'
     release: 'trusty'
     repos: 'main restricted universe multiverse'
     include_src: false
   ubuntu_updates:
-    location: 'http://10.140.221.229/snapshots/d84b8cc3-846b-4b64-9688-827b437b73b1/in.archive.ubuntu.com/ubuntu'
+    location: 'http://10.140.221.229/snapshots/7d5dce53-f6d0-4f4d-98a7-bdf6a01851aa/in.archive.ubuntu.com/ubuntu'
     release: 'trusty-updates'
     repos: 'main restricted universe multiverse'
     include_src: false
   ubuntu_security:
-    location: 'http://10.140.221.229/snapshots/b538b5c0-80e3-47c7-9791-a98f6ef37093/in.archive.ubuntu.com/ubuntu'
+    location: 'http://10.140.221.229/snapshots/7dae742a-c85f-476d-8cbd-816fa571a916/in.archive.ubuntu.com/ubuntu'
     release: 'trusty-security'
     repos: 'main restricted universe multiverse'
     include_src: false
@@ -285,3 +288,21 @@ ntp::servers:
   - 10.140.221.232
   - 10.140.221.236
 
+
+#Overrides for Disabling Ceph
+rjil::jiocloud::dns::entries:
+  identity.jiocloud.com:
+    cname: iam.ind-west-1.staging.jiocloudservices.com
+  network.jiocloud.com:
+    cname: haproxy1
+  compute.jiocloud.com:
+    cname: keystone1
+  image.jiocloud.com:
+    cname: keystone1
+
+neutron::policy::policies:
+  neutron-admin_only:
+    key: 'admin_only'
+    value: 'rule:context_is_admin or tenant_id:%(tenant_id)s'
+
+rjil::haproxy::contrail::ec2api_listen_ports: '1443'
