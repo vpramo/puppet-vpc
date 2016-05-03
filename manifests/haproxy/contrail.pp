@@ -29,6 +29,7 @@ class rjil::haproxy::contrail(
   $ec2api_listen_ports     = 443,
   $ec2api_balancer_port    = 443,
   $min_members             = '3',
+  $virtual_ip              = undef,
 ) {
 
  # Add contrail discovery , contrail api tests here
@@ -80,6 +81,7 @@ class rjil::haproxy::contrail(
     listen_ports      => $api_listen_ports,
     balancer_ports    => $api_balancer_ports,
     cluster_addresses => $api_backend_ips,
+    virtual_ip        => $virtual_ip,
     require           => Runtime_fail['Haproxy_ready'],
   }
 
@@ -88,6 +90,7 @@ class rjil::haproxy::contrail(
     listen_ports      => $discovery_listen_ports,
     balancer_ports    => $discovery_balancer_ports,
     cluster_addresses => $discovery_backend_ips,
+    virtual_ip        => $virtual_ip,
     require           => Runtime_fail['Haproxy_ready'],
   }
 
@@ -96,6 +99,7 @@ class rjil::haproxy::contrail(
     #listen_ports      => $neutron_listen_ports,
     balancer_ports    => $neutron_balancer_ports,
     cluster_addresses => $neutron_backend_ips,
+    virtual_ip        => $virtual_ip,
     require           => Runtime_fail['Haproxy_ready'],
   }
 
@@ -104,6 +108,7 @@ class rjil::haproxy::contrail(
     listen_ports      => $ec2api_listen_ports,
     balancer_ports    => $ec2api_balancer_port,
     cluster_addresses => $ec2api_backend_ips,
+    virtual_ip        => $virtual_ip,
     require           => Runtime_fail['Haproxy_ready'],
   }
 

@@ -286,4 +286,7 @@ ntp::servers:
   - 10.140.221.236
 
 rjil::pacemaker::ipaddress: "%{ipaddress_eth1}"
+virtual_ha_ip: '192.168.100.29'
+rjil::pacemaker::haproxy_vip_ip: "%{hiera('virtual_ha_ip')}"
+rjil::haproxy::contrail::virtual_ip: "%{hiera('virtual_ha_ip')}"
 
