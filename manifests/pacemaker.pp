@@ -68,11 +68,19 @@ class rjil::pacemaker(
     operations      => { 'monitor' => { 'interval' => $haproxy_vip_monitor_interval } },
   }
 
+  file{'/usr/lib/ocf/resource.d/heartbeat/haproxy':
+       source => "puppet:///modules/rjil/haproxy",
+       mode   => '0755',
+       owner  => 'root',
+       group  => 'root',
+  }
+
   cs_primitive { 'haproxy':
     primitive_class => 'ocf',
     primitive_type  => 'haproxy',
     provided_by     => 'heartbeat',
     operations      => { 'monitor' => { 'interval' => $haproxy_monitor_interval } },
+    require         => File['/usr/lib/ocf/resource.d/heartbeat/haproxy'],
   }
 
 
