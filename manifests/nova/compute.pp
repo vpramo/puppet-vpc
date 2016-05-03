@@ -32,37 +32,30 @@ class rjil::nova::compute (
 
   ensure_resource('package','python-six', { ensure => 'latest' })
 
-  include rjil::nova::zmq_config
-  include ::nova::client
-  include ::nova
-  include ::nova::compute
-  include ::nova::network::neutron
+  #include rjil::nova::zmq_config
 
   ##
   # call compute driver specific classes
   ##
-  include "::nova::compute::${compute_driver}"
 
   ##
   # ironic doesnt need vif specific configurations.
   ##
   if $compute_driver == 'libvirt' {
-    include ::nova::compute::neutron
-    include ::nova::compute::libvirt
 
     Package['libvirt'] -> Exec['rm_virbr0']
-
+   }
     ##
     # if rbd is enabled, configure ceph.
     # rbd will not support ironic with current setup, so only to be enabled in
     # case of libvirt.
     ##
-    if $rbd_enabled {
-      include ::rjil::nova::compute::rbd
-    }
-  } elsif $compute_driver == 'ironic' {
-    include ::nova::compute::ironic
-  }
+ #   if $rbd_enabled {
+ #     include ::rjil::nova::compute::rbd
+ #   }
+ # } elsif $compute_driver == 'ironic' {
+ #   include ::nova::compute::ironic
+ # }
 
 
   rjil::jiocloud::logrotate { 'nova-compute':
@@ -70,7 +63,7 @@ class rjil::nova::compute (
   }
 
   include rjil::nova::logrotate::manage
-
+  include rjil::os_compute
   ##
   # Remove libvirt default nated network
   ##

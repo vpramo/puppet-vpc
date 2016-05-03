@@ -12,7 +12,7 @@ class rjil::contrail::ec2api (
     include ::mysql::server
     include ::ec2api::db::mysql
     include ::ec2api::db::sync
-    Class['::ec2api::db::mysql']->Class['::ec2api::db::sync']->Class['::ec2api']
+    Class['::ec2api::db::mysql']->Class['::ec2api::db::sync']
   }
 
   if $keystone_user_create {

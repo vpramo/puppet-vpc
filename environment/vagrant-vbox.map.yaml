@@ -13,6 +13,9 @@ flavor:
   large:
     ram: 4096
     cpu: 2
+  xlarge:
+    ram: 8192
+    cpu: 4
   storage:
     ram: 4096
     cpu: 2
