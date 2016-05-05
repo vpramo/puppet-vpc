@@ -226,9 +226,6 @@ rjil::haproxy::default_timeout_server: 50000
 
 
 # Keystone Properties
-rjil::jiocloud::dns::entries:
-  iam.ind-west-1.internal.jiocloudservices.com:
-    cname: iam.ind-west-1.internal.jiocloudservices.com
 keystone_public_address: iam.ind-west-1.internal.jiocloudservices.com
 keystone_private_address: iam.ind-west-1.internal.jiocloudservices.com
 keystone_port: 443
