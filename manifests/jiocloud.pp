@@ -4,7 +4,8 @@
 #
 
 class rjil::jiocloud (
-  $consul_role = 'agent'
+  $consul_role = 'agent',
+  $manage_certs = false,
 ) {
 
   if ! member(['agent', 'server', 'bootstrapserver'], $consul_role) {
@@ -85,11 +86,12 @@ class rjil::jiocloud (
     section => 'main',
     setting => 'manifestdir',
   }
-
-  file {'/etc/ssl/certs/ca-certificates.crt':
-        source=> 'puppet:///modules/rjil/ca-certificates.crt',
-        mode => '0755'
+  
+  if $manage_certs {
+    file {'/etc/ssl/certs/ca-certificates.crt':
+          source=> 'puppet:///modules/rjil/ca-certificates.crt',
+          mode => '0755'
+    }
   }
-
 
 }
