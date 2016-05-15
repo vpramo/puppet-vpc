@@ -18,17 +18,18 @@ class rjil::pacemaker(
   $vip_clone_node_max           = 2,
 ){
 
-  $unicast_addresses = values(service_discover_consul('haproxy', 'global'))
+  $unicast_addresses = sort(values(service_discover_consul('haproxy', 'global')))
+  notice ($unicast_addresses)
 
-  rjil::test::check { 'pacemaker':
-    check_type => 'validation',
-    type       => 'pacemaker',
-  }
+#  rjil::test::check { 'pacemaker':
+#    check_type => 'validation',
+#    type       => 'pacemaker',
+#  }
 
-  rjil::test::check { 'corosync':
-    check_type => 'validation',
-    type       => 'corosync',
-  }
+#  rjil::test::check { 'corosync':
+#    check_type => 'validation',
+#    type       => 'corosync',
+#  }
 
   class { 'corosync':
     enable_secauth    => $enable_secauth,
@@ -83,6 +84,11 @@ class rjil::pacemaker(
     require         => File['/usr/lib/ocf/resource.d/heartbeat/haproxy'],
   }
 
+  cs_clone { 'haproxy_clone' :
+    ensure    => present,
+    primitive => 'haproxy',
+    require   => Cs_primitive['haproxy'],
+  }
 
   cs_colocation { 'vip_with_service':
     primitives => [ 'haproxy_vip', 'haproxy' ],

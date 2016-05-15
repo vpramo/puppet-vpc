@@ -1,6 +1,6 @@
 resources:
   haproxy:
-    number: 1
+    number: 2
     flavor: medium
     image: trusty
     networks: default

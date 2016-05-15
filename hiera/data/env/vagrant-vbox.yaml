@@ -291,8 +291,10 @@ ntp::servers:
 rjil::pacemaker::ipaddress: "%{ipaddress_eth1}"
 virtual_ha_ip: '192.168.100.29'
 rjil::pacemaker::haproxy_vip_ip: "%{hiera('virtual_ha_ip')}"
-rjil::haproxy::contrail::virtual_ip: "%{hiera('virtual_ha_ip')}"
-
+rjil::contrail::server::api_virtual_ip: "%{hiera('virtual_ha_ip')}"
+rjil::contrail::server::discovery_virtual_ip: "%{hiera('virtual_ha_ip')}"
+rjil::contrail::vrouter::discovery_address: "%{hiera('virtual_ha_ip')}"
+rjil::neutron::contrail::contrail_api_server: "%{hiera('virtual_ha_ip')}"
 #Overrides for Disabling Ceph
 rjil::jiocloud::dns::entries:
   identity.jiocloud.com:

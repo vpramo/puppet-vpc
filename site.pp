@@ -138,12 +138,21 @@ node /^stmon\d+/ {
 }
 
 #Complete HAPROXY for testing
-node /^haproxy\d+/ {
+node haproxy1 {
   include rjil::base
   include rjil::haproxy
   include rjil::haproxy::contrail
   include rjil::contrail::ec2api
   include rjil::haproxy::openstack
+  include rjil::pacemaker
+}
+
+node haproxy2 {
+  include rjil::base
+  include rjil::haproxy
+  include rjil::haproxy::contrail
+  #include rjil::contrail::ec2api
+  #include rjil::haproxy::openstack
   include rjil::pacemaker
 }
 

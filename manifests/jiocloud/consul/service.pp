@@ -22,6 +22,7 @@ define rjil::jiocloud::consul::service(
  
   if $ip_address {
     $service_hash = {
+      address => $ip_address,
       service => {
         name  => $name,
         address => $ip_address,

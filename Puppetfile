@@ -102,7 +102,7 @@ mod 'puppetlabs/mysql',
   :ref => '2.2.x'
 
 mod 'openstack/neutron',
-  :git => "#{base_url}/jiocloudvpc/puppet-neutron",
+  :git => "#{base_url}/openstack/puppet-neutron",
   :ref => 'stable/kilo'
 
 mod 'stackforge/nova',
