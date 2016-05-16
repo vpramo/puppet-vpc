@@ -21,15 +21,15 @@ class rjil::pacemaker(
   $unicast_addresses = sort(values(service_discover_consul('haproxy', 'global')))
   notice ($unicast_addresses)
 
-#  rjil::test::check { 'pacemaker':
-#    check_type => 'validation',
-#    type       => 'pacemaker',
-#  }
+  rjil::test::check { 'pacemaker':
+    check_type => 'validation',
+    type       => 'pacemaker',
+  }
 
-#  rjil::test::check { 'corosync':
-#    check_type => 'validation',
-#    type       => 'corosync',
-#  }
+  rjil::test::check { 'corosync':
+    check_type => 'validation',
+    type       => 'corosync',
+  }
 
   class { 'corosync':
     enable_secauth    => $enable_secauth,
