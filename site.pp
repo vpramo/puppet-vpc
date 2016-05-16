@@ -10,6 +10,7 @@ node /^vpc-service\d+/ {
   include rjil::omd_client
   include rjil::monitoring::base
   include rjil::monitoring::vpcservice
+  include rjil::pacemaker
 }
 
 node /^vpc-cfg\d+/{
@@ -138,22 +139,12 @@ node /^stmon\d+/ {
 }
 
 #Complete HAPROXY for testing
-node haproxy1 {
+node /^haproxy\d+/ {
   include rjil::base
   include rjil::haproxy
   include rjil::haproxy::contrail
   include rjil::contrail::ec2api
   include rjil::haproxy::openstack
-  include rjil::pacemaker
-}
-
-node haproxy2 {
-  include rjil::base
-  include rjil::haproxy
-  include rjil::haproxy::contrail
-  #include rjil::contrail::ec2api
-  #include rjil::haproxy::openstack
-  include rjil::pacemaker
 }
 
 node /^keystone\d+/ {
