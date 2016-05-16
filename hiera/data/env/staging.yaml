@@ -373,6 +373,15 @@ contrail::vrouter::interface_is_dhcp: false
 rjil::contrail::vrouter_standalone::discovery_address: 'vpc.ind-west-1.staging.jiocloudservices.com'
 rjil::contrail::vrouter_standalone::vrouter_physical_interface: 'em3'
 
+# Pacemaker and Corosync Configurations
+rjil::pacemaker::ipaddress: "%{ipaddress_em3}"
+virtual_ha_ip: '10.140.214.50'
+rjil::pacemaker::haproxy_vip_ip: "%{hiera('virtual_ha_ip')}"
+rjil::contrail::server::api_virtual_ip: "%{hiera('virtual_ha_ip')}"
+rjil::contrail::server::discovery_virtual_ip: "%{hiera('virtual_ha_ip')}"
+rjil::contrail::vrouter::discovery_address: "%{hiera('virtual_ha_ip')}"
+rjil::neutron::contrail::contrail_api_server: "%{hiera('virtual_ha_ip')}"
+
 # EC2API Settings
 rjil::contrail::ec2api::db_provision: false
 ec2api::ec2api_config:
