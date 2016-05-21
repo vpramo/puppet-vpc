@@ -372,6 +372,7 @@ rjil::contrail::vrouter_standalone::vrouter_physical_interface: 'em3'
 
 # Pacemaker and Corosync Configurations
 rjil::pacemaker::ipaddress: "%{ipaddress_em3}"
+rjil::pacemaker::haproxy_vip_nic: 'em3'
 virtual_ha_ip: '10.140.214.50'
 rjil::pacemaker::haproxy_vip_ip: "%{hiera('virtual_ha_ip')}"
 rjil::contrail::server::api_virtual_ip: "%{hiera('virtual_ha_ip')}"
