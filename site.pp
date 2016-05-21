@@ -10,6 +10,7 @@ node /^vpc-service\d+/ {
   include rjil::omd_client
   include rjil::monitoring::base
   include rjil::monitoring::vpcservice
+  include rjil::pacemaker
 }
 
 node /^vpc-cfg\d+/{

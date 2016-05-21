@@ -18,6 +18,7 @@ define rjil::haproxy_service(
   $bind_options     = undef,
   $ssl              = false,
   $check_type       = 'http',
+  $virtual_ip       = undef,
 ) {
 
   if $cluster_addresses != [] {
@@ -91,6 +92,7 @@ define rjil::haproxy_service(
       rjil::jiocloud::consul::service { "${name}":
         tags          => ['lb'],
         port          => $port,
+        ip_address    => $virtual_ip,
       }
     }
   }

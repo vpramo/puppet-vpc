@@ -4,6 +4,7 @@ define rjil::jiocloud::consul::service(
   $interval      = '10s',
   $ttl           = false,
   $tags          = [],
+  $ip_address    = undef,
 ) {
 
   if $check_command {
@@ -18,14 +19,27 @@ define rjil::jiocloud::consul::service(
   } else {
     fail("Must specify either ttl or check_command")
   }
-
-  $service_hash = {
-    service => {
-      name  => $name,
-      port  => $port + 0,
-      tags  => $tags,
-      check => $check,
+ 
+  if $ip_address {
+    $service_hash = {
+      address => $ip_address,
+      service => {
+        name  => $name,
+        address => $ip_address,
+        port  => $port + 0,
+        tags  => $tags,
+        check => $check,
+      }
     }
+  } else {
+    $service_hash = {
+      service => {
+        name  => $name,
+        port  => $port + 0,
+        tags  => $tags,
+        check => $check,
+      }
+  }
   }
 
   ensure_resource( 'file', '/etc/consul',
