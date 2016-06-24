@@ -53,7 +53,6 @@ class rjil::neutron::contrail(
                           keystone_admin_user     => $keystone_admin_user,
                           keystone_admin_password => $keystone_admin_password,
                           contrail_api_server     => $contrail_api_server,
-                          rt_number               => $rt_number,
                           router_asn              => $router_asn,
                           tenant_name             => $tenant_name
                         }
