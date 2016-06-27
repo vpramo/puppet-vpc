@@ -71,11 +71,11 @@ mod 'puppetlabs/apt',
 
 mod 'openstack/cinder',
   :git => "#{base_url}/openstack/puppet-cinder",
-  :ref => 'stable/kilo'
+  :ref => 'kilo-eol'
 
 mod 'openstack/openstacklib',
   :git => "#{base_url}/openstack/puppet-openstacklib",
-  :ref => 'stable/kilo'
+  :ref => 'kilo-eol'
 
 mod 'stackforge/ironic',
   :git => "#{base_url}/jiocloud/puppet-ironic",
@@ -91,11 +91,11 @@ mod 'enovance/ceph',
 
 mod 'openstack/glance',
   :git => "#{base_url}/openstack/puppet-glance",
-  :ref => 'stable/kilo'
+  :ref => 'kilo-eol'
 
 mod 'openstack/keystone',
   :git => "#{base_url}/openstack/puppet-keystone",
-  :ref => 'stable/kilo'
+  :ref => 'kilo-eol'
 
 mod 'puppetlabs/mysql',
   :git => "#{base_url}/puppetlabs/puppetlabs-mysql",
